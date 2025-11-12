@@ -13,7 +13,7 @@ export class RutaService {
 
   // Signals para ESTADO COMPARTIDO
   private _rutas = signal<RutaResponse[]>([]);
-  rutas = this._rutas.asReadonly();
+
 
   // GET - Obtener todos
   get(): Observable<RutaResponse[]> {
