@@ -25,10 +25,10 @@ export interface SolicitudViajeResponse{
 }
 
 export interface SolicitudViajeRequest{
-    estadoSolicitud: EstadoSolicitud,
+    estadoSolicitud: EstadoSolicitud
 }
 
 export interface SolicitudViajeResponse{
-    estadoSolicitud: EstadoSolicitud,
+    estadoSolicitud: EstadoSolicitud
 }
 
