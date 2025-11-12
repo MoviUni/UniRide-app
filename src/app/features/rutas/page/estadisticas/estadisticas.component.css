@@ -379,61 +379,118 @@
   border-radius: 80px;
 }
 
-.viaje_1 {
-  width: 1446px;
-  height: 149px;
-  left: 237px;
-  top: 1557px;
-  position: absolute;
-  opacity: 0.80;
-  background: white;
-  box-shadow: 0px 8px 10px 4px rgba(0, 0, 0, 0.30);
-  overflow: hidden;
-  border-radius: 50px;
-}
-
-.viaje_2 {
-  width: 1446px;
-  height: 149px;
-  left: 237px;
-  top: 1751px;
-  position: absolute;
-  opacity: 0.80;
-  background: white;
-  box-shadow: 0px 8px 10px 4px rgba(0, 0, 0, 0.30);
-  overflow: hidden;
-  border-radius: 50px;
-}
-
-.viaje_3 {
-  width: 1446px;
-  height: 149px;
-  left: 241px;
-  top: 1945px;
-  position: absolute;
-  opacity: 0.80;
-  background: white;
-  box-shadow: 0px 8px 10px 4px rgba(0, 0, 0, 0.30);
-  overflow: hidden;
-  border-radius: 50px;
-}
-
-.viaje_4 {
-  width: 1446px;
-  height: 149px;
-  left: 237px;
-  top: 2137px;
-  position: absolute;
-  opacity: 0.80;
-  background: white;
-  box-shadow: 0px 8px 10px 4px rgba(0, 0, 0, 0.30);
-  overflow: hidden;
-  border-radius: 50px;
-}
-
 .total {
   width: 1920px;
   height: 2757px;
   position: relative;
   overflow: hidden;
+}
+
+/* MENSAJE DE ERROR - SIN VIAJES */
+.rectangle-188 {
+  width: 1261px;
+  height: 709px;
+  left: 0px;
+  top: 0px;
+  position: absolute;
+  background: #F3F3F3;
+  border-radius: 40px;
+}
+
+.clock {
+  width: 94.91px;
+  height: 94.91px;
+  left: 583.04px;
+  top: 85.54px;
+  position: absolute;
+}
+
+.notieneviajesregistradosan_span {
+  color: black;
+  font-size: 24px;
+  font-family: Poppins;
+  font-weight: 400;
+  word-wrap: break-word;
+}
+
+.no-tiene-viajes-registrados-an {
+  width: 376px;
+  height: 36px;
+  left: 443px;
+  top: 236px;
+  position: absolute;
+}
+
+.auto_icon {
+  width: 106px;
+  height: 85px;
+  left: 578px;
+  top: 326px;
+  position: absolute;
+}
+
+.mensaje_errpr {
+  width: 1261px;
+  height: 709px;
+  left: 329px;
+  top: 1567px;
+  position: absolute;
+  background: rgba(255, 255, 255, 0.50);
+  overflow: hidden;
+  border-radius: 50px;
+}
+
+
+/* MENSAJE DE ERROR 1 - SIN VIAJES */
+.mensaje_errpr_01 {
+  width: 1261px;
+  height: 709px;
+  left: 328px;
+  top: 709px;
+  position: absolute;
+  background: rgba(255, 255, 255, 0.50);
+  overflow: hidden;
+  border-radius: 50px;
+}
+
+.rectangle-188_01 {
+  width: 1261px;
+  height: 709px;
+  left: 0px;
+  top: 0px;
+  position: absolute;
+  background: #F3F3F3;
+  border-radius: 40px;
+}
+
+.clock_01 {
+  width: 94.91px;
+  height: 94.91px;
+  left: 583.04px;
+  top: 85.54px;
+  position: absolute;
+}
+
+.vector {
+  width: 106px;
+  height: 85px;
+  left: 578px;
+  top: 328px;
+  position: absolute;
+}
+
+.notieneviajesregistradosan_01_span {
+  color: black;
+  font-size: 24px;
+  font-family: Poppins;
+  font-weight: 400;
+  word-wrap: break-word;
+}
+
+.no-tiene-viajes-registrados-an_01 {
+  width: 376px;
+  height: 36px;
+  left: 443px;
+  top: 236px;
+  position: absolute;
 }
