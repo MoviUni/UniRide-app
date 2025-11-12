@@ -9,26 +9,26 @@ export interface SolicitudViajeRequest{
     estadoSolicitud: EstadoSolicitud,
     fecha:string,
     hora:string,
-    rutaId:string,
-    pasajeroId:string,
+    rutaId:number,
+    pasajeroId:number,
     updatedAt:string
 }
 
 export interface SolicitudViajeResponse{
-    idSolicitudViaje: string,
+    idSolicitudViaje: number,
     estadoSolicitud: EstadoSolicitud,
     fecha:string,
     hora:string,
-    rutaId:string,
-    pasajeroId:string,
+    rutaId:number,
+    pasajeroId:number,
     updatedAt:string
 }
 
-export interface SolicitudViajeRequest{
+export interface SolicitudEstadoRequest{
     estadoSolicitud: EstadoSolicitud
 }
 
-export interface SolicitudViajeResponse{
+export interface SolicitudEstadoResponse{
     estadoSolicitud: EstadoSolicitud
 }
 
