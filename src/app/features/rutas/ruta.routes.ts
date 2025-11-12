@@ -4,5 +4,9 @@ export const RUTA_ROUTES: Routes = [
     {
     path: '',
     loadComponent: () => import('./page/estadisticas/estadisticas.component').then((m) => m.EstadisticasComponent)
+    },
+    {
+    path: 'buscar',
+    loadComponent: () => import('./page/busqueda/busqueda.component').then((m) => m.BusquedaRutasComponent)
     }
 ];  
