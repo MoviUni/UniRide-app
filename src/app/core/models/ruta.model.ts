@@ -10,20 +10,20 @@ export interface RutaRequest{
     destino:string,
     fechaSalida:string,
     horaSalida:string,
-    tarifa:string,
-    asientosDisponibles:string,
+    tarifa:number,
+    asientosDisponibles:number,
     estadoRuta:EstadoRuta,
-    conductorId:string
+    conductorId:number
 }
 
 export interface RutaResponse{
-    idRuta:string,
+    idRuta:number,
     origen: string,
     destino:string,
     fechaSalida:string,
     horaSalida:string,
-    tarifa:string,
-    asientosDisponibles:string,
+    tarifa:number,
+    asientosDisponibles:number,
     estadoRuta:EstadoRuta,
-    idConductor:string
+    idConductor:number
 }
