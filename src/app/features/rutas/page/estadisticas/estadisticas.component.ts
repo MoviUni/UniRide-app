@@ -4,9 +4,13 @@ import { RutaService } from '../../../../core/services/ruta.service';
 import { RutaFrecuenteResponseDTO } from '../../../../core/models/ruta.model';
 import { ChangeDetectorRef } from '@angular/core'; // fuerza a Angular a detectar y renderizar los cambios inmediatamente
 
+//Para formularios reactivos
+import { ReactiveFormsModule } from '@angular/forms';
+import { FormGroup, FormControl, Validators } from '@angular/forms';
+
 //Para las gráficas
 import { BaseChartDirective } from 'ng2-charts';
-import { ChartOptions, ChartType, ChartDataset, ChartData, Chart, CategoryScale, LinearScale, BarElement, Title, Tooltip, Legend, BarController} from 'chart.js';
+import { ChartOptions, ChartData, Chart, CategoryScale, LinearScale, BarElement, Title, Tooltip, Legend, BarController} from 'chart.js';
 
 
 // 🔹 Registrar los componentes de Chart.js
@@ -15,7 +19,7 @@ Chart.register(CategoryScale, LinearScale, BarElement, Title, Tooltip, Legend, B
 @Component({
   selector: 'app-estadisticas',
   standalone: true,
-  imports: [CommonModule, BaseChartDirective],
+  imports: [CommonModule, BaseChartDirective, CommonModule, ReactiveFormsModule],
   templateUrl: './estadisticas.component.html',
   styleUrls: ['./estadisticas.component.css']
 })
@@ -23,6 +27,7 @@ export class EstadisticasComponent implements OnInit {
 
   //====== TOTAL DE VIAJES ======
   totalViajes: number = 0; // Valor inicial 0
+  conductorId: number = 2; // ID hardcodeado para ejemplo
 
   constructor(private rutaService: RutaService, private cdr: ChangeDetectorRef) {}
 
@@ -31,6 +36,7 @@ export class EstadisticasComponent implements OnInit {
     const conductorId = 2; // ID hardcodeado para ejemplo
     this.obtenerTotalViajes(conductorId);
     this.cargarFrecuencia(conductorId);
+    this.obtenerRutasFrecuentes(conductorId);
   }
 
   obtenerTotalViajes(conductorId: number): void {
@@ -152,20 +158,24 @@ cargarFrecuencia(conductorId: number) {
 
 
   //=========== RUTAS FRECUENTES ===========
-  rutasFrecuentes: RutaFrecuenteResponseDTO[] = [];
+rutasFrecuentes: RutaFrecuenteResponseDTO[] = [];
 
-  obtenerRutasFrecuentes(conductorId: number): void {
-    this.rutaService.getRutasMasFrecuentes(conductorId).subscribe({
-      next: (data) => (this.rutasFrecuentes = data),
-      error: (err) => {
-        console.error('Error al obtener rutas frecuentes', err);
-        this.rutasFrecuentes = [];
-      },
-    });
-  
-
-    //=========== DESCARGAR HISTORIAL EN PDF ===========
-
-
+obtenerRutasFrecuentes(conductorId: number): void {
+  this.rutaService.getRutasMasFrecuentes(conductorId).subscribe({
+    next: (data) => {
+      this.rutasFrecuentes = data;
+      console.log('Rutas frecuentes cargadas:', this.rutasFrecuentes);
+      this.cdr.detectChanges();
+    },
+    error: (err) => {
+      console.error('Error al obtener rutas frecuentes', err);
+      this.rutasFrecuentes = [];
+    },
+  });
+}
+  //=========== DESCARGAR HISTORIAL EN PDF ===========
+    descargarHistorialPDF(): void {
+    // Y también puedo usarla aquí
+    this.rutaService.descargarHistorialPDF(this.conductorId);
   }
 }

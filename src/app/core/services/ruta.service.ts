@@ -54,7 +54,7 @@ export class RutaService {
     const url = window.URL.createObjectURL(data);
     const a = document.createElement('a');
     a.href = url;
-    a.download = `historial_conductor_${this.conductorId}.pdf`;
+    a.download = `historial_conductor_${conductorId}.pdf`;
     a.click();
     window.URL.revokeObjectURL(url);
   });
