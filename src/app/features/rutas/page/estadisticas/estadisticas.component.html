@@ -25,7 +25,6 @@
     <img class="people-in-car-side-view" src="https://placehold.co/90x90" alt="auto" />
   </div>
 <!-- FIN REVISAR -->
-
   @if (rutasFrecuentes.length === 0) {
   <div class="sin-viajes">
     <div class="mensaje_errpr">
@@ -47,15 +46,36 @@
   <div class="total_viajes_titulo"><span class="total_viajes_titulo_span">Total de viajes realizados</span></div>
 
 
-  <!--VIAJES FRECUENTES-->
-  <div class="viajes_frecuentes_titulo"><span class="viajes_frecuentes_titulo_span">Viajes frecuentes</span></div>
+<!-- FRECUENCIA DE VIAJES -->
+<div class="viajes_frecuentes_titulo">
+  <span class="viajes_frecuentes_titulo_span">Viajes frecuentes</span>
+</div>
+
+@if (noTieneViajes) {
+  <!-- Mensaje cuando no hay viajes -->
   <div class="mensaje_errpr_01">
     <div class="rectangle-188_01"></div>
     <div class="clock_01"></div>
-    <img class="vector" src="assets/auto_icon.png"/>
-    <div class="no-tiene-viajes-registrados-an_01"><span class="notieneviajesregistradosan_01_span">No tiene viajes registrados aún.</span></div>
+    <img class="vector" src="assets/auto_icon.png" />
+    <div class="no-tiene-viajes-registrados-an_01">
+      <span class="notieneviajesregistradosan_01_span">
+        No tiene viajes registrados aún.
+      </span>
+    </div>
   </div>
-  
+} @else {
+  <!-- Gráfico -->
+  <div class="grafico_barras">
+    <canvas
+      baseChart
+      [data]="barChartData"
+      [options]="barChartOptions"
+      [type]="barChartType">
+    </canvas>
+  </div>
+
+}
+
    <!--DESCARGAR PDF-->
   <div class="exportar_historial_titulo"><span class="exportar_historial_titulo_span">Exportar historial en PDF</span></div>
   <div class="descargar_btn">

@@ -31,8 +31,6 @@ export class RutaService {
   items = this._items.asReadonly();
 
   // GET - Obtener total de viajes de un conductor
-
-  
   getTotalViajes(conductorId: number): Observable<number> {
     return this.http.get<number>(`${this.apiUrl}/conductor/${conductorId}/total`, this.getHeaders());
   }
