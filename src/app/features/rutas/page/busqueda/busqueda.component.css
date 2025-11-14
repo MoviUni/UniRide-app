@@ -127,7 +127,7 @@
 }
 
 .hoy_01 {
-  width: 38.95px;
+  width: 200px;
   height: 26.46px;
   left: 0px;
   top: -140px;
@@ -198,17 +198,17 @@
   height: 800px;
   left: 550px;
   top: 170px;
-  display: flex;
+
   flex-wrap: wrap; 
+
   gap: 20px;
-  position: absolute;
+  position: relative;
   overflow-y: scroll
 }
 
 .ruta-box1 {
-  margin: auto;
-  margin-bottom: -140px;
-  padding-bottom: -100px;
+
+  height: 190px;
   overflow: hidden;
 }
 
@@ -425,69 +425,6 @@
   position: absolute;
 }
 
-.dadesalida_span {
-  color: black;
-  font-size: 17.64px;
-  font-family: Poppins;
-  font-weight: 400;
-  word-wrap: break-word;
-}
-
-.da-de-salida {
-  width: 170.52px;
-  height: 26.46px;
-  left: 23.52px;
-  top: 255.04px;
-  position: absolute;
-}
-
-.hoy_04_span {
-  color: black;
-  font-size: 14.70px;
-  font-family: Poppins;
-  font-weight: 400;
-  word-wrap: break-word;
-}
-
-.hoy_04 {
-  width: 170.52px;
-  height: 21.31px;
-  left: 65.41px;
-  top: 294.73px;
-  position: absolute;
-}
-
-.maana_span {
-  color: black;
-  font-size: 14.70px;
-  font-family: Poppins;
-  font-weight: 400;
-  word-wrap: break-word;
-}
-
-.maana {
-  width: 170.52px;
-  height: 22.05px;
-  left: 65.41px;
-  top: 332.22px;
-  position: absolute;
-}
-
-.horadesalida_span {
-  color: black;
-  font-size: 17.64px;
-  font-family: Poppins;
-  font-weight: 400;
-  word-wrap: break-word;
-}
-
-.hora-de-salida {
-  width: 170.52px;
-  height: 26.46px;
-  left: 23.52px;
-  top: 421.15px;
-  position: absolute;
-}
 
 .line-44 {
   width: 254.31px;
@@ -499,193 +436,7 @@
   outline-offset: -0.37px;
 }
 
-.circle-point {
-  width: 26.46px;
-  height: 26.46px;
-  left: 23.52px;
-  top: 330.02px;
-  position: absolute;
-}
 
-.fdasams_span {
-  color: black;
-  font-size: 14.70px;
-  font-family: Poppins;
-  font-weight: 400;
-  word-wrap: break-word;
-}
-
-.text-2-das-a-ms {
-  width: 170.52px;
-  height: 22.05px;
-  left: 65.41px;
-  top: 373.38px;
-  position: absolute;
-}
-
-.circle-point_01 {
-  width: 26.46px;
-  height: 26.46px;
-  left: 23.52px;
-  top: 371.18px;
-  position: absolute;
-}
-
-.circle-point-checked {
-  width: 26.46px;
-  height: 26.46px;
-  left: 23.52px;
-  top: 292.53px;
-  position: absolute;
-}
-
-.antesdelas0600_span {
-  color: black;
-  font-size: 14.70px;
-  font-family: Poppins;
-  font-weight: 400;
-  word-wrap: break-word;
-}
-
-.antes-de-las-0600 {
-  width: 170.52px;
-  height: 21.31px;
-  left: 65.41px;
-  top: 460.11px;
-  position: absolute;
-}
-
-.f600-0900_span {
-  color: black;
-  font-size: 14.70px;
-  font-family: Poppins;
-  font-weight: 400;
-  word-wrap: break-word;
-}
-
-.text-0600---0900 {
-  width: 170.52px;
-  height: 22.05px;
-  left: 65.41px;
-  top: 501.27px;
-  position: absolute;
-}
-
-.circle-point_02 {
-  width: 26.46px;
-  height: 26.46px;
-  left: 23.52px;
-  top: 499.06px;
-  position: absolute;
-}
-
-.f900-1200_span {
-  color: black;
-  font-size: 14.70px;
-  font-family: Poppins;
-  font-weight: 400;
-  word-wrap: break-word;
-}
-
-.text-0900---1200 {
-  width: 170.52px;
-  height: 22.05px;
-  left: 65.41px;
-  top: 542.43px;
-  position: absolute;
-}
-
-.circle-point_03 {
-  width: 26.46px;
-  height: 26.46px;
-  left: 23.52px;
-  top: 540.23px;
-  position: absolute;
-}
-
-.f200-1500_span {
-  color: black;
-  font-size: 14.70px;
-  font-family: Poppins;
-  font-weight: 400;
-  word-wrap: break-word;
-}
-
-.text-1200---1500 {
-  width: 170.52px;
-  height: 22.05px;
-  left: 65.41px;
-  top: 583.59px;
-  position: absolute;
-}
-
-.circle-point_04 {
-  width: 26.46px;
-  height: 26.46px;
-  left: 23.52px;
-  top: 581.38px;
-  position: absolute;
-}
-
-.circle-point-checked_01 {
-  width: 26.46px;
-  height: 26.46px;
-  left: 23.52px;
-  top: 457.90px;
-  position: absolute;
-}
-
-.avangamoseste_span {
-  color: black;
-  font-size: 11.02px;
-  font-family: Poppins;
-  font-weight: 400;
-  word-wrap: break-word;
-}
-
-.av-angamos-este {
-  left: 16.90px;
-  top: 8.09px;
-  position: absolute;
-}
-
-.upcmonterrico_span {
-  color: black;
-  font-size: 11.02px;
-  font-family: Poppins;
-  font-weight: 400;
-  word-wrap: break-word;
-}
-
-.upc-monterrico {
-  left: 16.90px;
-  top: 8.08px;
-  position: absolute;
-}
-
-.f500-1800_span {
-  color: black;
-  font-size: 14.70px;
-  font-family: Poppins;
-  font-weight: 400;
-  word-wrap: break-word;
-}
-
-.text-1500---1800 {
-  width: 170.52px;
-  height: 22.05px;
-  left: 65.41px;
-  top: 624.02px;
-  position: absolute;
-}
-
-.circle-point_05 {
-  width: 26.46px;
-  height: 26.46px;
-  left: 23.52px;
-  top: 621.81px;
-  position: absolute;
-}
 
 .btn_trabaja {
   width: 171.99px;
@@ -810,6 +561,8 @@
   border-radius: 2vh;
   width: 35vh;
   height: 4vh;
+  border: 2px solid;
+  border-color:#6BC8C9;
 }
 
 .filtro-text-origen{
@@ -820,6 +573,27 @@
   border-radius: 2vh;
   width: 35vh;
   height: 4vh;
+  border: 2px solid;
+  border-color:#6BC8C9;
+}
+
+.form-control {
+  padding: 2vh;
+  text-align: left;
+  margin-top: 0.5vh;
+  color: gray;
+  border-radius: 2vh;
+  width: 35vh;
+  height: 4vh;
+  border: 2px solid;
+  border-color:#6BC8C9;
+
+}
+
+.filters-form{
+  left: 20px;
+  top: 66.27px;
+  position: relative;
 }
 
 .solicitarunirse_01{
@@ -838,4 +612,23 @@
 
 .solicitarunirse_01:hover{
   background-color:#620713;
+}
+
+.filters-form{
+  position: relative;
+
+}
+
+.btn {
+  padding: 0.5rem 1rem;
+  border-radius: 4px;
+  text-decoration: none;
+  font-weight: 500;
+  border: none;
+  cursor: pointer;
+  position: relative;
+  background: #003D7A;
+  color: white;
+
+  margin: 1vh;
 }

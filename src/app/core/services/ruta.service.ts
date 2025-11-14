@@ -37,6 +37,13 @@ export class RutaService {
     );
   }
 
+    // GET - Obtener todos
+  getByOrigen(origen:string): Observable<RutaResponse[]> {
+    return this.http.get<RutaResponse[]>(`${this.apiUrl}/origen?origen=${origen}`, this.getHeaders()).pipe(
+      tap(data => this._rutas.set(data))
+    );
+  }
+
 
   // GET - Obtener por ID
   getById(id: number): Observable<RutaResponse> {

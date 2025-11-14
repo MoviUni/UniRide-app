@@ -1,36 +1,35 @@
 import { Component, ElementRef, inject, OnInit, signal, ViewChild } from '@angular/core';
+import { FormBuilder, FormsModule, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
+import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { RutaService } from '../../../../core/services/ruta.service';
 import { RutaResponse } from '@core/models/ruta.model';
+import { ConductorService } from '@core/services/conductor.service';
+
+
 
 @Component({
   selector: 'app-busqueda-rutas',
   standalone: true,
-  imports: [CommonModule],
+  imports: [CommonModule, ReactiveFormsModule],
   template: `
   <div class="frame-427318940">
   <div class="mi_cuenta_contenido" >
-
-    
     <div class="ruta-list-box">
     @if (loading()) {
-      <p>Cargando transacciones...</p>
-    } @else if (page()) {
-      @for (tx of page()!; track $index) {
+      <p>Cargando rutas...</p>
+    } @else if (rutas()) {
+      @for (tx of rutas()!; track $index) {
       
         <div class="ruta-box1">
           <div class="rectangle1"></div>
-          <img class="star_05" src="https://placehold.co/19x31" />
-          <img class="star_06" src="https://placehold.co/19x31" />
-          <img class="star_07" src="https://placehold.co/19x31" />
-          <img class="star_08" src="https://placehold.co/19x31" />
-          <img class="star_09" src="https://placehold.co/19x31" />
-          <div class="hoy_01"><span class="hoy_01_span">Hoy</span></div>
+
+          <div class="hoy_01"><span class="hoy_01_span">{{'Empieza en '+ diferenciaFechas(tx.fechaSalida) + ' días'}} </span></div>
           <div class="btn_solicitar">
             <input type="button" class="solicitarunirse_01" value="Solicitar Unirse">
 
           </div>
-          <div class="conductor-text1"><span>tx.</span></div>
+          <div class="conductor-text1"><span>{{getNombreConductorById(tx.idConductor)}}</span></div>
 
           <div class="origen-text-1">
             <span>{{tx.origen}}</span>
@@ -59,34 +58,33 @@ import { RutaResponse } from '@core/models/ruta.model';
   <div class="filtros_01">
     <div class="rectangle-186"></div>
     <div class="filtros"><span class="filtros_span">Filtros</span></div>
-    <div class="quitar"><span class="quitar_span">Quitar</span></div>
-    <div class="origen"><span class="origen_span">Origen</span></div>
-    <div class="destino"><span class="destino_span">Destino</span></div>
-    <div class="da-de-salida"><span class="dadesalida_span">Día de salida</span></div>
-    <div class="hoy_04"><span class="hoy_04_span">Hoy</span></div>
-    <div class="maana"><span class="maana_span">Mañana</span></div>
-    <div class="hora-de-salida"><span class="horadesalida_span">Hora de salida</span></div>
-    <div class="line-44"></div>
-    <img class="circle-point" src="https://placehold.co/26x26" />
-    <div class="text-2-das-a-ms"><span class="fdasams_span">2 días a más</span></div>
-    <img class="circle-point_01" src="https://placehold.co/26x26" />
-    <img class="circle-point-checked" src="https://placehold.co/26x26" />
-    <div class="antes-de-las-0600"><span class="antesdelas0600_span">Antes de las 06:00</span></div>
-    <div class="text-0600---0900"><span class="f600-0900_span">06:00 - 09:00</span></div>
-    <img class="circle-point_02" src="https://placehold.co/26x26" />
-    <div class="text-0900---1200"><span class="f900-1200_span">09:00 - 12:00</span></div>
-    <img class="circle-point_03" src="https://placehold.co/26x26" />
-    <div class="text-1200---1500"><span class="f200-1500_span">12:00 - 15:00</span></div>
-    <img class="circle-point_04" src="https://placehold.co/26x26" />
-    <img class="circle-point-checked_01" src="https://placehold.co/26x26" />
-    <div class="frame-61variant3">
-      <input type="text" placeholder="Ingresar origen" class="filtro-text-origen"> 
-    </div>
-    <div class="frame-61variant3_01">
-      <input type="text" placeholder="Ingresar destino" class="filtro-text-destino"> 
-    </div>
-    <div class="text-1500---1800"><span class="f500-1800_span">15:00 - 18:00</span></div>
-    <img class="circle-point_05" src="https://placehold.co/26x26" />
+
+    <form [formGroup]="filterForm" class="filters-form">
+      <div class="form-group">
+        <label for="origen">Origen</label><br>
+        <input 
+        id="origen" 
+        type="text" 
+        placeholder="Ingresar origen" 
+        formControlName="origen"
+        class="form-control"
+        > 
+      </div>
+      <br>
+      <div class="form-group">
+        <label for="destino">Destino</label><br>
+        <input 
+        id="destino" 
+        type="text" 
+        placeholder="Ingresar destino" 
+        formControlName = "destino"
+        class="form-control"
+        > 
+      </div>
+      <br>
+      <button type="button" class="btn" (click)="applyFilters()">Filtrar</button>
+
+    </form>
   </div>
 </div>
   
@@ -97,11 +95,31 @@ export class BusquedaRutasComponent implements OnInit{
 
 
   private rutaService = inject(RutaService);
+  private conductorService = inject(ConductorService);
+  private fb = inject(FormBuilder);
 
-  page = signal<RutaResponse[]>([]);
+  allRutas = signal<RutaResponse[]>([]);
+  rutas = signal<RutaResponse[]>([]);
   loading = signal(true);
 
-  rutaName = signal(0);
+  filterForm: FormGroup = this.fb.group({
+    origen: [''],
+    destino: ['']
+  });
+  
+
+   rutaName = this.conductorService.getById(1).subscribe({
+      next: (conductor) => {
+        return conductor.idConductor;
+        
+      },
+      error: (error) => {
+        console.error('Error buscando conductor por ID:', error);
+        // Mostrar mensaje informativo en lugar de error
+        this.errorMessage.set('No existen con este ID');
+      }
+    });
+  
   errorMessage = signal('');
 
   ngOnInit() {
@@ -110,10 +128,10 @@ export class BusquedaRutasComponent implements OnInit{
 
   loadRutas() {
     this.rutaService.get().subscribe({
-      next: (ruta) => {
-        this.rutaName.set(ruta.length);
+      next: (rutas) => {
         this.loading.set(false);
-        this.page.set(ruta);
+        this.rutas.set(rutas);
+        this.allRutas.set(rutas);
         
       },
       error: (error) => {
@@ -124,4 +142,75 @@ export class BusquedaRutasComponent implements OnInit{
     });
 
   }
+
+  loadRutasByFilter(origen:string){
+    this.rutaService.getByOrigen(origen).subscribe({
+      next: (ruta) => {
+        this.loading.set(false);
+        this.rutas.set(ruta);
+        
+      },
+      error: (error) => {
+        console.error('Error cargando rutas:', error);
+        // Mostrar mensaje informativo en lugar de error
+        this.errorMessage.set('No existen rutas bajo los filtros aplicados');
+      }
+    });
+  }
+
+  diferenciaFechas(date1:string){
+    const _date1 = new Date(date1);
+    const time1 = _date1.getTime();
+    const time2 = Date.now();
+    const diffInMs = Math.abs(time2 - time1);
+    return Math.ceil(diffInMs / (1000 * 60 * 60 * 24));
+  }
+
+  getNombreConductorById(id:number){
+    this.conductorService.getById(id).subscribe({
+      next: (conductor) => {
+        
+        
+      },
+      error: (error) => {
+        console.error('Error buscando conductor por ID:', error);
+        // Mostrar mensaje informativo en lugar de error
+        this.errorMessage.set('No existen con este ID');
+      }
+    });
+  }
+
+  applyFilters() {
+    const origen = this.filterForm.value.origen;
+    const destino = this.filterForm.value.destino;
+
+    if (!origen && !destino) {
+      this.rutas.set(this.allRutas());
+      return;
+    }
+
+    const filtered = this.allRutas().filter(tx => {
+      const txOrigen = tx.origen;
+      const txDestino = tx.destino;
+
+      if (origen && destino) {
+        return txOrigen == origen && txDestino == destino;
+      }
+      if (origen) {
+        return txOrigen == origen;
+      }
+      if (destino) {
+        return txDestino == destino;
+      }
+      return true;
+    });
+
+    this.rutas.set(filtered);
+
+  }
+
+  reloadPage(){
+    window.location.reload();
+  }
+
 }
