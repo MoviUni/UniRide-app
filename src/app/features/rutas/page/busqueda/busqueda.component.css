@@ -1,68 +1,3 @@
-.rectangle-187 {
-  width: 796.74px;
-  height: 144.79px;
-  left: -5.15px;
-  top: 30.13px;
-  position: absolute;
-  background: #F3F3F3;
-  border-radius: 29.40px;
-}
-
-.star {
-  width: 19.50px;
-  height: 30.69px;
-  left: 172.26px;
-  top: 124.95px;
-  position: absolute;
-}
-
-.star_01 {
-  width: 19.50px;
-  height: 30.69px;
-  left: 194.58px;
-  top: 124.95px;
-  position: absolute;
-}
-
-.star_02 {
-  width: 19.50px;
-  height: 30.69px;
-  left: 216.90px;
-  top: 124.95px;
-  position: absolute;
-}
-
-.star_03 {
-  width: 19.50px;
-  height: 30.69px;
-  left: 239.22px;
-  top: 124.95px;
-  position: absolute;
-}
-
-.star_04 {
-  width: 19.50px;
-  height: 30.69px;
-  left: 149.94px;
-  top: 124.95px;
-  position: absolute;
-}
-
-.hoy_span {
-  color: black;
-  font-size: 17.64px;
-  font-family: Poppins;
-  font-weight: 400;
-  word-wrap: break-word;
-}
-
-.hoy {
-  width: 38.95px;
-  height: 26.46px;
-  left: 0px;
-  top: -4.41px;
-  position: absolute;
-}
 
 .solicitarunirse_span {
   color: white;
@@ -84,103 +19,8 @@
   flex-direction: column;
 }
 
-.mara_span {
-  color: black;
-  font-size: 14.70px;
-  font-family: Poppins;
-  font-weight: 400;
-  word-wrap: break-word;
-}
 
-.mara {
-  width: 92.61px;
-  height: 22.05px;
-  left: 77.91px;
-  top: 129.36px;
-  position: absolute;
-}
 
-.avangamoseste1234upcmonterrico_span_01 {
-  color: black;
-  font-size: 17.64px;
-  font-family: Poppins;
-  font-weight: 500;
-  word-wrap: break-word;
-}
-
-.avangamoseste1234upcmonterrico_span_02 {
-  color: black;
-  font-size: 17.64px;
-  font-family: Poppins;
-  font-weight: 400;
-  word-wrap: break-word;
-}
-
-.avangamoseste1234upcmonterrico_span_03 {
-  color: black;
-  font-size: 17.64px;
-  font-family: Poppins;
-  font-weight: 500;
-  word-wrap: break-word;
-}
-
-.av-angamos-este-1234-upc-monterrico {
-  width: 497.60px;
-  height: 22.05px;
-  left: 23.52px;
-  top: 47.04px;
-  position: absolute;
-}
-
-.horadesalida0550_span {
-  color: black;
-  font-size: 17.64px;
-  font-family: Poppins;
-  font-weight: 400;
-  word-wrap: break-word;
-}
-
-.hora-de-salida-0550 {
-  width: 497.60px;
-  height: 22.05px;
-  left: 23.52px;
-  top: 80.12px;
-  position: absolute;
-}
-
-.capacidad2personas_span {
-  color: black;
-  font-size: 14.70px;
-  font-family: Poppins;
-  font-weight: 400;
-  word-wrap: break-word;
-}
-
-.capacidad-2-personas {
-  width: 213.88px;
-  height: 22.05px;
-  left: 413.80px;
-  top: 129.36px;
-  position: absolute;
-}
-
-.ellipse-129 {
-  width: 41.16px;
-  height: 41.16px;
-  left: 23.52px;
-  top: 119.80px;
-  position: absolute;
-  background: #D9D9D9;
-  border-radius: 9999px;
-}
-
-.image-36 {
-  width: 117.75px;
-  height: 58.68px;
-  left: -34.48px;
-  top: 121.05px;
-  position: absolute;
-}
 
 .s1200_span {
   color: black;
@@ -198,15 +38,7 @@
   position: absolute;
 }
 
-.rectangle-187_01 {
-  width: 796.74px;
-  height: 144.79px;
-  left: -5.15px;
-  top: 30.13px;
-  position: absolute;
-  background: #F3F3F3;
-  border-radius: 29.40px;
-}
+
 
 .star_05 {
   width: 19.50px;
@@ -256,13 +88,6 @@
   word-wrap: break-word;
 }
 
-.hoy_01 {
-  width: 38.95px;
-  height: 26.46px;
-  left: 0px;
-  top: -4.41px;
-  position: absolute;
-}
 
 .solicitarunirse_01_span {
   color: white;
@@ -291,88 +116,104 @@
   font-weight: 400;
   word-wrap: break-word;
 }
+.rectangle1 {
+  width: 796.74px;
+  height: 144.79px;
+  left: 0px;
+  top: 35px;
+  position: relative;
+  background: #F3F3F3;
+  border-radius: 29.40px;
+}
 
-.mara_01 {
+.hoy_01 {
+  width: 38.95px;
+  height: 26.46px;
+  left: 0px;
+  top: -140px;
+  position: relative;
+
+}
+
+.conductor-text1 {
   width: 92.61px;
   height: 22.05px;
-  left: 77.91px;
-  top: 129.36px;
-  position: absolute;
+  left: 70px;
+  top: -70px;
+  position: relative;
 }
-
-.avangamoseste2310upcmonterrico_span_01 {
+.destino-text-1 {
   color: black;
   font-size: 17.64px;
   font-family: Poppins;
   font-weight: 500;
   word-wrap: break-word;
+  
 }
 
-.avangamoseste2310upcmonterrico_span_02 {
-  color: black;
-  font-size: 17.64px;
-  font-family: Poppins;
-  font-weight: 400;
-  word-wrap: break-word;
-}
-
-.avangamoseste2310upcmonterrico_span_03 {
-  color: black;
-  font-size: 17.64px;
-  font-family: Poppins;
-  font-weight: 500;
-  word-wrap: break-word;
-}
-
-.av-angamos-este-2310-upc-monterrico {
+.origen-text-1 {
   width: 497.60px;
   height: 22.05px;
-  left: 23.52px;
-  top: 47.04px;
-  position: absolute;
+  left: 20px;
+  top: -180px;
+  position: relative;
 }
-
-.horadesalida0550_01_span {
-  color: black;
-  font-size: 17.64px;
-  font-family: Poppins;
-  font-weight: 400;
-  word-wrap: break-word;
-}
-
-.hora-de-salida-0550_01 {
+.hora-salida1 {
   width: 497.60px;
   height: 22.05px;
-  left: 23.52px;
-  top: 80.11px;
-  position: absolute;
+  left: 20px;
+  top: -170px;
+  position: relative;
 }
 
-.capacidad2personas_01_span {
-  color: black;
-  font-size: 14.70px;
-  font-family: Poppins;
-  font-weight: 400;
-  word-wrap: break-word;
-}
-
-.capacidad-2-personas_01 {
+.capacidad-text1 {
   width: 213.88px;
   height: 22.05px;
-  left: 413.80px;
-  top: 129.36px;
-  position: absolute;
+  left: 400px;
+  top: -140px;
+  position: relative;
 }
 
-.ellipse-129_01 {
-  width: 41.16px;
-  height: 41.16px;
-  left: 23.52px;
-  top: 119.80px;
-  position: absolute;
-  background: #D9D9D9;
-  border-radius: 9999px;
+.btn_solicitar {
+  width: 171.99px;
+  height: 36.75px;
+  left: 600px;
+  top: -50px;
+  position: relative;
+
 }
+
+
+.precio-text-1 {
+  width: 123.48px;
+  height: 33.08px;
+  font-size: 26.46px;
+  left: 645px;
+  top: -240px;
+  position: relative;
+}
+
+.ruta-list-box{
+  width: 830px;
+  height: 800px;
+  left: 550px;
+  top: 170px;
+  display: flex;
+  flex-wrap: wrap; 
+  gap: 20px;
+  position: absolute;
+  overflow-y: scroll
+}
+
+.ruta-box1 {
+  margin: auto;
+  margin-bottom: -140px;
+  padding-bottom: -100px;
+  overflow: hidden;
+}
+
+
+
 
 .image-36_01 {
   width: 117.75px;
@@ -382,87 +223,6 @@
   position: absolute;
 }
 
-.s1200_01_span {
-  color: black;
-  font-size: 26.46px;
-  font-family: Poppins;
-  font-weight: 600;
-  word-wrap: break-word;
-}
-
-.s-1200_01 {
-  width: 123.48px;
-  height: 33.08px;
-  left: 648.27px;
-  top: 41.89px;
-  position: absolute;
-}
-
-.rectangle-187_02 {
-  width: 796.74px;
-  height: 144.79px;
-  left: -5.15px;
-  top: 30.13px;
-  position: absolute;
-  background: #F3F3F3;
-  border-radius: 29.40px;
-}
-
-.star_10 {
-  width: 19.50px;
-  height: 30.69px;
-  left: 232.53px;
-  top: 124.95px;
-  position: absolute;
-}
-
-.star_11 {
-  width: 19.50px;
-  height: 30.69px;
-  left: 254.85px;
-  top: 124.95px;
-  position: absolute;
-}
-
-.star_12 {
-  width: 19.50px;
-  height: 30.69px;
-  left: 277.17px;
-  top: 124.95px;
-  position: absolute;
-}
-
-.star_13 {
-  width: 19.50px;
-  height: 30.69px;
-  left: 299.49px;
-  top: 124.95px;
-  position: absolute;
-}
-
-.star_14 {
-  width: 19.50px;
-  height: 30.69px;
-  left: 210.21px;
-  top: 124.95px;
-  position: absolute;
-}
-
-.hoy_02_span {
-  color: black;
-  font-size: 17.64px;
-  font-family: Poppins;
-  font-weight: 400;
-  word-wrap: break-word;
-}
-
-.hoy_02 {
-  width: 38.95px;
-  height: 26.46px;
-  left: 0px;
-  top: -4.41px;
-  position: absolute;
-}
 
 .solicitarunirse_02_span {
   color: white;
@@ -500,190 +260,6 @@
   position: absolute;
 }
 
-.juanvzquez_span {
-  color: black;
-  font-size: 14.70px;
-  font-family: Poppins;
-  font-weight: 400;
-  word-wrap: break-word;
-}
-
-.juan-vzquez {
-  width: 105.84px;
-  height: 22.05px;
-  left: 77.91px;
-  top: 129.36px;
-  position: absolute;
-}
-
-.avangamoseste2102upcmonterrico_span_01 {
-  color: black;
-  font-size: 17.64px;
-  font-family: Poppins;
-  font-weight: 500;
-  word-wrap: break-word;
-}
-
-.avangamoseste2102upcmonterrico_span_02 {
-  color: black;
-  font-size: 17.64px;
-  font-family: Poppins;
-  font-weight: 400;
-  word-wrap: break-word;
-}
-
-.avangamoseste2102upcmonterrico_span_03 {
-  color: black;
-  font-size: 17.64px;
-  font-family: Poppins;
-  font-weight: 500;
-  word-wrap: break-word;
-}
-
-.av-angamos-este-2102-upc-monterrico {
-  width: 497.60px;
-  height: 22.05px;
-  left: 23.52px;
-  top: 47.04px;
-  position: absolute;
-}
-
-.horadesalida0530_span {
-  color: black;
-  font-size: 17.64px;
-  font-family: Poppins;
-  font-weight: 400;
-  word-wrap: break-word;
-}
-
-.hora-de-salida-0530 {
-  width: 497.60px;
-  height: 22.05px;
-  left: 23.52px;
-  top: 80.12px;
-  position: absolute;
-}
-
-.capacidad4personas_span {
-  color: black;
-  font-size: 14.70px;
-  font-family: Poppins;
-  font-weight: 400;
-  word-wrap: break-word;
-}
-
-.capacidad-4-personas {
-  width: 213.88px;
-  height: 22.05px;
-  left: 413.80px;
-  top: 129.36px;
-  position: absolute;
-}
-
-.ellipse-129_02 {
-  width: 41.16px;
-  height: 41.16px;
-  left: 23.52px;
-  top: 119.80px;
-  position: absolute;
-  background: #D9D9D9;
-  border-radius: 9999px;
-}
-
-.image-38 {
-  width: 109.51px;
-  height: 72.76px;
-  left: -22.79px;
-  top: 117.60px;
-  position: absolute;
-}
-
-.rectangle-187_03 {
-  width: 796.74px;
-  height: 144.79px;
-  left: -5.15px;
-  top: 30.13px;
-  position: absolute;
-  background: #F3F3F3;
-  border-radius: 29.40px;
-}
-
-.star_15 {
-  width: 19.50px;
-  height: 30.69px;
-  left: 172.26px;
-  top: 124.95px;
-  position: absolute;
-}
-
-.star_16 {
-  width: 19.50px;
-  height: 30.69px;
-  left: 194.58px;
-  top: 124.95px;
-  position: absolute;
-}
-
-.star_17 {
-  width: 19.50px;
-  height: 30.69px;
-  left: 216.90px;
-  top: 124.95px;
-  position: absolute;
-}
-
-.star_18 {
-  width: 19.50px;
-  height: 30.69px;
-  left: 239.22px;
-  top: 124.95px;
-  position: absolute;
-}
-
-.star_19 {
-  width: 19.50px;
-  height: 30.69px;
-  left: 149.94px;
-  top: 124.95px;
-  position: absolute;
-}
-
-.hoy_03_span {
-  color: black;
-  font-size: 17.64px;
-  font-family: Poppins;
-  font-weight: 400;
-  word-wrap: break-word;
-}
-
-.hoy_03 {
-  width: 38.95px;
-  height: 26.46px;
-  left: 0px;
-  top: -4.41px;
-  position: absolute;
-}
-
-.solicitarunirse_03_span {
-  color: white;
-  font-size: 16.17px;
-  font-family: Poppins;
-  font-weight: 500;
-  letter-spacing: 0.32px;
-  word-wrap: break-word;
-}
-
-.solicitar-unirse_03 {
-  width: 124.95px;
-  height: 24.99px;
-  left: 23.52px;
-  top: 5.88px;
-  position: absolute;
-  justify-content: center;
-  display: flex;
-  flex-direction: column;
-}
-
 .s1400_span {
   color: black;
   font-size: 26.46px;
@@ -716,87 +292,8 @@
   position: absolute;
 }
 
-.avangamoseste604upcmonterrico_span_01 {
-  color: black;
-  font-size: 17.64px;
-  font-family: Poppins;
-  font-weight: 500;
-  word-wrap: break-word;
-}
 
-.avangamoseste604upcmonterrico_span_02 {
-  color: black;
-  font-size: 17.64px;
-  font-family: Poppins;
-  font-weight: 400;
-  word-wrap: break-word;
-}
 
-.avangamoseste604upcmonterrico_span_03 {
-  color: black;
-  font-size: 17.64px;
-  font-family: Poppins;
-  font-weight: 500;
-  word-wrap: break-word;
-}
-
-.av-angamos-este-604-upc-monterrico {
-  width: 497.60px;
-  height: 22.05px;
-  left: 23.52px;
-  top: 47.04px;
-  position: absolute;
-}
-
-.horadesalida0550_02_span {
-  color: black;
-  font-size: 17.64px;
-  font-family: Poppins;
-  font-weight: 400;
-  word-wrap: break-word;
-}
-
-.hora-de-salida-0550_02 {
-  width: 497.60px;
-  height: 22.05px;
-  left: 23.52px;
-  top: 80.12px;
-  position: absolute;
-}
-
-.capacidad4personas_01_span {
-  color: black;
-  font-size: 14.70px;
-  font-family: Poppins;
-  font-weight: 400;
-  word-wrap: break-word;
-}
-
-.capacidad-4-personas_01 {
-  width: 213.88px;
-  height: 22.05px;
-  left: 413.80px;
-  top: 129.36px;
-  position: absolute;
-}
-
-.ellipse-129_03 {
-  width: 41.16px;
-  height: 41.16px;
-  left: 23.52px;
-  top: 119.80px;
-  position: absolute;
-  background: #D9D9D9;
-  border-radius: 9999px;
-}
-
-.image-37 {
-  width: 108.78px;
-  height: 163.17px;
-  left: -5.15px;
-  top: 119.80px;
-  position: absolute;
-}
 
 .frame-427318923 {
   width: 73.50px;
@@ -1202,17 +699,7 @@
   border-radius: 26.46px;
 }
 
-.btn_trabaja_01 {
-  width: 171.99px;
-  height: 36.75px;
-  left: 599.76px;
-  top: 122.01px;
-  position: absolute;
-  background: #880D1E;
-  box-shadow: 0px 2.93999981880188px 2.93999981880188px rgba(0, 0, 0, 0.25);
-  overflow: hidden;
-  border-radius: 26.46px;
-}
+
 
 .btn_trabaja_02 {
   width: 171.99px;
@@ -1271,15 +758,6 @@
   overflow: hidden;
 }
 
-.frame-427318926 {
-  width: 797.47px;
-  height: 182.28px;
-  left: 550.52px;
-  top: 778.37px;
-  position: absolute;
-  overflow: hidden;
-}
-
 .frame-427318924 {
   width: 797.47px;
   height: 182.28px;
@@ -1322,4 +800,42 @@
   position: relative;
   background: white;
   overflow: hidden;
+}
+
+.filtro-text-destino{
+  padding: 2vh;
+  text-align: left;
+  margin-top: 0.5vh;
+  color: gray;
+  border-radius: 2vh;
+  width: 35vh;
+  height: 4vh;
+}
+
+.filtro-text-origen{
+  padding: 2vh;
+  text-align: left;
+  margin-top: 0.5vh;
+  color: gray;
+  border-radius: 2vh;
+  width: 35vh;
+  height: 4vh;
+}
+
+.solicitarunirse_01{
+
+  padding-top: 0.5vh;
+  width: 171.99px;
+  height: 36.75px;
+  color: white;
+  background-color:#880D1E;
+
+
+  box-shadow: 0px 2.93999981880188px 2.93999981880188px rgba(0, 0, 0, 0.25);
+  overflow: hidden;
+  border-radius: 26.46px;
+}
+
+.solicitarunirse_01:hover{
+  background-color:#620713;
 }
