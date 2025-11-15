@@ -247,8 +247,8 @@
 .ruta-list-box{
   width: 830px;
   height: 800px;
-  left: 550px;
-  top: 170px;
+  left: 240px;
+  top: 270px;
 
   flex-wrap: wrap; 
 
@@ -354,6 +354,14 @@
   position: absolute;
 }
 
+
+.title-sol{
+  font-size:x-large;
+  font-weight:600;
+  left:224.17px;
+  top:100px;
+  position: relative;
+}
 .inicio_span {
   color: #2635D6;
   font-size: 17.64px;
@@ -367,7 +375,7 @@
   width: 48.51px;
   height: 26.46px;
   left: 224.17px;
-  top: 113.19px;
+  top: 140px;
   position: absolute;
 }
 
@@ -383,7 +391,7 @@
   width: 8.82px;
   height: 26.46px;
   left: 282.24px;
-  top: 113.19px;
+  top: 140px;
   position: absolute;
 }
 
@@ -399,7 +407,7 @@
   width: 214.62px;
   height: 26.46px;
   left: 302.82px;
-  top: 113.19px;
+  top: 140px;
   position: absolute;
 }
 

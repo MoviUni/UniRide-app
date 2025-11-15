@@ -12,7 +12,7 @@ import { RouterModule } from '@angular/router';
   imports: [CommonModule, RouterModule],
   template: `
   <div class="frame-427318940">
-
+  <p class ="title-sol"> Solicitudes realizadas </p>
   <div class="mi_cuenta_contenido" >
     <div class="ruta-list-box">
     @if (loading()) {
@@ -48,7 +48,8 @@ import { RouterModule } from '@angular/router';
     <div class="frame-427318923"></div>
     <div class="inicio"><a routerLink='rutas' class="inicio_span">Inicio</a></div>
     <div class="text-"><span class="fspan">></span></div>
-    <div class="bsqueda-de-rutas"><span class="bsquedaderutas_span"> Búsqueda de rutas</span></div>
+    <div class="bsqueda-de-rutas"><span class="bsquedaderutas_span"> Mis solicitudes</span></div>
+    
 
   </div>
   
