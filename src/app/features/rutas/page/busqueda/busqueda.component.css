@@ -126,6 +126,56 @@
   border-radius: 29.40px;
 }
 
+.rectangle-form {
+  width:  280vh;
+  height: 150vh;
+  position:absolute;
+  background-color: rgba(100, 100, 100, 0.5);
+
+  z-index: 10;
+}
+
+.form-content {
+  top: 45vh;
+  left: 60vh;
+  width:  90vh;
+  height: 60vh;
+  align-content: center;
+
+  text-align: center;
+  position:absolute;
+  background-color:white;
+  border-radius: 2vh;
+  z-index: 10;
+}
+
+.big-text-form{
+  font-size:xx-large;
+
+}
+.small-text-form{
+  font-size:larger;
+}
+
+.sol-button-form{
+  width: 200px;
+  height: 60px;
+  border-radius: 2vh;
+  background-color:#880D1E;
+  color: white;
+}
+.sol-button-form:hover{
+  cursor: pointer;
+  background-color:#620713;
+
+}
+
+.cerrar-text-form{
+  color: #2635D6;
+  font-size: medium;
+  cursor: pointer;
+}
+
 .hoy_01 {
   width: 200px;
   height: 26.46px;
@@ -590,6 +640,18 @@
 
 }
 
+.fecha1{
+  padding: 100px;
+}
+
+.fecha2{
+  padding: 100px;
+}
+
+.fecha3{
+  padding: 100px;
+}
+
 .filters-form{
   left: 20px;
   top: 66.27px;
@@ -612,6 +674,7 @@
 
 .solicitarunirse_01:hover{
   background-color:#620713;
+  cursor: pointer;
 }
 
 .filters-form{

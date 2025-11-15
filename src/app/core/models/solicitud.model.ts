@@ -9,8 +9,8 @@ export interface SolicitudViajeRequest{
     estadoSolicitud: EstadoSolicitud,
     fecha:string,
     hora:string,
-    rutaId:number,
     pasajeroId:number,
+    rutaId:number,
     updatedAt:string
 }
 

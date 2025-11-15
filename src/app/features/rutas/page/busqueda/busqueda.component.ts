@@ -1,10 +1,12 @@
-import { Component, ElementRef, inject, OnInit, signal, ViewChild } from '@angular/core';
+import { Component, ElementRef, Inject, inject, OnInit, signal, ViewChild } from '@angular/core';
 import { FormBuilder, FormsModule, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
-import { NgModule } from '@angular/core';
-import { CommonModule } from '@angular/common';
+import { LOCALE_ID } from '@angular/core';
+import { CommonModule, formatDate } from '@angular/common';
 import { RutaService } from '../../../../core/services/ruta.service';
 import { RutaResponse } from '@core/models/ruta.model';
 import { ConductorService } from '@core/services/conductor.service';
+import { SolicitudService } from '@core/services/solicitud.service';
+import { EstadoSolicitud, SolicitudViajeRequest, SolicitudViajeResponse } from '@core/models/solicitud.model';
 
 
 
@@ -13,7 +15,31 @@ import { ConductorService } from '@core/services/conductor.service';
   standalone: true,
   imports: [CommonModule, ReactiveFormsModule],
   template: `
+  <div *ngIf="showSolicitudForm" class="solicitud-exitosa">
+    <div class="rectangle-form"></div>
+    <div class="form-content">
+      <p class="big-text-form"> !La solicitud ha sido enviada con éxito!</p>
+      <br>
+      <p class="small-text-form"> Revisa los detalles de tus viajes</p>
+      <br>
+      <input class = "sol-button-form" type="button" value="Ver mis solicitudes">
+      <br>
+
+      <button type="button" class = "cerrar-text-form" (click)="closeForm()">Continuar viendo las rutas</button>
+    </div>
+  </div>
+
+  <div *ngIf="showErrorForm" class="solicitud-error">
+    <div class="rectangle-form"></div>
+    <div class="form-content">
+      <p class="big-text-form"> Ha ocurrido un error al enviar la solictud.</p>
+      <br>
+      <button type="button" class = "cerrar-text-form" (click)="closeErrorForm()">Continuar viendo las rutas</button>
+    </div>
+  </div>
+
   <div class="frame-427318940">
+
   <div class="mi_cuenta_contenido" >
     <div class="ruta-list-box">
     @if (loading()) {
@@ -26,7 +52,8 @@ import { ConductorService } from '@core/services/conductor.service';
 
           <div class="hoy_01"><span class="hoy_01_span">{{'Empieza en '+ diferenciaFechas(tx.fechaSalida) + ' días'}} </span></div>
           <div class="btn_solicitar">
-            <input type="button" class="solicitarunirse_01" value="Solicitar Unirse">
+
+            <button type="button" class="solicitarunirse_01" (click)="sendForm(tx)">Solicitar Unirse</button>
 
           </div>
           <div class="conductor-text1"><span>{{getNombreConductorById(tx.idConductor)}}</span></div>
@@ -82,6 +109,43 @@ import { ConductorService } from '@core/services/conductor.service';
         > 
       </div>
       <br>
+      <div class="form-group">
+        <label for="fecha">Fecha</label><br>
+        <div>
+          <label>
+            <input type="radio" 
+            id="fecha1" 
+            name="fecha" 
+            value="Hoy"
+            formControlName = "fecha">
+            Hoy
+          </label>
+        </div>
+        <div>
+          <label>
+            <input type="radio" 
+            id="fecha2" 
+            name="fecha"
+            value="Mañana"
+            formControlName = "fecha" 
+             >
+             Mañana
+          </label>
+        </div>
+        <div>
+         <label>
+            <input type="radio" 
+            id="fecha3"
+            name="fecha" 
+            value="En 1 semana"
+            formControlName = "fecha"checked>
+            En 1 semana
+          </label>
+        </div>
+      </div>
+   
+      <br>
+
       <button type="button" class="btn" (click)="applyFilters()">Filtrar</button>
 
     </form>
@@ -96,7 +160,11 @@ export class BusquedaRutasComponent implements OnInit{
 
   private rutaService = inject(RutaService);
   private conductorService = inject(ConductorService);
+  private solicitudService = inject(SolicitudService);
   private fb = inject(FormBuilder);
+
+  showSolicitudForm = false;
+  showErrorForm = false;
 
   allRutas = signal<RutaResponse[]>([]);
   rutas = signal<RutaResponse[]>([]);
@@ -104,7 +172,10 @@ export class BusquedaRutasComponent implements OnInit{
 
   filterForm: FormGroup = this.fb.group({
     origen: [''],
-    destino: ['']
+    destino: [''],
+    dia:[''],
+    fecha:[''],
+    
   });
   
 
@@ -183,6 +254,7 @@ export class BusquedaRutasComponent implements OnInit{
   applyFilters() {
     const origen = this.filterForm.value.origen;
     const destino = this.filterForm.value.destino;
+    const fecha = this.filterForm.value.fecha;
 
     if (!origen && !destino) {
       this.rutas.set(this.allRutas());
@@ -203,6 +275,18 @@ export class BusquedaRutasComponent implements OnInit{
         return txDestino == destino;
       }
       return true;
+    }).filter(tx=>{
+      const txFecha = this.diferenciaFechas(tx.fechaSalida);
+      if(fecha == 'Hoy'){
+        return txFecha <= 1;
+      }
+      if(fecha == 'Mañana'){
+        return txFecha == 2;
+      }
+      if(fecha == 'En 1 semana'){
+        return txFecha > 4;
+      }
+      return true;
     });
 
     this.rutas.set(filtered);
@@ -211,6 +295,62 @@ export class BusquedaRutasComponent implements OnInit{
 
   reloadPage(){
     window.location.reload();
+  }
+
+  closeForm(){
+    this.showSolicitudForm = false;
+  }
+  closeErrorForm(){
+    this.showErrorForm = false;
+  }
+
+  openForm(){
+    this.showSolicitudForm = true;
+  }
+
+  openErrorForm(){
+    this.showErrorForm = true;
+    
+  }
+
+  sendForm(dt:RutaResponse){
+
+    this.registerForm(dt)
+  }
+
+  constructor(@Inject(LOCALE_ID) private locale: string) {}
+
+  registerForm(dt:RutaResponse){
+    const currentDate = formatDate(new Date(), 'yyyy-MM-dd', this.locale);
+    const currentTime= new Date().toLocaleTimeString();
+
+    const solicitudReq: SolicitudViajeRequest = {
+      estadoSolicitud: EstadoSolicitud.PENDIENTE,
+      fecha: currentDate,
+      hora: currentTime,
+      pasajeroId: 2,
+      rutaId: dt.idRuta,
+      updatedAt: currentDate
+    };
+
+     this.solicitudService.create(solicitudReq).subscribe({
+        complete: () =>{
+          this.openForm();
+          console.error('Exito creando solicitud');
+        },
+        next: () => {
+          
+          
+        },
+        error: (error) => {
+          this.openErrorForm();
+          console.error('Error creando solicitud de viaje:');
+          this.errorMessage.set('Ha ocurrido un error solicitando unirse a este viaje.');
+        }
+      }); 
+
+
+    
   }
 
 }
