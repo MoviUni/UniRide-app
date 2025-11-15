@@ -21,6 +21,6 @@ export const routes: Routes = [
     },
     {
         path: '**', 
-        redirectTo: '/  ' //aquí muestra la ruta por defecto
+        redirectTo: '/home/landing' //aquí muestra la ruta por defecto
     }
 ];
