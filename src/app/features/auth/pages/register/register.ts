@@ -12,7 +12,7 @@ export class Register {
 
   private router = inject(Router); // ← inyección en standalone
 
-  select(rol: 'passenger' | 'conductor') {
+  select(rol: 'passenger' | 'driver') {
     console.log('Rol seleccionado:', rol);
 
     // Redirige según el rol seleccionado

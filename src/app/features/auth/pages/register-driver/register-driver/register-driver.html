@@ -1,0 +1,59 @@
+<div class="register-container">
+  <div class="card">
+
+    <!-- Logo -->
+    <div class="logo">
+      <img src="assets/logo.png" alt="Logo">
+      <h1>UniRide</h1>
+    </div>
+
+    <!-- Steps -->
+    <div class="steps">
+
+      <!-- Paso 1: Datos -->
+      <div class="step">
+        <div class="circle active"></div>
+        <span class="label">Datos</span>
+      </div>
+
+      <div class="line"></div>
+
+      <!-- Paso 2: Vehículo -->
+      <div class="step">
+        <div class="circle"></div>
+        <span class="label">Vehículo</span>
+      </div>
+
+      <div class="line"></div>
+
+      <!-- Paso 3: Cuenta -->
+      <div class="step">
+        <div class="circle"></div>
+        <span class="label">Cuenta</span>
+      </div>
+
+    </div>
+
+    <h2>Registro de Conductor</h2>
+
+    <form>
+      <label>Nombres</label>
+      <input type="text" placeholder="Empty label" />
+
+      <label>Apellidos</label>
+      <input type="text" placeholder="Empty label" />
+
+      <label>Teléfono</label>
+      <input type="text" placeholder="Empty label" />
+
+      <label>DNI</label>
+      <input type="text" placeholder="Empty label" />
+
+      <button type="button" (click)="goToNext()">Continuar</button>
+    </form>
+
+    <hr/>
+
+    <p>¿Ya tienes una cuenta? <a routerLink="/auth/login">Accede a tu cuenta</a></p>
+  </div>
+</div>
