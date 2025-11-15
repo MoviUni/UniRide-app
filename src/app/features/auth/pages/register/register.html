@@ -1,0 +1,34 @@
+<div class="register-container">
+
+  <!-- LOGO + TÍTULO -->
+  <div class="header">
+    <div class="logo">
+      <img src="assets/logo.png" alt="Logo">
+      <h1>UniRide</h1>
+    </div>
+    <h2>Crear cuenta</h2>
+  </div>
+
+  <!-- TARJETAS DE ROL -->
+  <div class="cards" routerLink="/auth/register/pasajero">
+    <!-- PASAJERO -->
+    <div class="card" (click)="select('passenger')">
+      <h3>Pasajero</h3>
+      <p>Solicita y comparte viajes para llegar a tu destino.</p>
+      <img src="assets/pasajero.png" alt="Pasajero" class="role-image">
+    </div>
+
+    <!-- CONDUCTOR -->
+    <div class="card" (click)="select('conductor')">
+      <h3>Conductor</h3>
+      <p>Conduce por la ciudad transportando a otros estudiantes.</p>
+      <img src="assets/conductor.png" alt="Conductor" class="role-image">
+    </div>
+  </div>
+
+  <!-- FOOTER CON ENLACES -->
+  <hr>
+  <p class="footer-text">¿Ya tienes una cuenta?</p>
+  <a class="link" routerLink="/auth/login">Accede a tu cuenta</a>
+
+</div>

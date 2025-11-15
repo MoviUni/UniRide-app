@@ -1,0 +1,99 @@
+/* Fondo rosado suave */
+.register-container {
+  background-color: #f6dcd3;
+  min-height: 100vh;
+  padding: 40px;
+  text-align: center;
+}
+
+/* Logo */
+.header .logo {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 12px;
+}
+
+.header .logo img {
+  width: 70px;
+}
+
+.header h1 {
+  font-size: 32px;
+  font-weight: bold;
+}
+
+.header h2 {
+  font-size: 26px;
+  margin-top: 10px;
+  margin-bottom: 40px;
+}
+
+/* Tarjetas */
+.cards {
+  display: flex;
+  justify-content: center;
+  gap: 50px;
+  margin-bottom: 50px;
+}
+
+.card {
+  background: white;
+  width: 320px;
+  padding: 30px;
+  border-radius: 25px;
+  box-shadow: 0px 4px 10px rgba(0,0,0,0.15);
+  cursor: pointer;
+  transition: transform 0.15s ease, box-shadow 0.15s ease;
+}
+
+.card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0px 6px 16px rgba(0,0,0,0.2);
+}
+
+.card h3 {
+  font-size: 22px;
+  margin-bottom: 15px;
+}
+
+.card p {
+  font-size: 15px;
+  margin-bottom: 20px;
+}
+
+/* Imagen de las tarjetas */
+.card img {
+  width: 120px;
+  height: auto;
+}
+
+/* Footer */
+hr {
+  width: 50%;
+  margin: 20px auto;
+  border: none;
+  border-top: 1px solid #aaa;
+}
+
+.footer-text {
+  margin-top: 20px;
+  font-size: 15px;
+}
+
+.link {
+  display: block;
+  margin-top: 5px;
+  color: #2c3e94;
+  text-decoration: none;
+  font-weight: 500;
+}
+
+.link:hover {
+  text-decoration: underline;
+}
+
+.role-image {
+  display: block;
+  margin: 0 auto;
+}

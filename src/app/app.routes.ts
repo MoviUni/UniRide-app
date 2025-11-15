@@ -10,11 +10,15 @@ export const routes: Routes = [
                 path:'rutas',
                 loadChildren: () => import('./features/rutas/ruta.routes').then((m) => m.RUTA_ROUTES)
             }
-            
+
         ]
     },
     {
-        path: '**', 
-        redirectTo: '/  ' //aquí muestra la ruta por defecto
+  path: 'auth',
+  loadChildren: () => import('./features/auth/auth.routes').then(m => m.AUTH_ROUTES)
+    },
+    {
+        path: '**',
+        redirectTo: 'auth/login'
     }
 ];
