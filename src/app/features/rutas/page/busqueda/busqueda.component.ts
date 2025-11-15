@@ -2,6 +2,7 @@ import { Component, ElementRef, Inject, inject, OnInit, signal, ViewChild } from
 import { FormBuilder, FormsModule, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { LOCALE_ID } from '@angular/core';
 import { CommonModule, formatDate } from '@angular/common';
+import { RouterModule } from '@angular/router';
 import { RutaService } from '../../../../core/services/ruta.service';
 import { RutaResponse } from '@core/models/ruta.model';
 import { ConductorService } from '@core/services/conductor.service';
@@ -13,7 +14,7 @@ import { EstadoSolicitud, SolicitudViajeRequest, SolicitudViajeResponse } from '
 @Component({
   selector: 'app-busqueda-rutas',
   standalone: true,
-  imports: [CommonModule, ReactiveFormsModule],
+  imports: [CommonModule, ReactiveFormsModule, RouterModule],
   template: `
   <div *ngIf="showSolicitudForm" class="solicitud-exitosa">
     <div class="rectangle-form"></div>
@@ -46,7 +47,7 @@ import { EstadoSolicitud, SolicitudViajeRequest, SolicitudViajeResponse } from '
       <p>Cargando rutas...</p>
     } @else if (rutas()) {
       @for (tx of rutas()!; track $index) {
-      
+
         <div class="ruta-box1">
           <div class="rectangle1"></div>
 
@@ -77,7 +78,7 @@ import { EstadoSolicitud, SolicitudViajeRequest, SolicitudViajeResponse } from '
     </div>
 
     <div class="frame-427318923"></div>
-    <div class="inicio"><span class="inicio_span">Inicio</span></div>
+    <div class="inicio"><a routerLink='rutas' class="inicio_span">Inicio</a></div>
     <div class="text-"><span class="fspan">></span></div>
     <div class="bsqueda-de-rutas"><span class="bsquedaderutas_span"> Búsqueda de rutas</span></div>
 

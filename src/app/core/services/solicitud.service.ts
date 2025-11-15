@@ -34,10 +34,10 @@ export class SolicitudService {
   }
 
 
-  private _estados = signal<SolicitudEstadoResponse[]>([]);
+  private _estados = signal<SolicitudViajeResponse[]>([]);
   estados = this._estados.asReadonly();
-  getEstados(pasajeroId: number): Observable<SolicitudEstadoResponse[]> {
-    return this.http.get<SolicitudEstadoResponse[]>(`${this.apiUrl}/usuario/id?id=${pasajeroId}`).pipe(
+  getByPasajero(pasajeroId: number): Observable<SolicitudViajeResponse[]> {
+    return this.http.get<SolicitudViajeResponse[]>(`${this.apiUrl}/usuario/id?id=${pasajeroId}`, this.getHeaders()).pipe(
       tap(data => this._estados.set(data))
     );
   }

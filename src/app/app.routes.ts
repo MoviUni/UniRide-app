@@ -13,6 +13,10 @@ export const routes: Routes = [
             {
                 path:'login',
                 loadChildren: () => import('./features/auth/auth.routes').then((m) => m.AUTH_ROUTES)
+            },
+            {
+                path:'solicitudes',
+                loadChildren: () => import('./features/solicitudes/solicitud.routes').then((m) => m.SOLICITUD_ROUTES)
             }
             
         ]
