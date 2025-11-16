@@ -1,4 +1,9 @@
 
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;700&display=swap');
+div {
+  font-family: "Poppins", sans-serif;
+}
+
 .solicitarunirse_span {
   color: white;
   font-size: 16.17px;
@@ -187,8 +192,17 @@
 
 }
 
+.image-conductor {
+  width: 30px;
+  height: 29px;
+  left: 25px;
+  top: -195px;
+  position:relative;
+
+}
+
 .conductor-text1 {
-  width: 92.61px;
+  width: 192.61px;
   height: 22.05px;
   left: 70px;
   top: -70px;
@@ -198,7 +212,7 @@
   color: black;
   font-size: 17.64px;
   font-family: Poppins;
-  font-weight: 500;
+
   word-wrap: break-word;
   
 }
@@ -206,6 +220,7 @@
 .origen-text-1 {
   width: 497.60px;
   height: 22.05px;
+  font-weight: 600;
   left: 20px;
   top: -180px;
   position: relative;
@@ -417,7 +432,7 @@
   color: black;
   font-size: 26.46px;
   font-family: Poppins;
-  font-weight: 600;
+  font-weight: 500;
   word-wrap: break-word;
 }
 
@@ -623,7 +638,7 @@
   margin-top: 0.5vh;
   color: gray;
   border-radius: 2vh;
-  width: 35vh;
+  width: 38vh;
   height: 4vh;
   border: 2px solid;
   border-color:#6BC8C9;
@@ -635,7 +650,7 @@
   margin-top: 0.5vh;
   color: gray;
   border-radius: 2vh;
-  width: 35vh;
+  width: 38vh;
   height: 4vh;
   border: 2px solid;
   border-color:#6BC8C9;
@@ -658,6 +673,21 @@
   left: 20px;
   top: 66.27px;
   position: relative;
+}
+
+.btn-clear{
+  top: -563px;
+  left: 40px;
+  padding: 0.5rem 1rem;
+  border-radius: 4px;
+  text-decoration: none;
+  font-weight: 500;
+  border: none;
+  cursor: pointer;
+  position: relative;
+  color:#2635D6;
+
+  margin: 1vh;
 }
 
 .solicitarunirse_01{

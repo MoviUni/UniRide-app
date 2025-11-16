@@ -8,6 +8,7 @@ import { RutaResponse } from '@core/models/ruta.model';
 import { ConductorService } from '@core/services/conductor.service';
 import { SolicitudService } from '@core/services/solicitud.service';
 import { EstadoSolicitud, SolicitudViajeRequest, SolicitudViajeResponse } from '@core/models/solicitud.model';
+import { ConductorResponse } from '@core/models/usuario.model';
 
 
 
@@ -57,18 +58,19 @@ import { EstadoSolicitud, SolicitudViajeRequest, SolicitudViajeResponse } from '
             <button type="button" class="solicitarunirse_01" (click)="sendForm(tx)">Solicitar Unirse</button>
 
           </div>
-          <div class="conductor-text1"><span>{{getNombreConductorById(tx.idConductor)}}</span></div>
-
+          <div class="conductor-text1"><span>{{conductores()[$index].nombre + ' ' + conductores()[$index].apellido}}</span></div>
+          
           <div class="origen-text-1">
-            <span>{{tx.origen}}</span>
-            <span> → </span>
-            <span >{{tx.destino}}</span>
+          <span>{{tx.origen}}</span>
+          <span> → </span>
+          <span >{{tx.destino}}</span>
           </div>
           
           <div class="hora-salida1"><span>{{'Hora de salida: ' + tx.horaSalida}} </span></div>
           <div class="capacidad-text1"><span>{{'Capacidad: '+ tx.asientosDisponibles +' personas'}}</span></div>
           <div class="precio-text-1"><span>{{ 's/.' +tx.tarifa}}</span></div>
-
+          
+          <img class="image-conductor" src="assets/ConductorLogo.png" />
 
         </div>
         
@@ -110,6 +112,8 @@ import { EstadoSolicitud, SolicitudViajeRequest, SolicitudViajeResponse } from '
         > 
       </div>
       <br>
+
+
       <div class="form-group">
         <label for="fecha">Fecha</label><br>
         <div>
@@ -144,10 +148,86 @@ import { EstadoSolicitud, SolicitudViajeRequest, SolicitudViajeResponse } from '
           </label>
         </div>
       </div>
-   
       <br>
-
+      
+      <div class="form-group">
+        <label for="hora">Hora</label><br>
+        <div>
+          <label>
+            <input type="radio" 
+            id="hora0" 
+            name="hora"
+            value="Cualquier"
+            formControlName = "hora" 
+             >
+             Cualquiera
+          </label>
+        </div>
+        <div>
+          <label>
+            <input type="radio" 
+            id="hora1" 
+            name="hora"
+            value="06:00 - 09:00"
+            formControlName = "hora" 
+             >
+             06:00 - 09:00
+          </label>
+        </div>
+        <div>
+         <label>
+            <input type="radio" 
+            id="hora2"
+            name="hora" 
+            value="09:00 - 12:00"
+            formControlName = "hora"checked>
+            09:00 - 12:00
+          </label>
+        </div>
+        <div>
+         <label>
+            <input type="radio" 
+            id="hora3"
+            name="hora" 
+            value="12:00 - 15:00"
+            formControlName = "hora"checked>
+            12:00 - 15:00
+          </label>
+        </div>
+        <div>
+         <label>
+            <input type="radio" 
+            id="hora4"
+            name="hora" 
+            value="15:00 - 18:00"
+            formControlName = "hora"checked>
+            15:00 - 18:00
+          </label>
+        </div>
+        <div>
+         <label>
+            <input type="radio" 
+            id="hora5"
+            name="hora" 
+            value="18:00 - 21:00"
+            formControlName = "hora"checked>
+            18:00 - 21:00
+          </label>
+        </div>
+        <div>
+         <label>
+            <input type="radio" 
+            id="hora6"
+            name="hora" 
+            value="21:00<"
+            formControlName = "hora"checked>
+            21:00<
+          </label>
+        </div>
+      </div>
+      <br>
       <button type="button" class="btn" (click)="applyFilters()">Filtrar</button>
+      <button type="button" class="btn-clear" (click)="clearFilters()">Quitar filtros</button>
 
     </form>
   </div>
@@ -169,13 +249,15 @@ export class BusquedaRutasComponent implements OnInit{
 
   allRutas = signal<RutaResponse[]>([]);
   rutas = signal<RutaResponse[]>([]);
+  conductores = signal<ConductorResponse[]>([]);
   loading = signal(true);
 
   filterForm: FormGroup = this.fb.group({
     origen: [''],
     destino: [''],
-    dia:[''],
+    hora:[''],
     fecha:[''],
+    
     
   });
   
@@ -204,6 +286,7 @@ export class BusquedaRutasComponent implements OnInit{
         this.loading.set(false);
         this.rutas.set(rutas);
         this.allRutas.set(rutas);
+        this.getDatosConductores(this.rutas());
         
       },
       error: (error) => {
@@ -238,29 +321,32 @@ export class BusquedaRutasComponent implements OnInit{
     return Math.ceil(diffInMs / (1000 * 60 * 60 * 24));
   }
 
-  getNombreConductorById(id:number){
-    this.conductorService.getById(id).subscribe({
-      next: (conductor) => {
-        
-        
-      },
-      error: (error) => {
-        console.error('Error buscando conductor por ID:', error);
-        // Mostrar mensaje informativo en lugar de error
-        this.errorMessage.set('No existen con este ID');
-      }
-    });
+  getDatosConductores(rutas:RutaResponse[]){
+      for (let i = 0; i < rutas.length; i++) {
+        this.conductorService.getById(rutas[i].idConductor).subscribe({
+        next: (conductor) => {
+          this.conductores.update((currentArray) => [...currentArray, conductor]);
+          
+        },
+        error: (error) => {
+          console.error('Error buscando conductor por ID:', error);
+          // Mostrar mensaje informativo en lugar de error
+          this.errorMessage.set('No existen con este ID');
+        }
+      });
+    }
+  }
+
+  clearFilters(){
+    this.rutas.set(this.allRutas());
   }
 
   applyFilters() {
     const origen = this.filterForm.value.origen;
     const destino = this.filterForm.value.destino;
     const fecha = this.filterForm.value.fecha;
+    const hora = this.filterForm.value.hora;
 
-    if (!origen && !destino) {
-      this.rutas.set(this.allRutas());
-      return;
-    }
 
     const filtered = this.allRutas().filter(tx => {
       const txOrigen = tx.origen;
@@ -270,6 +356,7 @@ export class BusquedaRutasComponent implements OnInit{
         return txOrigen == origen && txDestino == destino;
       }
       if (origen) {
+
         return txOrigen == origen;
       }
       if (destino) {
@@ -278,15 +365,49 @@ export class BusquedaRutasComponent implements OnInit{
       return true;
     }).filter(tx=>{
       const txFecha = this.diferenciaFechas(tx.fechaSalida);
-      if(fecha == 'Hoy'){
+      if(fecha === 'Hoy'){
         return txFecha <= 1;
       }
-      if(fecha == 'Mañana'){
+      if(fecha === 'Mañana'){
         return txFecha == 2;
       }
-      if(fecha == 'En 1 semana'){
+      if(fecha === 'En 1 semana'){
         return txFecha > 4;
       }
+      return true;
+    }).filter(tx=>{
+
+      if(hora === "Cualquier"){
+        
+        return true;
+      }
+      const txHora = new Date(tx.fechaSalida +"T"+tx.horaSalida);
+      const txIn = new Date(tx.fechaSalida +"T00:00:00");
+
+      const hourMs = txHora.getTime() - txIn.getTime();
+      const hour = hourMs / (1000 * 60 * 60)
+      
+
+      if(hora === "06:00 - 09:00"){
+        
+        return hour >= 6 && hour < 9;
+      }
+      if(hora === "09:00 - 12:00"){
+        return hour >= 9 && hour < 12;
+      }
+      if(hora === "12:00 - 15:00"){
+        return hour >= 12 && hour < 15;
+      }
+      if(hora === "15:00 - 18:00"){
+        return hour >= 15 && hour < 18;
+      }
+      if(hora === "18:00 - 21:00"){
+        return hour >= 18 && hour < 21;
+      }
+      if(hora === "21:00<"){
+        return hour >= 21;
+      }
+
       return true;
     });
 
