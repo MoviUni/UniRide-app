@@ -7,6 +7,7 @@ import { RouterModule } from '@angular/router';
   standalone: true,
   imports: [CommonModule, RouterModule],
   template: `
+    <img class="banner" src="assets/MainBanner.png" />
     <div class="content">
 
         <p class="inicio"> Inicio </p>
