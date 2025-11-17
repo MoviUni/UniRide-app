@@ -1,1033 +1,412 @@
-.ellipse-2 {
-  width: 20px;
-  height: 19.98px;
-  left: 1758px;
-  top: 381.44px;
-  position: absolute;
-  background: #C4C4C4;
-  border-radius: 9999px;
+.hero-section {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 5% 5%; /* Espacio lateral proporcional */
+  background: #FDE5DF;
+  gap: 5%; /* Separación proporcional */
+  flex-wrap: wrap; /* Permite que el texto y la imagen se acomoden en móvil */
+  width: 100%; /* IMPORTANTE: que ocupe todo el ancho disponible */
+  box-sizing: border-box; /* Incluye padding en el ancho total */
 }
 
-.ellipse-3 {
-  width: 20px;
-  height: 19.98px;
-  left: 1758px;
-  top: 381.44px;
-  position: absolute;
-  background: #4EE381;
-  border-radius: 9999px;
+.hero-text {
+  flex: 1 1 400px; /* Crece y se encoge, mínimo 400px */
+  max-width: 600px;
 }
 
-.vector-4 {
-  width: 9px;
-  height: 6.99px;
-  left: 1764px;
-  top: 388.43px;
-  position: absolute;
-  outline: 2px rgba(207, 229, 255, 0.49) solid;
-  outline-offset: -1px;
-}
-
-.conectatucaminocompartetuviaje_span {
-  color: #2A324B;
-  font-size: 54px;
+.hero-text h1 {
   font-family: Poppins;
+  font-size: clamp(24px, 5vw, 54px); /* Escala con la pantalla */
   font-weight: 700;
-  word-wrap: break-word;
+  color: #2A324B;
+  margin-bottom: 20px;
 }
 
-.conecta-tu-camino-comparte-tu-viaje {
-  width: 598px;
-  height: 188px;
-  left: 149px;
-  top: 184px;
-  position: absolute;
-}
-
-.neteaunirideydescubreunaformaseguraeconmicaycolaborativadeiryvenirdelauniversidad_span {
+.hero-text p {
+  font-family: 'Nunito Sans', sans-serif;
+  font-size: clamp(16px, 2.5vw, 24px); /* Escala con la pantalla */
+  font-weight: 700;
+  line-height: 1.6;
   color: black;
-  font-size: 24px;
-  font-family: Nunito Sans;
-  font-weight: 700;
-  line-height: 38.40px;
-  word-wrap: break-word;
+  margin-bottom: 30px;
 }
 
-.nete-a-uniride-y-descubre-una-forma-segura-econmica-y-colaborativa-de-ir-y-venir-de-la-universidad {
-  width: 580px;
-  height: 76px;
-  left: 156px;
-  top: 414px;
-  position: absolute;
-}
-
-.body_landing {
-  width: 1924px;
-  height: 4404px;
-  left: 0px;
-  top: 952px;
-  position: absolute;
-}
-
-.image-20 {
-  width: 900px;
-  height: 675px;
-  left: 923px;
-  top: 115px;
-  position: absolute;
-  border-radius: 25px;
-}
-
-.rectangle-3387 {
-  width: 269px;
-  height: 64px;
-  left: 256px;
-  top: 612px;
-  position: absolute;
-  background: #880D1E;
-  border-radius: 36px;
-}
-
-.comienzaahora_span {
+.btn-comienza {
+  background-color: #880D1E;
   color: white;
-  font-size: 22px;
   font-family: Poppins;
   font-weight: 500;
-  word-wrap: break-word;
+  font-size: clamp(16px, 2vw, 22px);
+  padding: clamp(10px, 2vw, 15px) clamp(20px, 4vw, 40px);
+  border: none;
+  border-radius: 36px;
+  cursor: pointer;
+  transition: 0.3s;
 }
 
-.comienza-ahora {
-  left: 295px;
-  top: 627px;
-  position: absolute;
+.btn-comienza:hover {
+  background-color: #a0142b;
 }
 
-.quesuniride_span_01 {
-  color: #2A324B;
-  font-size: 36px;
-  font-family: Poppins;
+.hero-image {
+  flex: 1 1 300px; /* Crece y se encoge, mínimo 300px */
+  max-width: 900px;
+}
+
+.hero-image img {
+  width: 100%;
+  height: auto;
+  border-radius: 25px;
+}
+
+
+/* Seccion ¿Que es UniRide */
+/* Contenedor principal */
+.section-uniride {
+  width: 100%;
+  padding: 50px 5%;
+  text-align: center;
+  
+  box-sizing: border-box;
+}
+
+/* Título */
+.uniride-title {
+  font-family: Poppins, sans-serif;
   font-weight: 700;
-  line-height: 64.80px;
-  word-wrap: break-word;
+  line-height: 64.8px;
+  margin-bottom: 20px;
+  font-size: 36px;
+  margin-top: 50px;
 }
 
-.quesuniride_span_02 {
+.title-normal {
+  color: #2A324B;
+}
+
+.title-highlight {
   color: #DD2D4A;
-  font-size: 36px;
-  font-family: Poppins;
-  font-weight: 700;
-  line-height: 64.80px;
-  word-wrap: break-word;
 }
 
-.quesuniride_span_03 {
-  color: #2A324B;
-  font-size: 36px;
-  font-family: Poppins;
-  font-weight: 700;
-  line-height: 64.80px;
-  word-wrap: break-word;
-}
-
-.qu-es-uniride {
-  left: 798px;
-  top: 1056px;
-  position: absolute;
-}
-
-.unirideesunaplataformadigitaldemovilidadcompartidaquefacilitalabusquedadetransporteparamovilizarseasusedeupcoderegresoasuhogar_span {
-  color: black;
+/* Descripción */
+.uniride-description {
+  font-family: Poppins, sans-serif;
+  font-weight: 400;
   font-size: 24px;
-  font-family: Poppins;
-  font-weight: 400;
-  line-height: 43.20px;
-  word-wrap: break-word;
-}
-
-.uniride-es-una-plataforma-digital-de-movilidad-compartida-que-facilita-la-busqueda-de-transporte-para-movilizarse-a-su-sede-upc-o-de-regreso-a-su-hogar {
-  width: 837px;
-  left: 541px;
-  top: 1130px;
-  position: absolute;
-  text-align: center;
-}
-
-.rectangle-15 {
-  width: 550px;
-  height: 430px;
-  left: 350px;
-  top: 1421px;
-  position: absolute;
-  background: #FEF1ED;
-  box-shadow: 0px 10px 60px rgba(38.03, 44.84, 117.94, 0.08);
-  border-radius: 20px;
-}
-
-.pasajeros_span {
-  color: #880D1E;
-  font-size: 30px;
-  font-family: Poppins;
-  font-weight: 500;
-  word-wrap: break-word;
-}
-
-.pasajeros {
-  width: 345px;
-  left: 449px;
-  top: 1525px;
-  position: absolute;
-  text-align: center;
-}
-
-.encuentrauntransporteconfiablesegntunecesidadcercanaopresupuestoeligeentrerutasdisponiblesypagadeformasimple_span {
+  line-height: 43.2px;
   color: black;
-  font-size: 20px;
-  font-family: Poppins;
-  font-weight: 400;
-  line-height: 36px;
-  word-wrap: break-word;
+  max-width: 837px;
+  margin: 0 auto 150px auto;
 }
 
-.encuentra-un-transporte-confiable-segn-tu-necesidad-cercana-o-presupuesto-elige-entre-rutas-disponibles-y-paga-de-forma-simple {
-  width: 377px;
-  left: 439px;
-  top: 1611px;
-  position: absolute;
-  text-align: center;
-}
-
-.rectangle-15_01 {
-  width: 550px;
-  height: 430px;
-  left: 1036px;
-  top: 1421px;
-  position: absolute;
-  background: #FEF1ED;
-  box-shadow: 0px 10px 60px rgba(38.03, 44.84, 117.94, 0.08);
-  border-radius: 20px;
-}
-
-.conductores_span {
-  color: #880D1E;
-  font-size: 30px;
-  font-family: Poppins;
-  font-weight: 500;
-  word-wrap: break-word;
-}
-
-.conductores {
-  width: 345px;
-  left: 1138px;
-  top: 1525px;
-  position: absolute;
-  text-align: center;
-}
-
-.publicatusrutasrealizaviajesyrecibepagosdesdeunsololugarconectafcilmenteconotrosestudiantescomot_span {
-  color: black;
-  font-size: 20px;
-  font-family: Poppins;
-  font-weight: 400;
-  line-height: 36px;
-  word-wrap: break-word;
-}
-
-.publica-tus-rutas-realiza-viajes-y-recibe-pagos-desde-un-solo-lugar-conecta-fcilmente-con-otros-estudiantes-como-t {
-  width: 377px;
-  left: 1134px;
-  top: 1611px;
-  position: absolute;
-  text-align: center;
-}
-
-.testimonios_span {
-  color: #2A324B;
-  font-size: 44px;
-  font-family: Poppins;
-  font-weight: 600;
-  line-height: 79.20px;
-  word-wrap: break-word;
-}
-
-.testimonios {
-  left: 820px;
-  top: 3280px;
-  position: absolute;
-  text-align: center;
-}
-
-.rectangle-84 {
-  width: 396.72px;
-  height: 705px;
-  left: 89px;
-  top: 3426px;
-  position: absolute;
-  background: #FEF1ED;
-  box-shadow: 0px 18.829999923706055px 47.08000183105469px rgba(47, 50, 125, 0.10);
-  border-radius: 20px;
-}
-
-.rectangle-32 {
-  width: 354.30px;
-  height: 272.69px;
-  left: 111.25px;
-  top: 3448.85px;
-  position: absolute;
-  border-radius: 20px;
-}
-
-.rectangle-38 {
-  width: 354.30px;
-  height: 272.69px;
-  left: 111.27px;
-  top: 3448.85px;
-  position: absolute;
-  opacity: 0.10;
-  background: #171B41;
-  border-radius: 20px;
-}
-
-.marianalopezpasajero_span_01 {
-  color: #252641;
-  font-size: 24px;
-  font-family: Poppins;
-  font-weight: 500;
-  word-wrap: break-word;
-}
-
-.marianalopezpasajero_span_02 {
-  color: rgba(37, 38, 65, 0.44);
-  font-size: 24px;
-  font-family: Poppins;
-  font-weight: 500;
-  word-wrap: break-word;
-}
-
-.mariana-lopez-pasajero {
-  width: 343.68px;
-  height: 87.98px;
-  left: 117.64px;
-  top: 3792.78px;
-  position: absolute;
-}
-
-.graciasaunirideencontrunaplataformademovilidadquerealmentemeentendiahorallegomscmodayatiempoalauniversidad_span {
-  color: black;
-  font-size: 18px;
-  font-family: Poppins;
-  font-weight: 400;
-  line-height: 32.40px;
-  letter-spacing: 0.36px;
-  word-wrap: break-word;
-}
-
-.gracias-a-uniride-encontr-una-plataforma-de-movilidad-que-realmente-me-entendi-ahora-llego-ms-cmoda-y-a-tiempo-a-la-universidad {
-  width: 348px;
-  height: 168px;
-  left: 118px;
-  top: 3874px;
-  position: absolute;
-}
-
-.rectangle-84_01 {
-  width: 396.72px;
-  height: 705px;
-  left: 538.76px;
-  top: 3426px;
-  position: absolute;
-  background: #FEF1ED;
-  box-shadow: 0px 18.829999923706055px 47.08000183105469px rgba(47, 50, 125, 0.10);
-  border-radius: 20px;
-}
-
-.andrssalazarconductor_span_01 {
-  color: #252641;
-  font-size: 24px;
-  font-family: Poppins;
-  font-weight: 500;
-  word-wrap: break-word;
-}
-
-.andrssalazarconductor_span_02 {
-  color: rgba(37, 38, 65, 0.45);
-  font-size: 24px;
-  font-family: Poppins;
-  font-weight: 500;
-  word-wrap: break-word;
-}
-
-.andrs-salazar-conductor {
-  width: 343.68px;
-  height: 87.98px;
-  left: 567.40px;
-  top: 3792.78px;
-  position: absolute;
-}
-
-.porfintrabajoamimaneraconectamentemeayudaatenercontroldemiagendasinperdercalidaddeatencin_span {
-  color: black;
-  font-size: 18px;
-  font-family: Poppins;
-  font-weight: 400;
-  line-height: 32.40px;
-  letter-spacing: 0.36px;
-  word-wrap: break-word;
-}
-
-.por-fin-trabajo-a-mi-manera-conectamente-me-ayuda-a-tener-control-de-mi-agenda-sin-perder-calidad-de-atencin {
-  width: 347.93px;
-  height: 116.55px;
-  left: 563px;
-  top: 3874px;
-  position: absolute;
-}
-
-.image-33 {
-  width: 352px;
-  height: 273px;
-  left: 559px;
-  top: 3449px;
-  position: absolute;
-  border-radius: 25px;
-}
-
-.rectangle-84_02 {
-  width: 396.72px;
-  height: 705px;
-  left: 988.52px;
-  top: 3426px;
-  position: absolute;
-  background: #FEF1ED;
-  box-shadow: 0px 18.829999923706055px 47.08000183105469px rgba(47, 50, 125, 0.10);
-  border-radius: 20px;
-}
-
-.anatorresconductor_span_01 {
-  color: #252641;
-  font-size: 24px;
-  font-family: Poppins;
-  font-weight: 500;
-  word-wrap: break-word;
-}
-
-.anatorresconductor_span_02 {
-  color: rgba(37, 38, 65, 0.45);
-  font-size: 24px;
-  font-family: Poppins;
-  font-weight: 500;
-  word-wrap: break-word;
-}
-
-.ana-torres-conductor {
-  width: 343.68px;
-  height: 87.98px;
-  left: 1017.16px;
-  top: 3792.78px;
-  position: absolute;
-}
-
-.uniridemebrindunentornoparacompartirmitransporteconotrosestudiantesquenecesitanllegaralauniversidad_span {
-  color: black;
-  font-size: 18px;
-  font-family: Poppins;
-  font-weight: 400;
-  line-height: 32.40px;
-  letter-spacing: 0.36px;
-  word-wrap: break-word;
-}
-
-.uniride-me-brind-un-entorno-para-compartir-mi-transporte-con-otros-estudiantes-que-necesitan-llegar-a-la-universidad {
-  width: 348px;
-  height: 128px;
-  left: 1017px;
-  top: 3874px;
-  position: absolute;
-}
-
-.image-34 {
-  width: 358px;
-  height: 273px;
-  left: 1008px;
-  top: 3449px;
-  position: absolute;
-  border-radius: 25px;
-}
-
-.rectangle-84_03 {
-  width: 396.72px;
-  height: 705px;
-  left: 1438.28px;
-  top: 3426px;
-  position: absolute;
-  background: #FEF1ED;
-  box-shadow: 0px 18.829999923706055px 47.08000183105469px rgba(47, 50, 125, 0.10);
-  border-radius: 20px;
-}
-
-.carlosmedinaconductor_span_01 {
-  color: #252641;
-  font-size: 24px;
-  font-family: Poppins;
-  font-weight: 500;
-  word-wrap: break-word;
-}
-
-.carlosmedinaconductor_span_02 {
-  color: rgba(37, 38, 65, 0.45);
-  font-size: 24px;
-  font-family: Poppins;
-  font-weight: 500;
-  word-wrap: break-word;
-}
-
-.carlos-medina-conductor {
-  width: 343.68px;
-  height: 87.98px;
-  left: 1466.92px;
-  top: 3792.78px;
-  position: absolute;
-}
-
-.hepodidoampliarmireddeconexionesademsyanomepreocupodemasiadoporloscostosdelcombustible_span {
-  color: black;
-  font-size: 18px;
-  font-family: Poppins;
-  font-weight: 400;
-  line-height: 32.40px;
-  letter-spacing: 0.36px;
-  word-wrap: break-word;
-}
-
-.he-podido-ampliar-mi-red-de-conexiones-adems-ya-no-me-preocupo-demasiado-por-los-costos-del-combustible {
-  width: 348px;
-  height: 139px;
-  left: 1473px;
-  top: 3874px;
-  position: absolute;
-}
-
-.image-19 {
-  width: 354px;
-  height: 273px;
-  left: 1460px;
-  top: 3449px;
-  position: absolute;
-  border-radius: 25px;
-}
-
-.rectangle-33 {
-  width: 355.35px;
-  height: 273.09px;
-  left: 111.28px;
-  top: 3448.85px;
-  position: absolute;
-  border-radius: 20px;
-}
-
-.funcionalidades_span {
-  color: #2A324B;
-  font-size: 44px;
-  font-family: Poppins;
-  font-weight: 600;
-  line-height: 79.20px;
-  word-wrap: break-word;
-}
-
-.funcionalidades {
-  left: 773px;
-  top: 77px;
-  position: absolute;
-  text-align: center;
-}
-
-.rectangle-14 {
-  width: 450px;
-  height: 372px;
-  left: 225px;
-  top: 206px;
-  position: absolute;
-  background: white;
-  box-shadow: 2px 8px 4px rgba(0, 0, 0, 0.30);
-  border-radius: 20px;
-}
-
-.rectangle-15_02 {
-  width: 450px;
-  height: 372px;
-  left: 735px;
-  top: 206px;
-  position: absolute;
-  background: #FEFEFE;
-  box-shadow: 2px 8px 4px rgba(0, 0, 0, 0.30);
-  border-radius: 20px;
-}
-
-.bsquedaderutas_span {
-  color: black;
-  font-size: 24px;
-  font-family: Poppins;
-  font-weight: 400;
-  word-wrap: break-word;
-}
-
-.bsqueda-de-rutas {
-  width: 280px;
-  height: 44px;
-  left: 829px;
-  top: 370px;
-  position: absolute;
-  text-align: center;
-}
-
-.filtrarutaspororigendestinodayhoraparaencontrarlaquemsteconvenga_span {
-  color: black;
-  font-size: 16px;
-  font-family: Poppins;
-  font-weight: 400;
-  word-wrap: break-word;
-  text-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
-}
-
-.filtra-rutas-por-origen-destino-da-y-hora-para-encontrar-la-que-ms-te-convenga {
-  width: 283px;
-  height: 71px;
-  left: 827px;
-  top: 428px;
-  position: absolute;
-  text-align: center;
-}
-
-.rectangle-16 {
-  width: 450px;
-  height: 372px;
-  left: 1245px;
-  top: 206px;
-  position: absolute;
-  background: white;
-  box-shadow: 2px 8px 4px rgba(0, 0, 0, 0.30);
-  border-radius: 20px;
-}
-
-.solicitarruta_span {
-  color: black;
-  font-size: 24px;
-  font-family: Poppins;
-  font-weight: 400;
-  word-wrap: break-word;
-  text-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
-}
-
-.solicitar-ruta {
-  width: 280px;
-  height: 44px;
-  left: 1330px;
-  top: 370px;
-  position: absolute;
-  text-align: center;
-}
-
-.solicitaunirteaunarutaparafacilitartutransportedevueltaacasaohacialauniversidad_span {
-  color: black;
-  font-size: 16px;
-  font-family: Poppins;
-  font-weight: 400;
-  word-wrap: break-word;
-  text-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
-}
-
-.solicita-unirte-a-una-ruta-para-facilitar-tu-transporte-de-vuelta-a-casa-o-hacia-la-universidad {
-  width: 283px;
-  height: 71px;
-  left: 1330px;
-  top: 428px;
-  position: absolute;
-  text-align: center;
-}
-
-.male-user {
-  width: 90px;
-  height: 90px;
-  left: 625px;
-  top: 376px;
-  position: absolute;
-  box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
-}
-
-.rectangle-18 {
-  width: 450px;
-  height: 372px;
-  left: 735px;
-  top: 645px;
-  position: absolute;
-  background: #FEFEFE;
-  box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
-  border-radius: 20px;
-}
-
-.pagosseguros_span {
-  color: black;
-  font-size: 24px;
-  font-family: Poppins;
-  font-weight: 400;
-  word-wrap: break-word;
-  text-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
-}
-
-.pagos-seguros {
-  width: 184px;
-  height: 44px;
-  left: 868px;
-  top: 803px;
-  position: absolute;
-}
-
-.realizapagosdemanerasencillayseguraconopcionesclarasyrpidas_span {
-  color: black;
-  font-size: 16px;
-  font-family: Poppins;
-  font-weight: 400;
-  word-wrap: break-word;
-  text-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
-}
-
-.realiza-pagos-de-manera-sencilla-y-segura-con-opciones-claras-y-rpidas {
-  width: 283px;
-  height: 45px;
-  left: 818px;
-  top: 860px;
-  position: absolute;
-  text-align: center;
-}
-
-.rectangle-19 {
-  width: 450px;
-  height: 372px;
-  left: 1245px;
-  top: 645px;
-  position: absolute;
-  background: #FEFEFE;
-  box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
-  border-radius: 20px;
-}
-
-.historialdeviajes_span {
-  color: black;
-  font-size: 24px;
-  font-family: Poppins;
-  font-weight: 400;
-  word-wrap: break-word;
-  text-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
-}
-
-.historial-de-viajes {
-  width: 211px;
-  height: 44px;
-  left: 1364px;
-  top: 803px;
-  position: absolute;
-}
-
-.accedealregistrocompletodetusviajesypagosparatenertodobajocontrol_span {
-  color: black;
-  font-size: 16px;
-  font-family: Poppins;
-  font-weight: 400;
-  word-wrap: break-word;
-  text-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
-}
-
-.accede-al-registro-completo-de-tus-viajes-y-pagos-para-tener-todo-bajo-control {
-  width: 283px;
-  height: 71px;
-  left: 1328px;
-  top: 860px;
-  position: absolute;
-  text-align: center;
-}
-
-.rectangle-17 {
-  width: 450px;
-  height: 372px;
-  left: 225px;
-  top: 645px;
-  position: absolute;
-  background: #FEFEFE;
-  box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
-  border-radius: 20px;
-}
-
-.calificacionesyreseas_span {
-  color: black;
-  font-size: 24px;
-  font-family: Poppins;
-  font-weight: 400;
-  word-wrap: break-word;
-  text-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
-}
-
-.calificaciones-y-reseas {
-  width: 296px;
-  height: 44px;
-  left: 302px;
-  top: 803px;
-  position: absolute;
-}
-
-.leeydejareseasdetusviajesparacompartirtuexperienciayayudaraotrosusuarios_span {
-  color: black;
-  font-size: 16px;
-  font-family: Poppins;
-  font-weight: 400;
-  word-wrap: break-word;
-  text-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
-}
-
-.lee-y-deja-reseas-de-tus-viajes-para-compartir-tu-experiencia-y-ayudar-a-otros-usuarios {
-  width: 283px;
-  height: 71px;
-  left: 308px;
-  top: 865px;
-  position: absolute;
-  text-align: center;
-}
-
-.like {
-  width: 129px;
-  height: 129px;
-  left: 385px;
-  top: 674px;
-  position: absolute;
-}
-
-.perfilespersonalizados_span {
-  color: black;
-  font-size: 24px;
-  font-family: Poppins;
-  font-weight: 400;
-  word-wrap: break-word;
-}
-
-.perfiles-personalizados {
-  width: 280px;
-  height: 44px;
-  left: 310px;
-  top: 370px;
-  position: absolute;
-}
-
-.creaunperfilnicoparamostrartuexperienciaynecesidadesadaptadoatuspreferencias_span {
-  color: black;
-  font-size: 16px;
-  font-family: Poppins;
-  font-weight: 400;
-  word-wrap: break-word;
-  text-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
-}
-
-.crea-un-perfil-nico-para-mostrar-tu-experiencia-y-necesidades-adaptado-a-tus-preferencias {
-  width: 283px;
-  height: 71px;
-  left: 307px;
-  top: 428px;
-  position: absolute;
-  text-align: center;
-}
-
-.frame-427318924 {
-  width: 1900px;
-  height: 1837px;
-  left: 0px;
-  top: 1531px;
-  position: absolute;
-}
-
-.user {
-  width: 129px;
-  height: 129px;
-  left: 0px;
-  top: -6px;
-  position: absolute;
-}
-
-.search {
-  width: 116px;
-  height: 116px;
-  left: 915px;
-  top: 240px;
-  position: absolute;
-}
-
-.calendar {
-  width: 116px;
-  height: 115px;
-  left: 1414px;
-  top: 240px;
-  position: absolute;
-}
-
-.money {
-  width: 91px;
-  height: 91px;
-  left: 914px;
-  top: 687px;
-  position: absolute;
-}
-
-.history {
-  width: 100px;
-  height: 95px;
-  left: 1420px;
-  top: 687px;
-  position: absolute;
-}
-
-.text_servicio_span {
-  color: black;
-  font-size: 36px;
-  font-family: Poppins;
-  font-weight: 600;
-  word-wrap: break-word;
-}
-
-.text_servicio {
-  width: 698px;
-  height: 162px;
-  left: 169px;
-  top: 4689px;
-  position: absolute;
-  text-align: center;
-}
-
-.img_servicio {
-  width: 744px;
-  height: 524px;
-  left: 1042px;
-  top: 4615px;
-  position: absolute;
-}
-
-.trabajaconnosotros_span {
-  color: #FEF1ED;
-  font-size: 22px;
-  font-family: Poppins;
-  font-weight: 500;
-  letter-spacing: 0.44px;
-  word-wrap: break-word;
-}
-
-.trabaja-con-nosotros {
-  width: 247px;
-  height: 40.41px;
-  left: 52px;
-  top: 10px;
-  position: absolute;
+/* Contenedor de tarjetas */
+.cards-container {
+  display: flex;
+  gap: 30px;
   justify-content: center;
+  flex-wrap: wrap;
+}
+
+/* Tarjetas individuales */
+.card {
+  box-shadow: 0px 10px 60px rgba(38, 45, 118, 0.08);
+  border-radius: 20px;
+  padding: 60px 20px 20px 20px; /* espacio superior para la imagen fuera de la tarjeta */
+  flex: 1 1 300px;
+  max-width: 450px;
+  max-height: 372px;
+  text-align: center;
+  position: relative;
+  margin-bottom: 30px;
+  
+}
+
+/* Círculo de la imagen */
+.circle-image {
+  width: 100px;
+  height: 100px;
+  background-color: #880D1E; /* rojo */
+  border-radius: 50%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: absolute;
+  top: -60px; /* mitad fuera de la tarjeta */
+  left: 50%;
+  transform: translateX(-50%);
+  overflow: hidden;
+}
+
+.circle-image img {
+  width: 80%;
+  height: auto;
+  border-radius: 50%;
+}
+
+/* Títulos de tarjetas */
+.card-title {
+  font-family: Poppins;
+  font-weight: 500;
+  font-size: 30px;
+  color: #880D1E;
+  margin-top: 40px;
+}
+
+/* Descripciones de tarjetas */
+.card-description {
+  font-family: Poppins;
+  font-weight: 400;
+  font-size: 20px;
+  line-height: 36px;
+  color: black;
+  margin-bottom: 30px;
+  padding-left: 30px;
+  padding-right: 30px;
+  
+}
+
+
+/*funcionalidades section*/
+.section-funcionalidades {
+  width: 100%;
+  padding: 50px 5%;
+  background: #FDE5DF;
+  text-align: center;
+  box-sizing: border-box;
+}
+
+/* Título */
+.funcionalidades-title {
+  font-family: Poppins, sans-serif;
+  font-weight: 700;
+  font-size: 36px;
+  line-height: 64.8px;
+  color: #2A324B;
+  margin-bottom: 50px;
+}
+
+/* Grid de cartillas */
+.funcionalidades-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 30px;
+}
+
+/* Cartilla */
+.card_funcionalidad {
+  background: white;
+  box-shadow: 0px 10px 60px rgba(38, 45, 118, 0.08);
+  border-radius: 20px;
+  padding: 20px;
+  text-align: center;
   display: flex;
   flex-direction: column;
+  align-items: center;
 }
 
-.users {
-  width: 65px;
-  height: 65px;
-  left: 17px;
-  top: 18px;
-  position: absolute;
-}
-
-.users_01 {
-  width: 65px;
-  height: 65px;
-  left: 17px;
-  top: 18px;
-  position: absolute;
-}
-
-.btn_trabaja {
-  width: 351px;
-  height: 60px;
-  left: 342px;
-  top: 4929px;
-  position: absolute;
-  background: #2A324B;
-  box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
-  overflow: hidden;
-  border-radius: 36px;
-}
-
-.frame-427318920 {
-  width: 1920px;
-  height: 905px;
-  left: 0px;
-  top: 0px;
-  position: absolute;
-  background: #FDE5DF;
-  overflow: hidden;
-}
-
-.frame-427318932 {
-  width: 115px;
-  height: 110px;
-  left: 391px;
-  top: 236px;
-  position: absolute;
-  overflow: hidden;
-}
-
-.frame-427318930 {
+/* Imagen dentro de la cartilla */
+.card-image {
   width: 100px;
-  height: 100px;
-  left: 578px;
-  top: 1371px;
-  position: absolute;
-  background: #880D1E;
-  overflow: hidden;
-  border-radius: 50px;
+  height: auto;
+  margin-bottom: 20px;
 }
 
-.frame-427318931 {
-  width: 100px;
-  height: 100px;
-  left: 1261px;
-  top: 1371px;
-  position: absolute;
-  background: #880D1E;
-  overflow: hidden;
-  border-radius: 50px;
+/* Título de la cartilla */
+.card-title {
+  font-family: Poppins, sans-serif;
+  font-weight: 500;
+  font-size: 30px;
+  color: #880D1E;
+  margin-bottom: 10px;
 }
 
-.frame-427318925 {
-  width: 1906px;
-  height: 5311px;
-  left: 0px;
-  top: -4511px;
-  position: absolute;
-  overflow: hidden;
+/* Descripción de la cartilla */
+.card-description {
+  font-family: Poppins, sans-serif;
+  font-weight: 400;
+  font-size: 20px;
+  line-height: 36px;
+  color: black;
 }
 
-.funcionalidades_01 {
-  width: 1920px;
-  height: 1166px;
-  left: 0px;
-  top: 2020px;
-  position: absolute;
-  background: #FDE5DF;
-  overflow: hidden;
+/* Seccion testimonios */
+.section-testimonios {
+  width: 100%;
+  padding: 50px 5%;
+
+  box-sizing: border-box;
+  text-align: center;
 }
 
-.servicio {
-  width: 1917px;
-  height: 788px;
-  left: 3px;
-  top: 4251px;
-  position: absolute;
+.testimonios-title {
+  font-family: Poppins, sans-serif;
+  font-weight: 600;
+  font-size: 44px;
+  line-height: 79.2px;
+  color: #2A324B;
+  margin-bottom: 50px;
+}
+
+/* Grid de testimonios */
+.testimonios-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: 30px;
+  justify-items: center;
+  width: 100%;
+}
+
+
+/* Tarjeta de testimonio */
+.testimonial-card {
   background: #FEF1ED;
+  box-shadow: 0px 18.83px 47.08px rgba(47, 50, 125, 0.1);
+  border-radius: 20px;
+  padding: 20px;
+  width: 100%;
+  max-width: 396px;
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+/* Imagen */
+.testimonial-image {
+  width: 100%;
+  max-width: 354px;
+  height: auto;
+  border-radius: 25px;
+  margin-bottom: 20px;
+}
+
+/* Nombre y rol */
+.testimonial-name {
+  font-family: Poppins, sans-serif;
+  font-weight: 500;
+  font-size: 24px;
+  color: #252641;
+  margin-bottom: 10px;
+}
+
+.testimonial-role {
+  display: block;
+  color: rgba(37, 38, 65, 0.45);
+  font-size: 24px;
+  font-weight: 500;
+}
+
+/* Texto */
+.testimonial-text {
+  font-family: Poppins, sans-serif;
+  font-weight: 400;
+  font-size: 18px;
+  line-height: 32.4px;
+  color: black;
+}
+
+.servicio-section {
+  width: 100%;
+  background: #FEF1ED;
+  padding: 50px 5%;
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.servicio-container {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: center; /* centra el texto y la imagen */
+  gap: 30px;
+  max-width: 1200px;
+  width: 100%;
+}
+
+.servicio-text-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center; /* centra el texto y el botón */
+  text-align: center;
+  gap: 20px; /* separación entre texto y botón */
+}
+
+.servicio-text {
+  max-width: 600px;
+  font-family: Poppins;
+  font-size: 36px;
+  font-weight: 1000;
+  line-height: 36px;
+  color: #2A324B;
+  text-align: center;
+}
+
+.btn-trabaja {
+  background-color: #2A324B;
+  color: #FEF1ED;
+  font-family: Poppins;
+  font-weight: 500;
+  font-size: 22px;
+  padding: 15px 40px;
+  border: none;
+  border-radius: 36px;
+  cursor: pointer;
+  transition: 0.3s;
+  margin-right: 500px;
+  margin-top: -100px;
+  margin-bottom: 80px;
+}
+
+.btn-trabaja:hover {
+  background-color: #1f273b;
+}
+
+.servicio-img {
+  width: 100%;
+  max-width: 450px;
+  border-radius: 20px;
+}
+
+.servicio-users {
+  display: flex;
+  gap: 30px;
+  margin-top: 40px;
+  justify-content: center;
+  flex-wrap: wrap; /* para que en pantallas pequeñas se acomoden */
+}
+
+.user-circle {
+  width: 100px;
+  height: 100px;
+  background: #880D1E;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
   overflow: hidden;
 }
 
-.frame-427318927 {
-  width: 1924px;
-  height: 5039px;
-  position: relative;
-  background: white;
-  overflow: hidden;
+.user-circle img {
+  width: 65px;
+  height: 65px;
+}
+
+/* Responsive */
+@media (max-width: 1024px) {
+  .servicio-text {
+    font-size: 28px;
+    line-height: 32px;
+  }
+
+  .btn-trabaja {
+    font-size: 20px;
+    padding: 12px 30px;
+  }
+
+  .servicio-container {
+    flex-direction: column;
+  }
 }
