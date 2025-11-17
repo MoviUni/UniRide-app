@@ -2,24 +2,24 @@ import { Component, inject } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 
-interface Vehicle {
-  id: number;
-  name: string;
-  minCapacity: number;
-  maxCapacity: number;
+interface PublishRouteForm {
+  origin: string;
+  destination: string;
+  date: string;
+  time: string;
+  vehicle: string;
+  capacity: number;
+  price: number | null;
 }
 
-interface Route {
+interface DriverRoute {
   id: number;
   origin: string;
   destination: string;
-  date: string;           // yyyy-MM-dd
-  time: string;           // HH:mm
+  date: string;
+  time: string;
   capacity: number;
-  confirmedPassengers: number;
-  vehicleId: number;
-  driverId: number;
-  active: boolean;
+  price?: number;
 }
 
 @Component({
@@ -28,65 +28,73 @@ interface Route {
   imports: [CommonModule, ReactiveFormsModule],
   template: `
     <div class="page">
-      <div class="page-title">Módulo 2 – Publicar ruta</div>
+      <div class="breadcrumb">Inicio &gt; Mis rutas &gt; Publicar ruta</div>
 
-      <div class="card">
-        <div class="card-header">
-          <h1>Publicar una ruta como conductor</h1>
-          <p>Completa los datos para publicar tu ruta. Todos los campos son obligatorios.</p>
-        </div>
+      <h1 class="page-title">Publicar ruta como conductor</h1>
+      <p class="page-subtitle">
+        Completa los datos para compartir tu viaje con otros estudiantes de la UPC.
+      </p>
+
+      <section class="card">
+        <header class="card-header">
+          <div class="card-title-row">
+            <h2>Datos de la ruta</h2>
+            <span class="brand-pill">UniRide</span>
+          </div>
+          <p>Esta información será visible para los pasajeros cuando busquen rutas.</p>
+        </header>
 
         <form class="form" [formGroup]="form" (ngSubmit)="onSubmit()">
           <div class="form-row">
             <div class="field">
               <label for="origin">Origen</label>
-              <input
-                id="origin"
-                type="text"
-                formControlName="origin"
-                placeholder="Ej. San Miguel"
-              />
+              <div class="input-shell">
+                <input
+                  id="origin"
+                  type="text"
+                  formControlName="origin"
+                  placeholder="Ej. Av. Angamos Este 2102"
+                />
+              </div>
               <div class="error" *ngIf="isInvalid('origin')">
-                El origen es obligatorio.
+                Ingresa un origen válido.
               </div>
             </div>
 
             <div class="field">
               <label for="destination">Destino</label>
-              <input
-                id="destination"
-                type="text"
-                formControlName="destination"
-                placeholder="Ej. Monterrico – UPC"
-              />
+              <div class="input-shell">
+                <input
+                  id="destination"
+                  type="text"
+                  formControlName="destination"
+                  placeholder="Ej. UPC Monterrico"
+                />
+              </div>
               <div class="error" *ngIf="isInvalid('destination')">
-                El destino es obligatorio.
+                Ingresa un destino válido.
               </div>
             </div>
           </div>
 
           <div class="form-row">
             <div class="field">
-              <label for="date">Día</label>
-              <input
-                id="date"
-                type="date"
-                formControlName="date"
-              />
+              <label for="date">Día de salida</label>
+              <div class="input-shell">
+                <input id="date" type="date" formControlName="date" />
+              </div>
               <div class="error" *ngIf="isInvalid('date')">
-                Debes seleccionar una fecha.
+                Selecciona un día de salida.
               </div>
             </div>
 
             <div class="field">
-              <label for="time">Hora</label>
-              <input
-                id="time"
-                type="time"
-                formControlName="time"
-              />
+              <label for="time">Hora de salida</label>
+              <div class="input-shell">
+                <input id="time" type="time" formControlName="time" />
+              </div>
               <div class="error" *ngIf="isInvalid('time')">
-                Debes seleccionar una hora.
+                Selecciona una hora de salida.
               </div>
             </div>
           </div>
@@ -94,138 +102,184 @@ interface Route {
           <div class="form-row">
             <div class="field">
               <label for="vehicle">Vehículo</label>
-              <select
-                id="vehicle"
-                formControlName="vehicleId"
-                (change)="onVehicleChange()"
-              >
-                <option value="" disabled>Selecciona un vehículo</option>
-                <option
-                  *ngFor="let v of vehicles"
-                  [value]="v.id"
-                >
-                  {{ v.name }} ({{ v.maxCapacity }} pasajeros máx.)
-                </option>
-              </select>
-              <div class="error" *ngIf="isInvalid('vehicleId')">
-                Debes seleccionar un vehículo.
+              <div class="input-shell">
+                <input
+                  id="vehicle"
+                  type="text"
+                  formControlName="vehicle"
+                  placeholder="Ej. Toyota Yaris 2024"
+                />
+              </div>
+              <div class="error" *ngIf="isInvalid('vehicle')">
+                Indica el vehículo que usarás.
               </div>
             </div>
 
-            <div class="field">
+            <div class="field field-small">
               <label for="capacity">Capacidad de pasajeros</label>
-              <input
-                id="capacity"
-                type="number"
-                formControlName="capacity"
-                min="1"
-              />
-              <div class="helper" *ngIf="selectedVehicle">
-                Capacidad permitida: mín. {{ selectedVehicle.minCapacity }},
-                máx. {{ selectedVehicle.maxCapacity }} pasajeros.
+              <div class="input-shell">
+                <input
+                  id="capacity"
+                  type="number"
+                  formControlName="capacity"
+                  min="1"
+                />
+              </div>
+              <div class="hint">
+                Mínimo 1 pasajero. La capacidad mínima real dependerá de tu vehículo.
               </div>
               <div class="error" *ngIf="isInvalid('capacity')">
-                La capacidad debe ser un número positivo.
+                Ingresa una capacidad válida (mayor o igual a 1).
+              </div>
+            </div>
+
+            <div class="field field-small">
+              <label for="price">Aporte por pasajero (opcional)</label>
+              <div class="input-shell">
+                <input
+                  id="price"
+                  type="number"
+                  formControlName="price"
+                  min="0"
+                  step="0.5"
+                  placeholder="Ej. 12.50"
+                />
+              </div>
+              <div class="hint">
+                Este monto se mostrará como referencia al pasajero.
               </div>
             </div>
           </div>
 
-          <div class="alert" *ngIf="timeError">
-            {{ timeError }}
+          <div class="messages" *ngIf="errorMessage || successMessage">
+            <div class="alert alert-error" *ngIf="errorMessage">
+              {{ errorMessage }}
+            </div>
+            <div class="alert alert-success" *ngIf="successMessage">
+              {{ successMessage }}
+            </div>
           </div>
 
-          <div class="alert" *ngIf="duplicateError">
-            {{ duplicateError }}
-          </div>
-
-          <button type="submit" class="btn-primary" [disabled]="form.invalid">
+          <button class="btn-primary" type="submit">
             Publicar ruta
           </button>
         </form>
-      </div>
+      </section>
 
-      <!-- Lista rápida de rutas creadas en esta pantalla (demo) -->
-      <div class="card card-list" *ngIf="routes.length">
-        <div class="card-header">
-          <h2>Rutas publicadas (demo local)</h2>
-          <p>Se muestran solo tus rutas activas.</p>
-        </div>
+      <section class="card card-list" *ngIf="routes.length">
+        <header class="card-header">
+          <h2>Últimas rutas publicadas</h2>
+          <p>Solo se muestran rutas activas creadas en esta sesión.</p>
+        </header>
 
-        <table class="table">
-          <thead>
-            <tr>
-              <th>Origen</th>
-              <th>Destino</th>
-              <th>Fecha</th>
-              <th>Hora</th>
-              <th>Pasajeros</th>
-            </tr>
-          </thead>
-          <tbody>
-            <tr *ngFor="let r of routes">
-              <td>{{ r.origin }}</td>
-              <td>{{ r.destination }}</td>
-              <td>{{ r.date | date:'dd/MM/yyyy' }}</td>
-              <td>{{ r.time }}</td>
-              <td>{{ r.capacity }}</td>
-            </tr>
-          </tbody>
-        </table>
-      </div>
+        <ul class="route-list">
+          <li class="route-item" *ngFor="let r of routes">
+            <div class="route-main">
+              <p class="route-line">
+                {{ r.origin }} &rarr; {{ r.destination }}
+              </p>
+              <p class="route-meta">
+                {{ r.date | date:'dd/MM/yyyy' }} &middot; {{ r.time }}
+                &middot; Capacidad: {{ r.capacity }} pasajeros
+              </p>
+            </div>
+            <div class="route-side">
+              <span class="price-chip" *ngIf="r.price !== undefined">
+                s/. {{ r.price | number:'1.2-2' }}
+              </span>
+            </div>
+          </li>
+        </ul>
+      </section>
     </div>
   `,
   styles: [`
     :host {
+      --ur-primary: #242F9B;
+      --ur-primary-dark: #2A314B;
+      --ur-accent: #DE2D4A;
+      --ur-soft-blue: #CFE4FF;
+      --ur-soft-salmon: #FAAB99;
+      --ur-bg: #F5F7FF;
+      --ur-border: #E5E7EB;
+
       display: block;
       min-height: 100vh;
-      background: #f3f4f8;
-      font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+      background: var(--ur-bg);
+      font-family: 'Poppins', system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
       color: #111827;
     }
 
     .page {
-      max-width: 1080px;
-      margin: 2rem auto;
-      padding: 0 1.5rem 2.5rem;
+      max-width: 1120px;
+      margin: 2.5rem auto 3rem;
+      padding: 0 1.5rem;
+    }
+
+    .breadcrumb {
+      font-size: 0.8rem;
+      color: #9CA3AF;
+      margin-bottom: 0.75rem;
     }
 
     .page-title {
-      font-size: 1.4rem;
-      font-weight: 600;
-      margin-bottom: 1.5rem;
-      color: #4b5563;
+      font-size: 1.6rem;
+      font-weight: 700;
+      color: var(--ur-primary-dark);
+      margin: 0 0 0.25rem;
+    }
+
+    .page-subtitle {
+      margin: 0 0 1.75rem;
+      font-size: 0.95rem;
+      color: #6B7280;
     }
 
     .card {
-      background: #ffffff;
+      background: #FFFFFF;
       border-radius: 24px;
-      box-shadow: 0 16px 40px rgba(15, 23, 42, 0.12);
-      padding: 2.5rem 2.75rem;
+      box-shadow: 0 18px 45px rgba(15, 23, 42, 0.12);
+      padding: 2.25rem 2.5rem 2.5rem;
       margin-bottom: 2rem;
     }
 
-    .card-header h1 {
-      font-size: 1.4rem;
-      font-weight: 700;
-      margin: 0 0 0.35rem;
-      color: #111827;
+    .card-header {
+      margin-bottom: 1.75rem;
+    }
+
+    .card-title-row {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 1rem;
+      margin-bottom: 0.35rem;
     }
 
     .card-header h2 {
-      font-size: 1.2rem;
-      font-weight: 600;
-      margin: 0 0 0.25rem;
-      color: #111827;
+      margin: 0;
+      font-size: 1.25rem;
+      font-weight: 700;
+      color: var(--ur-primary-dark);
     }
 
     .card-header p {
       margin: 0;
       font-size: 0.9rem;
-      color: #6b7280;
+      color: #6B7280;
+    }
+
+    .brand-pill {
+      padding: 0.35rem 0.9rem;
+      border-radius: 999px;
+      background: var(--ur-soft-blue);
+      color: var(--ur-primary);
+      font-size: 0.8rem;
+      font-weight: 600;
+      letter-spacing: 0.03em;
+      text-transform: uppercase;
     }
 
     .form {
-      margin-top: 2rem;
       display: flex;
       flex-direction: column;
       gap: 1.5rem;
@@ -243,223 +297,244 @@ interface Route {
       gap: 0.45rem;
     }
 
-    .field label {
-      font-size: 0.9rem;
-      font-weight: 500;
-      color: #4b5563;
+    .field-small {
+      max-width: 260px;
     }
 
-    .field input,
-    .field select {
+    .field label {
+      font-size: 0.85rem;
+      font-weight: 500;
+      color: #4B5563;
+    }
+
+    .input-shell {
       border-radius: 999px;
-      border: 1px solid #d1d5db;
+      border: 1px solid #D1D5DB;
+      background: #FFFFFF;
       padding: 0.7rem 1.1rem;
-      font-size: 0.9rem;
-      outline: none;
-      background: #ffffff;
+      display: flex;
+      align-items: center;
       transition: border-color 0.2s ease, box-shadow 0.2s ease;
     }
 
-    .field input:focus,
-    .field select:focus {
-      border-color: #2563eb;
-      box-shadow: 0 0 0 1px rgba(37, 99, 235, 0.25);
+    .input-shell input {
+      width: 100%;
+      border: none;
+      outline: none;
+      font-size: 0.9rem;
+      color: #111827;
+      background: transparent;
     }
 
-    .helper {
+    .input-shell input::placeholder {
+      color: #9CA3AF;
+    }
+
+    .input-shell:focus-within {
+      border-color: var(--ur-primary);
+      box-shadow: 0 0 0 1px rgba(36, 47, 155, 0.28);
+    }
+
+    .hint {
       font-size: 0.78rem;
-      color: #6b7280;
+      color: #6B7280;
     }
 
     .error {
       font-size: 0.78rem;
-      color: #b91c1c;
+      color: #B91C1C;
+    }
+
+    .messages {
+      margin-top: 0.5rem;
+      display: flex;
+      flex-direction: column;
+      gap: 0.5rem;
     }
 
     .alert {
-      padding: 0.75rem 1rem;
-      border-radius: 12px;
-      background: #fef2f2;
-      color: #991b1b;
+      padding: 0.7rem 1rem;
+      border-radius: 16px;
       font-size: 0.85rem;
-      margin-top: -0.5rem;
+    }
+
+    .alert-error {
+      background: #FEF2F2;
+      color: #991B1B;
+      border: 1px solid #FCA5A5;
+    }
+
+    .alert-success {
+      background: #ECFDF3;
+      color: #166534;
+      border: 1px solid #86EFAC;
     }
 
     .btn-primary {
-      align-self: flex-start;
       margin-top: 0.5rem;
-      border-radius: 999px;
+      align-self: flex-start;
       border: none;
-      padding: 0.8rem 1.6rem;
-      background: #2563eb;
-      color: #ffffff;
+      border-radius: 999px;
+      padding: 0.85rem 1.8rem;
+      background: var(--ur-primary);
+      color: #FFFFFF;
       font-size: 0.95rem;
       font-weight: 600;
       cursor: pointer;
-      box-shadow: 0 10px 20px rgba(37, 99, 235, 0.35);
-      transition: background 0.15s ease, transform 0.08s ease, box-shadow 0.15s ease;
+      box-shadow: 0 12px 30px rgba(36, 47, 155, 0.45);
+      transition: background 0.15s ease, transform 0.07s ease, box-shadow 0.15s ease;
     }
 
     .btn-primary:hover {
-      background: #1d4ed8;
+      background: #1F2A88;
       transform: translateY(-1px);
-      box-shadow: 0 14px 30px rgba(37, 99, 235, 0.5);
-    }
-
-    .btn-primary:disabled {
-      opacity: 0.7;
-      box-shadow: none;
-      cursor: default;
+      box-shadow: 0 16px 38px rgba(36, 47, 155, 0.6);
     }
 
     .card-list {
       padding-top: 1.75rem;
     }
 
-    .table {
-      width: 100%;
-      border-collapse: collapse;
-      margin-top: 1.5rem;
-      font-size: 0.88rem;
+    .route-list {
+      list-style: none;
+      margin: 0;
+      padding: 0;
+      display: flex;
+      flex-direction: column;
+      gap: 0.9rem;
     }
 
-    .table th,
-    .table td {
-      text-align: left;
-      padding: 0.7rem 0.6rem;
-      border-bottom: 1px solid #e5e7eb;
+    .route-item {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 1rem;
+      padding: 0.8rem 1rem;
+      border-radius: 16px;
+      border: 1px solid var(--ur-border);
+      background: #F9FAFB;
     }
 
-    .table th {
+    .route-line {
+      margin: 0;
+      font-size: 0.95rem;
+      font-weight: 500;
+      color: var(--ur-primary-dark);
+    }
+
+    .route-meta {
+      margin: 0.15rem 0 0;
+      font-size: 0.8rem;
+      color: #6B7280;
+    }
+
+    .price-chip {
+      display: inline-flex;
+      align-items: center;
+      padding: 0.35rem 0.7rem;
+      border-radius: 999px;
+      background: var(--ur-soft-salmon);
+      color: #7C1034;
+      font-size: 0.8rem;
       font-weight: 600;
-      color: #4b5563;
     }
 
     @media (max-width: 900px) {
       .card {
-        padding: 1.75rem 1.5rem;
+        padding: 1.8rem 1.6rem 2rem;
       }
 
       .form-row {
         grid-template-columns: 1fr;
+      }
+
+      .field-small {
+        max-width: none;
       }
     }
   `]
 })
 export class PublishRouteComponent {
   private fb = inject(FormBuilder);
-  private currentDriverId = 1; // demo
-
-  vehicles: Vehicle[] = [
-    { id: 1, name: 'Sedán – Toyota Yaris', minCapacity: 1, maxCapacity: 4 },
-    { id: 2, name: 'Hatchback – Kia Rio', minCapacity: 1, maxCapacity: 3 },
-    { id: 3, name: 'SUV – Hyundai Tucson', minCapacity: 1, maxCapacity: 5 },
-  ];
-
-  routes: Route[] = [];
-  timeError: string | null = null;
-  duplicateError: string | null = null;
 
   form: FormGroup = this.fb.group({
     origin: ['', Validators.required],
     destination: ['', Validators.required],
     date: ['', Validators.required],
     time: ['', Validators.required],
-    vehicleId: ['', Validators.required],
+    vehicle: ['', Validators.required],
     capacity: [1, [Validators.required, Validators.min(1)]],
+    price: [null, [Validators.min(0)]],
   });
 
-  get selectedVehicle(): Vehicle | undefined {
-    const id = this.form.get('vehicleId')?.value;
-    return this.vehicles.find(v => v.id === Number(id));
-  }
+  routes: DriverRoute[] = [];
+  successMessage: string | null = null;
+  errorMessage: string | null = null;
 
   isInvalid(controlName: string): boolean {
     const ctrl = this.form.get(controlName);
     return !!ctrl && ctrl.invalid && (ctrl.dirty || ctrl.touched);
   }
 
-  onVehicleChange(): void {
-    const vehicle = this.selectedVehicle;
-    if (!vehicle) { return; }
-    const ctrl = this.form.get('capacity');
-    if (!ctrl) { return; }
-    if (ctrl.value < vehicle.minCapacity) {
-      ctrl.setValue(vehicle.minCapacity);
-    }
-    if (ctrl.value > vehicle.maxCapacity) {
-      ctrl.setValue(vehicle.maxCapacity);
-    }
-  }
-
   onSubmit(): void {
-    this.timeError = null;
-    this.duplicateError = null;
+    this.successMessage = null;
+    this.errorMessage = null;
 
     if (this.form.invalid) {
       this.form.markAllAsTouched();
       return;
     }
 
-    const { origin, destination, date, time, vehicleId, capacity } = this.form.value;
-
-    const departure = new Date(`${date}T${time}`);
+    const value = this.form.value as PublishRouteForm;
+    const departure = new Date(`${value.date}T${value.time}`);
     const now = new Date();
 
-    // RN5: no publicar rutas con horarios pasados
+    // RN5: no horarios pasados
     if (departure <= now) {
-      this.timeError = 'No se pueden publicar rutas con horarios pasados.';
+      this.errorMessage = 'No se pueden publicar rutas con horarios pasados.';
       return;
     }
 
-    const vehicle = this.selectedVehicle;
-    if (vehicle) {
-      // RN6: capacidad mínima según vehículo y número positivo
-      if (capacity < vehicle.minCapacity || capacity > vehicle.maxCapacity) {
-        this.timeError = `La capacidad debe estar entre ${vehicle.minCapacity} y ${vehicle.maxCapacity} pasajeros.`;
-        return;
-      }
-    }
-
-    // RN5: rutas duplicadas para el mismo conductor
+    // RN5: rutas duplicadas mismo origen/destino, fecha y hora
     const duplicate = this.routes.some(r =>
-      r.driverId === this.currentDriverId &&
-      r.origin.toLowerCase() === String(origin).toLowerCase() &&
-      r.destination.toLowerCase() === String(destination).toLowerCase() &&
-      r.date === date &&
-      r.time === time &&
-      r.active
+      r.origin.trim().toLowerCase() === value.origin.trim().toLowerCase() &&
+      r.destination.trim().toLowerCase() === value.destination.trim().toLowerCase() &&
+      r.date === value.date &&
+      r.time === value.time
     );
 
     if (duplicate) {
-      this.duplicateError =
-        'Ya tienes una ruta publicada con el mismo origen, destino, fecha y hora.';
+      this.errorMessage = 'Ya publicaste una ruta con el mismo origen, destino, fecha y hora.';
       return;
     }
 
-    const newRoute: Route = {
+    // RN5 / RN6: capacidad mínima positiva
+    if (value.capacity < 1) {
+      this.errorMessage = 'Cada ruta debe tener al menos 1 pasajero como capacidad mínima.';
+      return;
+    }
+
+    const newRoute: DriverRoute = {
       id: this.routes.length + 1,
-      origin,
-      destination,
-      date,
-      time,
-      capacity,
-      confirmedPassengers: 0,
-      vehicleId: Number(vehicleId),
-      driverId: this.currentDriverId,
-      active: true,
+      origin: value.origin,
+      destination: value.destination,
+      date: value.date,
+      time: value.time,
+      capacity: value.capacity,
+      price: value.price ?? undefined,
     };
 
     this.routes.push(newRoute);
-    this.routes = [...this.routes]; // refrescar referencia para detección de cambios
+    this.successMessage = 'Ruta publicada correctamente.';
 
     this.form.reset({
       origin: '',
       destination: '',
       date: '',
       time: '',
-      vehicleId: '',
+      vehicle: '',
       capacity: 1,
+      price: null,
     });
   }
 }
