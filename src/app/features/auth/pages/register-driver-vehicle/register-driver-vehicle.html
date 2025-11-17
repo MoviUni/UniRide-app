@@ -1,0 +1,68 @@
+<div class="register-container">
+  <div class="card">
+
+    <!-- Logo -->
+    <div class="logo">
+      <img src="assets/logo.png" alt="Logo">
+      <h1>UniRide</h1>
+    </div>
+
+    <!-- Steps -->
+    <div class="steps">
+
+      <div class="step">
+        <div class="circle"></div>
+        <span class="label">Datos</span>
+      </div>
+
+      <div class="line"></div>
+
+      <div class="step">
+        <div class="circle active"></div>
+        <span class="label">Vehículo</span>
+      </div>
+
+      <div class="line"></div>
+
+      <div class="step">
+        <div class="circle"></div>
+        <span class="label">Cuenta</span>
+      </div>
+
+    </div>
+
+    <h2>Datos del Vehículo</h2>
+
+    <form>
+
+      <label>Matrícula</label>
+      <input type="text" placeholder="Empty label">
+
+      <label>Marca</label>
+      <input type="text" placeholder="Empty label">
+
+      <label>Modelo</label>
+      <input type="text" placeholder="Empty label">
+
+      <label>Capacidad</label>
+      <input type="number" placeholder="Empty label">
+
+      <label>Color</label>
+      <input type="text" placeholder="Empty label">
+
+      <label>Aire Acondicionado</label>
+      <div class="radio-group">
+        <label><input type="radio" name="aire" value="si"> Sí</label>
+        <label><input type="radio" name="aire" value="no"> No</label>
+      </div>
+
+      <button type="button" (click)="goToNext()">Continuar</button>
+
+    </form>
+
+    <hr/>
+
+    <p>¿Ya tienes una cuenta? <a routerLink="/auth/login">Accede a tu cuenta</a></p>
+
+  </div>
+</div>

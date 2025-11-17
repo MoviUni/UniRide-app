@@ -4,17 +4,16 @@ import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 
 @Component({
-  selector: 'app-register-driver',
+  selector: 'app-register-driver-vehicle',
   standalone: true,
-  templateUrl: './register-driver.html',
-  styleUrl: './register-driver.css',
+  templateUrl: './register-driver-vehicle.html',
+  styleUrl: './register-driver-vehicle.css',
   imports: [RouterModule, CommonModule, FormsModule]
 })
-export class RegisterDriver {
-
+export class RegisterDriverVehicle {
   constructor(private router: Router) {}
 
   goToNext() {
-    this.router.navigate(['/auth/register/driver']); // página paso 2
+    this.router.navigate(['/auth/register/driver/account']); // página paso 2
   }
 }
