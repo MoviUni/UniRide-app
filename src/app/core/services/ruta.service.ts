@@ -46,19 +46,13 @@ export class RutaService {
 }
 
   // GET - Exportar historial de rutas en PDF
-  descargarHistorialPDF(conductorId: number): void {
-  this.http.get(`${this.apiUrl}/conductor/${conductorId}/historial/pdf`, {
+  descargarHistorialPDF(conductorId: number): Observable<Blob> {
+  return this.http.get(`${this.apiUrl}/conductor/${conductorId}/historial/pdf`, {
     ...this.getHeaders(),
-    responseType: 'blob'
-  }).subscribe((data: Blob) => {
-    const url = window.URL.createObjectURL(data);
-    const a = document.createElement('a');
-    a.href = url;
-    a.download = `historial_conductor_${conductorId}.pdf`;
-    a.click();
-    window.URL.revokeObjectURL(url);
+    responseType: 'blob'  // ✅ aquí es 'blob', no 'json'
   });
 }
+
 
 
   
