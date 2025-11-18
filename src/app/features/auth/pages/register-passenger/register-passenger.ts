@@ -1,20 +1,58 @@
 import { Component } from '@angular/core';
 import { Router, RouterModule } from '@angular/router';
 import { CommonModule } from '@angular/common';
-import { FormsModule } from '@angular/forms';
+import { FormBuilder, FormGroup, Validators, ReactiveFormsModule } from '@angular/forms';
 
 @Component({
   selector: 'app-register-passenger',
   standalone: true,
   templateUrl: './register-passenger.html',
   styleUrl: './register-passenger.css',
-  imports: [RouterModule, CommonModule, FormsModule]
+  imports: [
+    RouterModule,
+    CommonModule,
+    ReactiveFormsModule
+  ]
 })
 export class RegisterPassenger {
 
-  constructor(private router: Router) {}
+  passengerForm: FormGroup;
+
+  constructor(
+    private router: Router,
+    private fb: FormBuilder
+  ) {
+
+    this.passengerForm = this.fb.group({
+      nombres: ['', [Validators.required, Validators.minLength(3)]],
+      apellidos: ['', [Validators.required, Validators.minLength(3)]],
+      telefono: [
+        '',
+        [
+          Validators.required,
+          Validators.pattern(/^[0-9]{9}$/) // 9 dígitos
+        ]
+      ],
+      dni: [
+        '',
+        [
+          Validators.required,
+          Validators.pattern(/^[0-9]{8}$/) // 8 dígitos
+        ]
+      ]
+    });
+  }
 
   goToNext() {
-    this.router.navigate(['/auth/register/passenger/account']); // página paso 2
+    if (this.passengerForm.invalid) {
+      this.passengerForm.markAllAsTouched();
+      return;
+    }
+
+    // Guarda los datos temporalmente (opcional)
+    localStorage.setItem('registerPassengerData', JSON.stringify(this.passengerForm.value));
+
+    // Navegar a la página de cuenta
+    this.router.navigate(['/auth/register/passenger/account']);
   }
 }

@@ -8,7 +8,7 @@
     </div>
 
     <!-- Steps -->
-<div class="steps">
+    <div class="steps">
 
       <div class="step">
         <div class="circle"></div>
@@ -33,30 +33,61 @@
 
     <h2>Datos del Vehículo</h2>
 
-    <form>
+    <form [formGroup]="vehicleForm">
 
+      <!-- Matrícula -->
       <label>Matrícula</label>
-      <input type="text" placeholder="Empty label">
-
-      <label>Marca</label>
-      <input type="text" placeholder="Empty label">
-
-      <label>Modelo</label>
-      <input type="text" placeholder="Empty label">
-
-      <label>Capacidad</label>
-      <input type="number" placeholder="Empty label">
-
-      <label>Color</label>
-      <input type="text" placeholder="Empty label">
-
-      <label>SOAT</label>
-      <div class="radio-group">
-        <label><input type="radio" name="aire" value="si"> Sí</label>
-        <label><input type="radio" name="aire" value="no"> No</label>
+      <input type="text" placeholder="Empty label" formControlName="matricula">
+      <div class="error"
+           *ngIf="vehicleForm.get('matricula')?.touched && vehicleForm.get('matricula')?.invalid">
+        <small *ngIf="vehicleForm.get('matricula')?.errors?.['required']">* Este campo es obligatorio.</small>
       </div>
 
-      <button type="button">Registrarse</button>
+      <!-- Marca -->
+      <label>Marca</label>
+      <input type="text" placeholder="Empty label" formControlName="marca">
+      <div class="error"
+           *ngIf="vehicleForm.get('marca')?.touched && vehicleForm.get('marca')?.invalid">
+        <small *ngIf="vehicleForm.get('marca')?.errors?.['required']">* Este campo es obligatorio.</small>
+      </div>
+
+      <!-- Modelo -->
+      <label>Modelo</label>
+      <input type="text" placeholder="Empty label" formControlName="modelo">
+      <div class="error"
+           *ngIf="vehicleForm.get('modelo')?.touched && vehicleForm.get('modelo')?.invalid">
+        <small *ngIf="vehicleForm.get('modelo')?.errors?.['required']">* Este campo es obligatorio.</small>
+      </div>
+
+      <!-- Capacidad -->
+      <label>Capacidad</label>
+      <input type="number" placeholder="Empty label" formControlName="capacidad">
+      <div class="error"
+           *ngIf="vehicleForm.get('capacidad')?.touched && vehicleForm.get('capacidad')?.invalid">
+        <small *ngIf="vehicleForm.get('capacidad')?.errors?.['required']">* Este campo es obligatorio.</small>
+        <small *ngIf="vehicleForm.get('capacidad')?.errors?.['min']">* Mínimo 1 asiento.</small>
+      </div>
+
+      <!-- Color -->
+      <label>Color</label>
+      <input type="text" placeholder="Empty label" formControlName="color">
+      <div class="error"
+           *ngIf="vehicleForm.get('color')?.touched && vehicleForm.get('color')?.invalid">
+        <small *ngIf="vehicleForm.get('color')?.errors?.['required']">* Este campo es obligatorio.</small>
+      </div>
+
+      <!-- SOAT -->
+      <label>SOAT</label>
+      <div class="radio-group">
+        <label><input type="radio" formControlName="soat" value="si"> Sí</label>
+        <label><input type="radio" formControlName="soat" value="no"> No</label>
+      </div>
+      <div class="error"
+           *ngIf="vehicleForm.get('soat')?.touched && vehicleForm.get('soat')?.invalid">
+        <small>* Selecciona una opción.</small>
+      </div>
+
+      <button type="button" (click)="register()">Registrarse</button>
 
     </form>
 

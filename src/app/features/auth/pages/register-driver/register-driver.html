@@ -10,7 +10,6 @@
     <!-- Steps -->
     <div class="steps">
 
-      <!-- Paso 1: Datos -->
       <div class="step">
         <div class="circle active"></div>
         <span class="label">Datos</span>
@@ -18,7 +17,6 @@
 
       <div class="line"></div>
 
-      <!-- Paso 2: Vehículo -->
       <div class="step">
         <div class="circle"></div>
         <span class="label">Cuenta</span>
@@ -26,7 +24,6 @@
 
       <div class="line"></div>
 
-      <!-- Paso 3: Cuenta -->
       <div class="step">
         <div class="circle"></div>
         <span class="label">Vehículo</span>
@@ -36,24 +33,48 @@
 
     <h2>Registro de Conductor</h2>
 
-    <form>
+    <form [formGroup]="driverForm">
+
+      <!-- Nombres -->
       <label>Nombres</label>
-      <input type="text" placeholder="Empty label" />
+      <input type="text" placeholder="Empty label" formControlName="nombres">
+      <p class="error" *ngIf="driverForm.get('nombres')?.touched && driverForm.get('nombres')?.invalid">
+        * Ingresa al menos 3 caracteres.
+      </p>
 
+      <!-- Apellidos -->
       <label>Apellidos</label>
-      <input type="text" placeholder="Empty label" />
+      <input type="text" placeholder="Empty label" formControlName="apellidos">
+      <p class="error" *ngIf="driverForm.get('apellidos')?.touched && driverForm.get('apellidos')?.invalid">
+        * Ingresa al menos 3 caracteres.
+      </p>
 
+      <!-- Teléfono -->
       <label>Teléfono</label>
-      <input type="text" placeholder="Empty label" />
+      <input type="text" placeholder="Empty label" formControlName="telefono">
+      <p class="error" *ngIf="driverForm.get('telefono')?.touched && driverForm.get('telefono')?.invalid">
+        * Ingresa un número de 9 dígitos.
+      </p>
 
+      <!-- DNI -->
       <label>DNI</label>
-      <input type="text" placeholder="Empty label" />
+      <input type="text" placeholder="Empty label" formControlName="dni">
+      <p class="error" *ngIf="driverForm.get('dni')?.touched && driverForm.get('dni')?.invalid">
+        * El DNI debe tener 8 dígitos.
+      </p>
 
-      <button type="button" (click)="goToNext()">Continuar</button>
+      <button type="button"
+              (click)="goToNext()"
+              [disabled]="driverForm.invalid">
+        Continuar
+      </button>
     </form>
 
     <hr/>
 
-    <p>¿Ya tienes una cuenta? <a routerLink="/auth/login">Accede a tu cuenta</a></p>
+    <p>
+      ¿Ya tienes una cuenta?
+      <a routerLink="/auth/login">Accede a tu cuenta</a>
+    </p>
   </div>
 </div>

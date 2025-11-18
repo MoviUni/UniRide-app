@@ -139,3 +139,9 @@ p {
 a {
   color: #2b3dbb;
 }
+
+.error {
+  color: #e74c3c;
+  font-size: 0.85rem;
+  margin: 4px 0 10px;
+}

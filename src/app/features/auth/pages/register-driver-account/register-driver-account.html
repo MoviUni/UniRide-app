@@ -8,7 +8,7 @@
     </div>
 
     <!-- Steps -->
-         <div class="steps">
+    <div class="steps">
 
       <div class="step">
         <div class="circle"></div>
@@ -31,22 +31,41 @@
 
     </div>
 
-
     <h2>Crear una cuenta</h2>
 
-    <form>
+    <form [formGroup]="accountForm">
 
+      <!-- Código universitario -->
       <label>Código Universitario</label>
-      <input type="text" placeholder="Empty label" />
+      <input type="text" placeholder="Empty label" formControlName="codigo" />
+      <div class="error" *ngIf="accountForm.get('codigo')?.touched && accountForm.get('codigo')?.invalid">
+        <small *ngIf="accountForm.get('codigo')?.errors?.['required']">* Este campo es obligatorio.</small>
+        <small *ngIf="accountForm.get('codigo')?.errors?.['minlength']">* Ingresa al menos 3 caracteres.</small>
+      </div>
 
+      <!-- Email -->
       <label>Correo electrónico</label>
-      <input type="email" placeholder="Empty label" />
+      <input type="email" placeholder="Empty label" formControlName="email" />
+      <div class="error" *ngIf="accountForm.get('email')?.touched && accountForm.get('email')?.invalid">
+        <small *ngIf="accountForm.get('email')?.errors?.['required']">* El email es obligatorio.</small>
+        <small *ngIf="accountForm.get('email')?.errors?.['email']">* Ingresa un email válido.</small>
+      </div>
 
+      <!-- Password -->
       <label>Contraseña</label>
-      <input type="password" placeholder="Empty label" />
+      <input type="password" placeholder="Empty label" formControlName="password" />
+      <div class="error" *ngIf="accountForm.get('password')?.touched && accountForm.get('password')?.invalid">
+        <small *ngIf="accountForm.get('password')?.errors?.['required']">* La contraseña es obligatoria.</small>
+        <small *ngIf="accountForm.get('password')?.errors?.['minlength']">* Mínimo 6 caracteres.</small>
+      </div>
 
+      <!-- Confirm Password -->
       <label>Confirmar contraseña</label>
-      <input type="password" placeholder="Empty label" />
+      <input type="password" placeholder="Empty label" formControlName="password2" />
+      <div class="error" *ngIf="accountForm.get('password2')?.touched && accountForm.get('password2')?.invalid">
+        <small *ngIf="accountForm.get('password2')?.errors?.['required']">* Este campo es obligatorio.</small>
+        <small *ngIf="accountForm.get('password2')?.errors?.['minlength']">* Mínimo 6 caracteres.</small>
+      </div>
 
       <button type="button" (click)="goToNext()">Continuar</button>
     </form>
@@ -54,5 +73,6 @@
     <hr/>
 
     <p>¿Ya tienes una cuenta? <a routerLink="/auth/login">Accede a tu cuenta</a></p>
+
   </div>
 </div>

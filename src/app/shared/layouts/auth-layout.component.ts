@@ -17,7 +17,7 @@ import { NavbarComponent } from '../components/navbar/navbar-user.component';
     </main>
     <app-footer></app-footer>
   </div>
-  `,  
+  `,
   styles: []
 })
 export class AuthLayoutComponent {

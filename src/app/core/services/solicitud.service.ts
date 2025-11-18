@@ -7,7 +7,7 @@ import { SolicitudEstadoRequest, SolicitudEstadoResponse, SolicitudViajeRequest,
 @Injectable({
   providedIn: 'root'
 })
-export class NombreService {
+export class SolicitudService {
   private http = inject(HttpClient);
   private apiUrl = `${environment.apiUrl}/solicitudes`;
 
