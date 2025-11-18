@@ -21,6 +21,12 @@ export const RUTA_ROUTES: Routes = [
       import('./page/rutas-conductor/rutas-conductor.component')
         .then(m => m.RutasConductorComponent)
   },
+    {
+    path: 'buscar',
+    loadComponent: () =>
+      import('./page/busqueda/busqueda.component')
+        .then(m => m.BusquedaRutasComponent)
+  },
   // 4) Gestionar solicitudes de una ruta
   {
     path: ':idRuta/solicitudes',
