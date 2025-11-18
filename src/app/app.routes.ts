@@ -1,5 +1,6 @@
 import { Routes } from '@angular/router';
 import { AuthLayoutComponent } from './shared/layouts/auth-layout.component';
+import { LandingLayoutComponent } from './shared/layouts/landing-layout.component';
 
 export const routes: Routes = [
     {
@@ -11,18 +12,43 @@ export const routes: Routes = [
                 loadChildren: () => import('./features/rutas/ruta.routes').then((m) => m.RUTA_ROUTES)
             },
             {
-                path:'login',
-                loadChildren: () => import('./features/auth/auth.routes').then((m) => m.AUTH_ROUTES)
-            },
-            {
                 path:'solicitudes',
                 loadChildren: () => import('./features/solicitudes/solicitud.routes').then((m) => m.SOLICITUD_ROUTES)
+            },
+            {
+                
+                path:'main',
+                loadChildren: () => import('./features/main-page/main.routes').then((m) => m.MAIN_ROUTES)
             }
             
         ]
     },
     {
+        path: 'home',
+        component: LandingLayoutComponent,
+        loadChildren: () => import('./features/home/home.routes').then((m) => m.HOME_ROUTES)
+    },
+    {
         path: '**', 
-        redirectTo: '' //aquí muestra la ruta por defecto
-    }
+        redirectTo: '/home/landing' //aquí muestra la ruta por defecto
+    },
+  {
+    path: 'auth',
+    loadChildren: () =>
+      import('./features/auth/auth.routes').then(m => m.AUTH_ROUTES),
+  },
+  {
+    path: 'home',
+    loadChildren: () =>
+      import('./features/home/home.routes').then(m => m.HOME_ROUTES),
+  },
+  {
+    path: '',
+    pathMatch: 'full',
+    redirectTo: 'auth/login',   // que abra el login al inicio
+  },
+  {
+    path: '**',
+    redirectTo: 'auth/login',
+  },
 ];

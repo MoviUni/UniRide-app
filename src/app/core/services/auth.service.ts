@@ -107,4 +107,17 @@ export class AuthService {
   getToken(): string | null {
     return this._token();
   }
+  
+  // 👇 NUEVO: devolver el id del usuario como number
+  getUserId(): number | null {
+    const user = this._currentUser(); // lo que guardaste en saveAuthData()
+
+    if (!user || user.id == null || user.id === '') {
+      return null;
+    }
+
+    // En tu UserResponse el id es string, lo convertimos a número
+    const idNum = Number(user.id);
+    return Number.isNaN(idNum) ? null : idNum;
+  }
 }
