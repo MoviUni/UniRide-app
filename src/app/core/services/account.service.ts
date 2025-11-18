@@ -9,7 +9,7 @@ import { environment } from '../../../environments/environment';
 })
 export class AccountService {
   private http = inject(HttpClient);
-  private apiUrl = `${environment.apiUrl}/products`;
+  private apiUrl = `${environment.apiUrl}/accounts`;
 
   // Signals para ESTADO COMPARTIDO
   private _items = signal<any[]>([]);

@@ -77,7 +77,7 @@ export class AuthService {
       id: '', // No disponible desde AuthResponse
       email: response.email,
       name: response.name,
-      role: RoleType.ROLE_USER, // Valor por defecto, actualizar desde backend si es necesario
+      role: RoleType.ROLE_CONDUCTOR, // Valor por defecto, actualizar desde backend si es necesario
       active: true,
       createdAt: new Date().toISOString(),
       updatedAt: new Date().toISOString()
@@ -106,5 +106,18 @@ export class AuthService {
 
   getToken(): string | null {
     return this._token();
+  }
+  
+  // 👇 NUEVO: devolver el id del usuario como number
+  getUserId(): number | null {
+    const user = this._currentUser(); // lo que guardaste en saveAuthData()
+
+    if (!user || user.id == null || user.id === '') {
+      return null;
+    }
+
+    // En tu UserResponse el id es string, lo convertimos a número
+    const idNum = Number(user.id);
+    return Number.isNaN(idNum) ? null : idNum;
   }
 }
