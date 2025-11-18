@@ -1,8 +1,8 @@
 // src/app/core/services/solicitud.service.ts
 
-import { Injectable, inject } from '@angular/core';
+import { Injectable, inject, signal } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { Observable } from 'rxjs';
+import { Observable, tap } from 'rxjs';
 
 import {
   EstadoSolicitud,
@@ -10,7 +10,7 @@ import {
   SolicitudViajeResponse
 } from '../models/solicitud.model';
 import { environment } from '../../../environments/environment';
-import { SolicitudCardResponse, SolicitudEstadoRequest, SolicitudEstadoResponse, SolicitudViajeRequest, SolicitudViajeResponse } from '../models/solicitud.model';
+import { SolicitudCardResponse, SolicitudEstadoRequest, SolicitudEstadoResponse } from '../models/solicitud.model';
 
 @Injectable({
   providedIn: 'root'
