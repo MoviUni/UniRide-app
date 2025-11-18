@@ -1,52 +1,91 @@
-import { Injectable, inject, signal } from '@angular/core';
+// src/app/core/services/solicitud.service.ts
+
+import { Injectable, inject } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { Observable, tap } from 'rxjs';
+import { Observable } from 'rxjs';
+
+import {
+  EstadoSolicitud,
+  SolicitudViajeRequest,
+  SolicitudViajeResponse
+} from '../models/solicitud.model';
 import { environment } from '../../../environments/environment';
-import { SolicitudEstadoRequest, SolicitudEstadoResponse, SolicitudViajeRequest, SolicitudViajeResponse } from '../models/solicitud.model';
 
 @Injectable({
   providedIn: 'root'
 })
-export class NombreService {
+export class SolicitudService {
+
+  // HttpClient vía inject (igual que en RutaService)
   private http = inject(HttpClient);
+
+  // base URL para solicitudes
   private apiUrl = `${environment.apiUrl}/solicitudes`;
 
-  // Signals para ESTADO COMPARTIDO
-  private _items = signal<SolicitudViajeResponse[]>([]);
-  items = this._items.asReadonly();
+  // 🔐 Token hardcodeado solo para pruebas
+  private token =
+    'eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJtYXJpYW5hLmc1bWV6QGV4YW1wbGUuY29tIiwicm9sZSI6IlJPTEVfQ09ORFVDVE9SIiwiZXhwIjoxNzY1NTYwNzc5fQ.u23huAEkcj49xEAgPhtArJtlDxbB_vxRB-77Ba5mx9vsfc5DogP5JOvxu7PtOdtiZeFm8ZirwVpmXZqmDxZWJw';
 
-  // GET - Obtener todos
-  getAll(): Observable<SolicitudViajeResponse[]> {
-    return this.http.get<SolicitudViajeResponse[]>(this.apiUrl).pipe(
-      tap(data => this._items.set(data))
+  // headers igual que en RutaService
+  private getHeaders() {
+    return {
+      headers: {
+        Authorization: `Bearer ${this.token}`,
+        'Content-Type': 'application/json'
+      }
+    };
+  }
+
+  // ----------------------------------------------------------------
+  // 1) Crear solicitud (por si la necesitas del lado pasajero)
+  // ----------------------------------------------------------------
+  crearSolicitud(
+    body: SolicitudViajeRequest
+  ): Observable<SolicitudViajeResponse> {
+    return this.http.post<SolicitudViajeResponse>(
+      this.apiUrl,
+      body,
+      this.getHeaders()
     );
   }
 
-
-  private _estados = signal<SolicitudEstadoResponse[]>([]);
-  estados = this._estados.asReadonly();
-  getEstados(pasajeroId: number): Observable<SolicitudEstadoResponse[]> {
-    return this.http.get<SolicitudEstadoResponse[]>(`${this.apiUrl}/usuario/id?id=${pasajeroId}`).pipe(
-      tap(data => this._estados.set(data))
+  // ----------------------------------------------------------------
+  // 2) Ver solicitudes de una ruta
+  //    GET /solicitudes/ruta/{idRuta}
+  // ----------------------------------------------------------------
+  getSolicitudesPorRuta(
+    idRuta: number
+  ): Observable<SolicitudViajeResponse[]> {
+    return this.http.get<SolicitudViajeResponse[]>(
+      `${this.apiUrl}/ruta/${idRuta}`,
+      this.getHeaders()
     );
   }
 
-  // POST - Crear
-  create(data: SolicitudViajeRequest): Observable<SolicitudViajeResponse> {
-    return this.http.post<SolicitudViajeResponse>(this.apiUrl, data).pipe(
-      tap(newItem => {
-        this._items.update(current => [...current, newItem]);
-      })
+  // ----------------------------------------------------------------
+  // 3) Cambiar estado de una solicitud
+  //    PATCH /solicitudes/{idSolicitud}/estado
+  // ----------------------------------------------------------------
+  cambiarEstadoSolicitud(
+    idSolicitud: number,
+    nuevoEstado: EstadoSolicitud
+  ): Observable<SolicitudViajeResponse> {
+    const body = { estadoSolicitud: nuevoEstado };
+
+    return this.http.patch<SolicitudViajeResponse>(
+      `${this.apiUrl}/${idSolicitud}/estado`,
+      body,
+      this.getHeaders()
     );
   }
 
-  // PATCH
-  cancelSolicitud(data:SolicitudEstadoRequest, idSolicitud:number){
-    return this.http.patch<SolicitudViajeResponse>(`${this.apiUrl}/${idSolicitud}/estado`, data)
+  // (Opcional) Obtener una solicitud por id
+  getSolicitudById(
+    idSolicitud: number
+  ): Observable<SolicitudViajeResponse> {
+    return this.http.get<SolicitudViajeResponse>(
+      `${this.apiUrl}/${idSolicitud}`,
+      this.getHeaders()
+    );
   }
-
-  updateSolicitud(data:SolicitudEstadoRequest, idSolicitud:number){
-    return this.http.patch<SolicitudViajeResponse>(`${this.apiUrl}/${idSolicitud}/estado`, data)
-  }
-
 }

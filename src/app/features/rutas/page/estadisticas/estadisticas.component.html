@@ -1,37 +1,100 @@
 <div class="total">
-  <div class="ver-ms"><span class="verms_span">Ver más</span></div>
-  <div class="polygon-3"></div>
-  <div class="viaje_1">
-    <div class="av-aviacin-2202-upc-monterrico"><span class="avaviacin2202upcmonterrico_span">Av. Aviación 2202 → UPC Monterrico</span></div>
-    <div class="text-15-septiembre-2049"><span class="f5septiembre2049_span">15 septiembre  20:49 </span></div>
-    <div class="s-1290"><span class="s1290_span">S/ 12,90</span></div>
-    <img class="people-in-car-side-view" src="https://placehold.co/90x90" />
-  </div>
-  <div class="viaje_2">
-    <div class="av-aviacin-2202-upc-monterrico_01"><span class="avaviacin2202upcmonterrico_01_span">Av. Aviación 2202 → UPC Monterrico</span></div>
-    <div class="text-15-septiembre-2049_01"><span class="f5septiembre2049_01_span">15 septiembre  20:49 </span></div>
-    <div class="s-1290_01"><span class="s1290_01_span">S/ 12,90</span></div>
-    <img class="people-in-car-side-view_01" src="https://placehold.co/90x90" />
-  </div>
-  <div class="viaje_3">
-    <div class="av-aviacin-2202-upc-monterrico_02"><span class="avaviacin2202upcmonterrico_02_span">Av. Aviación 2202 → UPC Monterrico</span></div>
-    <div class="text-15-septiembre-2049_02"><span class="f5septiembre2049_02_span">15 septiembre  20:49 </span></div>
-    <div class="s-1290_02"><span class="s1290_02_span">S/ 12,90</span></div>
-    <img class="people-in-car-side-view_02" src="https://placehold.co/90x90" />
-  </div>
-  <div class="viaje_4">
-    <div class="av-aviacin-2202-upc-monterrico_03"><span class="avaviacin2202upcmonterrico_03_span">Av. Aviación 2202 → UPC Monterrico</span></div>
-    <div class="text-15-septiembre-2049_03"><span class="f5septiembre2049_03_span">15 septiembre  20:49 </span></div>
-    <div class="s-1290_03"><span class="s1290_03_span">S/ 12,90</span></div>
-    <img class="people-in-car-side-view_03" src="https://placehold.co/90x90" />
-  </div>
-  <div class="total_viajes"><span class="total_viajes_span">82</span></div>
+  <!--TOTAL DE VIAJES-->
+  <!--<div class="total_viajes"><span class="total_viajes_span">82</span></div>-->
   <div class="total_viajes_titulo"><span class="total_viajes_titulo_span">Total de viajes realizados</span></div>
-  <div class="frecuencia_viajes_titulo"><span class="frecuencia_viajes_titulo_span">Frecuencia de viajes durante la semana</span></div>
-  <div class="exportar_historial_titulo"><span class="exportar_historial_titulo_span">Exportar historial en PDF</span></div>
-  <div class="viajes_frecuentes_titulo"><span class="viajes_frecuentes_titulo_span">Viajes frecuentes</span></div>
-  <img class="histograma" src="https://placehold.co/1261x709" />
-  <div class="descargar_btn">
-    <div class="conoce-ms"><span class="conocems_span">Descargar</span></div>
+  <div class="total_viajes">
+    <span class="total_viajes_span">{{ totalViajes }}</span>
   </div>
+
+  <!-- FRECUENCIA DE VIAJES -->
+<div class="frecuencia_viajes_titulo">
+  <span class="frecuencia_viajes_titulo_span">Frecuencia de viajes durante la semana</span>
+</div>
+@if (noTieneViajes) {
+  <!-- Mensaje cuando no hay viajes -->
+  <div class="mensaje_errpr_01"> 
+  <div class="mensaje-contenido">
+    <img class="vector" src="assets/auto_icon.png" />
+    <div class="no-tiene-viajes-registrados-an_01">
+      <span class="notieneviajesregistradosan_01_span">
+        No tiene viajes registrados aún.
+      </span>
+    </div>
+
+  </div>
+</div>
+   
+} @else {
+  <!-- Gráfico -->
+  <div class="grafico_barras">
+    <canvas
+      baseChart
+      [data]="barChartData"
+      [options]="barChartOptions"
+      [type]="barChartType">
+    </canvas>
+  </div>
+}
+  
+  <!--<div class="ver-ms"><span class="verms_span">Ver más</span></div>
+  <div class="polygon-3"></div>--> 
+
+<!-- VIAJES FRECUENTES -->  
+ <div class="viajes_frecuentes_titulo">
+  <span class="viajes_frecuentes_titulo_span">Viajes frecuentes</span>
+</div>
+<div class="lista-viajes">
+  @if (rutasFrecuentes.length > 0){
+    <div class="contenedor-viajes"> 
+  <ng-container *ngFor="let ruta of rutasFrecuentes; let i = index">
+    <div [ngClass]="'viaje_' + (i + 1)">
+      
+      <!-- Ícono a la izquierda -->
+      <img class="people-in-car-side-view" src="assets/Car_Side_View.png" alt="auto" />
+
+      <!-- Punto de partida -->
+      <div class="av-aviacin-2202-upc-monterrico">
+        <span class="avaviacin2202upcmonterrico_span">
+          {{ ruta.origen }} → {{ ruta.destino }}
+        </span>
+      </div>
+
+      <!-- Fecha -->
+      <div class="text-15-septiembre-2049">
+        <span class="f5septiembre2049_span">
+          {{ ruta.fechaSalida | date:'d MMMM' }} {{ ruta.horaSalida }}
+        </span>
+      </div>
+
+      <!-- Precio -->
+      <div class="s-1290">
+        <span class="s1290_span">S/ {{ ruta.tarifa | number:'1.2-2' }}</span>
+      </div>
+
+    </div>
+  </ng-container>
+</div>
+  }@else{
+    <div class="sin-viajes">
+      <div class="mensaje_errpr">
+        <div class="rectangle-188"></div>
+        <div class="clock"></div>
+        <div class="no-tiene-viajes-registrados-an">
+          <span class="notieneviajesregistradosan_span">No tiene viajes registrados aún.</span>
+        </div>
+        <img class="auto_icon" src="assets/auto_icon.png" />
+      </div>
+    </div>
+  }
+</div>
+
+
+   <!--DESCARGAR PDF-->
+  <div class="exportar_historial_contenedor">
+  <div class="exportar_historial_titulo">
+    <span class="exportar_historial_titulo_span">Exportar historial en PDF</span>
+  </div>
+  <button class="descargar_btn" (click)="descargarHistorialPDF()">
+    <div class="conoce-ms"><span class="conocems_span">Descargar</span></div>
+  </button>
 </div>

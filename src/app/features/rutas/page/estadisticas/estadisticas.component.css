@@ -1,29 +1,4 @@
-.verms_span {
-  color: black;
-  font-size: 24px;
-  font-family: Poppins;
-  font-weight: 400;
-  word-wrap: break-word;
-}
 
-.ver-ms {
-  width: 100px;
-  height: 36px;
-  left: 892px;
-  top: 2329px;
-  position: absolute;
-}
-
-.polygon-3 {
-  width: 15.59px;
-  height: 13.50px;
-  left: 1027.59px;
-  top: 2354.50px;
-  position: absolute;
-  transform: rotate(180deg);
-  transform-origin: top left;
-  background: black;
-}
 
 .avaviacin2202upcmonterrico_span {
   color: black;
@@ -31,13 +6,14 @@
   font-family: Poppins;
   font-weight: 700;
   word-wrap: break-word;
+  margin-left: 70px;
 }
 
 .av-aviacin-2202-upc-monterrico {
-  left: 286px;
-  top: 57px;
-  position: absolute;
-  text-align: center;
+  font-size: 20px;
+  font-family: Poppins;
+  font-weight: 500;
+  flex: 1;
 }
 
 .f5septiembre2049_span {
@@ -50,10 +26,11 @@
 }
 
 .text-15-septiembre-2049 {
-  width: 264px;
-  left: 872px;
-  top: 53px;
-  position: absolute;
+  font-size: 22px;
+  font-family: Poppins;
+  font-weight: 400;
+  flex: 0.6;
+  text-align: center;
 }
 
 .s1290_span {
@@ -66,187 +43,17 @@
 }
 
 .s-1290 {
-  width: 125px;
-  left: 1225px;
-  top: 45px;
-  position: absolute;
-  text-align: center;
+  font-size: 28px;
+  font-family: Poppins;
+  font-weight: 700;
+  flex: 0.4;
+  text-align: right;
 }
 
 .people-in-car-side-view {
-  width: 90px;
+   width: 90px;
   height: 90px;
-  left: 82px;
-  top: 30px;
-  position: absolute;
-}
-
-.avaviacin2202upcmonterrico_01_span {
-  color: black;
-  font-size: 24px;
-  font-family: Poppins;
-  font-weight: 700;
-  word-wrap: break-word;
-}
-
-.av-aviacin-2202-upc-monterrico_01 {
-  left: 286px;
-  top: 57px;
-  position: absolute;
-  text-align: center;
-}
-
-.f5septiembre2049_01_span {
-  color: black;
-  font-size: 24px;
-  font-family: Poppins;
-  font-weight: 400;
-  line-height: 43.20px;
-  word-wrap: break-word;
-}
-
-.text-15-septiembre-2049_01 {
-  width: 264px;
-  left: 872px;
-  top: 53px;
-  position: absolute;
-}
-
-.s1290_01_span {
-  color: black;
-  font-size: 32px;
-  font-family: Poppins;
-  font-weight: 700;
-  line-height: 57.60px;
-  word-wrap: break-word;
-}
-
-.s-1290_01 {
-  width: 125px;
-  left: 1225px;
-  top: 45px;
-  position: absolute;
-  text-align: center;
-}
-
-.people-in-car-side-view_01 {
-  width: 90px;
-  height: 90px;
-  left: 82px;
-  top: 30px;
-  position: absolute;
-}
-
-.avaviacin2202upcmonterrico_02_span {
-  color: black;
-  font-size: 24px;
-  font-family: Poppins;
-  font-weight: 700;
-  word-wrap: break-word;
-}
-
-.av-aviacin-2202-upc-monterrico_02 {
-  left: 286px;
-  top: 57px;
-  position: absolute;
-  text-align: center;
-}
-
-.f5septiembre2049_02_span {
-  color: black;
-  font-size: 24px;
-  font-family: Poppins;
-  font-weight: 400;
-  line-height: 43.20px;
-  word-wrap: break-word;
-}
-
-.text-15-septiembre-2049_02 {
-  width: 264px;
-  left: 872px;
-  top: 53px;
-  position: absolute;
-}
-
-.s1290_02_span {
-  color: black;
-  font-size: 32px;
-  font-family: Poppins;
-  font-weight: 700;
-  line-height: 57.60px;
-  word-wrap: break-word;
-}
-
-.s-1290_02 {
-  width: 125px;
-  left: 1225px;
-  top: 45px;
-  position: absolute;
-  text-align: center;
-}
-
-.people-in-car-side-view_02 {
-  width: 90px;
-  height: 90px;
-  left: 82px;
-  top: 30px;
-  position: absolute;
-}
-
-.avaviacin2202upcmonterrico_03_span {
-  color: black;
-  font-size: 24px;
-  font-family: Poppins;
-  font-weight: 700;
-  word-wrap: break-word;
-}
-
-.av-aviacin-2202-upc-monterrico_03 {
-  left: 286px;
-  top: 57px;
-  position: absolute;
-  text-align: center;
-}
-
-.f5septiembre2049_03_span {
-  color: black;
-  font-size: 24px;
-  font-family: Poppins;
-  font-weight: 400;
-  line-height: 43.20px;
-  word-wrap: break-word;
-}
-
-.text-15-septiembre-2049_03 {
-  width: 264px;
-  left: 872px;
-  top: 53px;
-  position: absolute;
-}
-
-.s1290_03_span {
-  color: black;
-  font-size: 32px;
-  font-family: Poppins;
-  font-weight: 700;
-  line-height: 57.60px;
-  word-wrap: break-word;
-}
-
-.s-1290_03 {
-  width: 125px;
-  left: 1225px;
-  top: 45px;
-  position: absolute;
-  text-align: center;
-}
-
-.people-in-car-side-view_03 {
-  width: 90px;
-  height: 90px;
-  left: 82px;
-  top: 30px;
-  position: absolute;
+  margin-right: 20px;
 }
 
 .total_viajes_span {
@@ -259,15 +66,16 @@
 }
 
 .total_viajes {
-  width: 574px;
-  height: 213px;
-  left: 667px;
-  top: 217px;
-  position: absolute;
   text-align: center;
-  justify-content: center;
+  width: 100%;
+  max-width: 574px;
+  margin: 60px auto; /* esto centra horizontalmente */
+  background: rgba(255, 255, 255, 0.5);
+  border-radius: 30px;
+  padding: 20px;
   display: flex;
   flex-direction: column;
+  align-items: center;
 }
 
 .total_viajes_titulo_span {
@@ -275,17 +83,14 @@
   font-size: 44px;
   font-family: Poppins;
   font-weight: 600;
-  line-height: 79.20px;
+  line-height: 1.4;
   word-wrap: break-word;
 }
 
 .total_viajes_titulo {
-  width: 574px;
-  height: 93px;
-  left: 673px;
-  top: 57px;
-  position: absolute;
   text-align: center;
+  margin-top: 40px; /* Espaciado superior */
+  margin-bottom: 30px;
 }
 
 .frecuencia_viajes_titulo_span {
@@ -298,12 +103,10 @@
 }
 
 .frecuencia_viajes_titulo {
-  width: 574px;
-  height: 93px;
-  left: 667px;
-  top: 497px;
-  position: absolute;
   text-align: center;
+  width: 100%;
+  max-width: 574px;
+  margin: 40px auto 20px auto;
 }
 
 .exportar_historial_titulo_span {
@@ -316,11 +119,9 @@
 }
 
 .exportar_historial_titulo {
-  width: 574px;
-  height: 93px;
-  left: 403px;
-  top: 2427px;
-  position: absolute;
+  width: 100%;
+  max-width: 574px;
+  margin: 40px auto 100px; /* centra horizontalmente y separa del contenido de arriba */
   text-align: center;
 }
 
@@ -329,26 +130,17 @@
   font-size: 44px;
   font-family: Poppins;
   font-weight: 600;
-  line-height: 79.20px;
+  line-height: 79.2px;
   word-wrap: break-word;
 }
 
 .viajes_frecuentes_titulo {
-  width: 574px;
-  height: 93px;
-  left: 667px;
-  top: 1431px;
-  position: absolute;
+  width: 100%;
+  max-width: 574px;
+  margin: 60px auto 20px auto; /* centra + separa de lo anterior */
   text-align: center;
 }
 
-.histograma {
-  width: 1261px;
-  height: 709px;
-  left: 329px;
-  top: 706px;
-  position: absolute;
-}
 
 .conocems_span {
   color: #FDE5DF;
@@ -360,80 +152,230 @@
 }
 
 .conoce-ms {
-  width: 146px;
-  left: 41px;
-  top: 14px;
-  position: absolute;
-  text-align: center;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100%;
 }
 
 .descargar_btn {
+  display: block;
   width: 227px;
   height: 60px;
-  left: 1076px;
-  top: 2435px;
-  position: absolute;
+  margin: 0 auto 60px; /* centra horizontalmente y deja espacio abajo */
   background: #880D1E;
   box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
   overflow: hidden;
   border-radius: 80px;
+  text-align: center;
+  cursor: pointer;
 }
 
-.viaje_1 {
-  width: 1446px;
-  height: 149px;
-  left: 237px;
-  top: 1557px;
-  position: absolute;
-  opacity: 0.80;
-  background: white;
-  box-shadow: 0px 8px 10px 4px rgba(0, 0, 0, 0.30);
-  overflow: hidden;
-  border-radius: 50px;
+.descargar_btn:hover {
+  background-color: #a10f2b; /* cambia a un tono más claro o más oscuro */
 }
 
-.viaje_2 {
-  width: 1446px;
-  height: 149px;
-  left: 237px;
-  top: 1751px;
-  position: absolute;
-  opacity: 0.80;
-  background: white;
-  box-shadow: 0px 8px 10px 4px rgba(0, 0, 0, 0.30);
-  overflow: hidden;
-  border-radius: 50px;
-}
-
-.viaje_3 {
-  width: 1446px;
-  height: 149px;
-  left: 241px;
-  top: 1945px;
-  position: absolute;
-  opacity: 0.80;
-  background: white;
-  box-shadow: 0px 8px 10px 4px rgba(0, 0, 0, 0.30);
-  overflow: hidden;
-  border-radius: 50px;
-}
-
-.viaje_4 {
-  width: 1446px;
-  height: 149px;
-  left: 237px;
-  top: 2137px;
-  position: absolute;
-  opacity: 0.80;
-  background: white;
-  box-shadow: 0px 8px 10px 4px rgba(0, 0, 0, 0.30);
-  overflow: hidden;
-  border-radius: 50px;
+.descargar_btn:active {
+  background-color: #880D1E; /* cambia a un tono más claro o más oscuro */
 }
 
 .total {
-  width: 1920px;
-  height: 2757px;
-  position: relative;
+  width: 100%;            /* se adapta al ancho de la pantalla */
+  max-width: 1920px;      /* opcional, limita ancho máximo */
+  min-width: 320px;       /* opcional, limita ancho mínimo */
+  height: auto;           /* se ajusta al contenido */
+  position: relative;  
   overflow: hidden;
+  margin: 0 auto;         /* centra horizontalmente si hay max-width */
+  padding: 20px;          /* separa contenido de los bordes */
+  box-sizing: border-box;
+}
+
+.exportar_historial_contenedor {
+  display: flex;
+  justify-content: center; /* centra horizontalmente el grupo */
+  align-items: center;     /* centra verticalmente los elementos */
+  gap: 20px;               /* espacio entre título y botón */
+  margin: 110px auto;       /* separa de los elementos de arriba */
+  flex-wrap: wrap;         /* permite que en pantallas pequeñas se acomoden verticalmente */
+}
+
+/* MENSAJE DE ERROR - SIN VIAJES */
+
+.notieneviajesregistradosan_span {
+  color: black;
+  font-size: 24px;
+  font-family: Poppins;
+  word-wrap: break-word;
+}
+
+.no-tiene-viajes-registrados-an {
+  margin-top: 15px;
+}
+
+.auto_icon {
+  width: 106px;
+  margin-top: 20px;
+}
+
+.mensaje_errpr {
+  width: 100%;
+  max-width: 1261px;
+  height: 709px; 
+  margin: 40px auto;
+  background: #F3F3F3;
+  border-radius: 50px;
+
+  /* CENTRADO REAL */
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+
+  position: relative;
+}
+
+/* Contenedor principal de todos los viajes */
+.contenedor-viajes {
+  width: 100%;
+  max-width: 1446px;
+  background: white;
+  border-radius: 50px;
+  padding: 30px;
+  margin: 60px auto;
+  display: flex;
+  flex-direction: column;
+  flex-wrap: wrap;
+  gap: 25px;
+  justify-content: center;
+  box-shadow: 0px 8px 10px 4px rgba(0, 0, 0, 0.30);
+  align-items: center; /* CENTRAR filas */
+  overflow: visible;
+  max-height: 600px;
+  overflow-y: auto;
+}
+
+.contenedor-viajes > div {
+  display: flex;
+  align-items: center;      /* centra verticalmente */
+  justify-content: space-between;
+  width: 100%;
+  padding: 20px 30px;
+  border-bottom: 1px solid #ddd;
+}
+
+.contenedor-viajes:hover {
+  background: rgba(247, 245, 245, 0.686);
+}
+
+/* Cada tarjeta individual de viaje */
+.viaje {
+  width: 360px;
+  height: 180px;
+  background: white;
+  border-radius: 25px;
+  padding: 20px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.08);
+  transition: all 0.3s ease;
+  align-items: center;
+}
+
+/* Hover con efecto suave */
+.viaje:hover {
+  transform: translateY(-5px);
+  background: rgba(255, 255, 255, 0.85);
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.12);
+}
+
+/* Texto del origen y destino */
+.origen-destino {
+  font-size: 1.2rem;
+  font-weight: 600;
+  color: #333;
+}
+
+/* Fecha y hora */
+.viaje-fecha span {
+  font-size: 0.95rem;
+  color: #666;
+}
+
+/* Tarifa */
+.viaje-tarifa span {
+  font-size: 1.1rem;
+  font-weight: bold;
+  color: #008080;
+}
+
+/* Icono del auto */
+.auto-icono {
+  width: 70px;
+  align-self: flex-end;
+  opacity: 0.8;
+}
+
+/* MENSAJE DE ERROR 1 - SIN VIAJES */
+.mensaje_errpr_01 {
+  width: 100%;
+  max-width: 1261px;
+  height: 709px;
+  margin: 40px auto;
+  background: #F3F3F3;
+  border-radius: 50px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+}
+
+.mensaje-contenido {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 30px; /* separación entre icono y texto */
+}
+
+/* Icono */
+.vector {
+  width: 106px;
+  height: 85px;
+  object-fit: contain;
+  opacity: 0.9;
+}
+
+/* Texto */
+.no-tiene-viajes-registrados-an_01 {
+  max-width: 400px;
+}
+
+.notieneviajesregistradosan_01_span {
+  color: black;
+  font-size: 24px;
+  font-family: Poppins;
+  font-weight: 400;
+}
+
+.grafico_barras {
+  width: 100%;
+  max-width: 1261px;
+  height: 709px; 
+  margin: 40px auto; 
+  border-radius: 40px;
+  overflow: hidden;
+  display: flex; 
+  justify-content: center;
+  align-items: center;
+  background: white;
+}
+
+.notieneviajesregistradosan_01_span {
+  color: black;
+  font-size: 24px;
+  font-family: Poppins;
+  font-weight: 400;
+  word-wrap: break-word;
 }
