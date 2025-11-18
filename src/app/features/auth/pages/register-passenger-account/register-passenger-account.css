@@ -1,0 +1,122 @@
+.register-container {
+  display: flex;
+  justify-content: center;
+  padding: 40px;
+  background: #f7dbd4;
+}
+
+.card {
+  width: 600px;
+  background: white;
+  padding: 50px;
+  border-radius: 40px;
+  text-align: center;
+}
+
+.logo {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 5px;
+  margin-bottom: 25px;
+}
+
+.logo img {
+  width: 90px;
+}
+
+/* --- Steps --- */
+.steps {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 20px; /* espacio general */
+  margin-bottom: 25px;
+}
+
+.step {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 6px;
+}
+/* círculos */
+.circle {
+  width: 26px;
+  height: 26px;
+  border-radius: 50%;
+  border: 2px solid #2b3dbb;
+}
+
+.circle.active {
+  background: #2b3dbb;
+  border-color: #2b3dbb;
+}
+
+/* línea perfectamente centrada entre los círculos */
+.line {
+  width: 60px;              /* << Tamaño controlado */
+  height: 2px;
+  background: #ccc;
+  margin-top: -25px;         /* << Alinea verticalmente con los círculos */
+}
+
+/* texto debajo */
+.label {
+  font-size: 13px;
+  color: #333;
+}
+
+
+/* --- Formulario y resto --- */
+form {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+  margin-top: 10px;
+}
+
+label {
+  text-align: left;
+  font-size: 14px;
+  font-weight: 500;
+}
+
+input {
+  height: 45px;
+  border-radius: 25px;
+  border: 1.8px solid #2b3dbb;
+  padding: 0 20px;
+  outline: none;
+}
+
+button {
+  margin-top: 20px;
+  height: 45px;
+  background: #2b3dbb;
+  color: white;
+  font-size: 16px;
+  border: none;
+  border-radius: 25px;
+  cursor: pointer;
+}
+
+hr {
+  margin: 35px 0;
+  border: none;
+  height: 1px;
+  background: #ddd;
+}
+
+p {
+  font-size: 14px;
+}
+
+a {
+  color: #2b3dbb;
+}
+
+input::placeholder {
+  color: #cfcfcf;
+  opacity: 1;
+}
