@@ -49,7 +49,7 @@ export class RutaService {
   descargarHistorialPDF(conductorId: number): Observable<Blob> {
   return this.http.get(`${this.apiUrl}/conductor/${conductorId}/historial/pdf`, {
     ...this.getHeaders(),
-    responseType: 'blob'  // ✅ aquí es 'blob', no 'json'
+    responseType: 'blob'  
   });
 }
 
