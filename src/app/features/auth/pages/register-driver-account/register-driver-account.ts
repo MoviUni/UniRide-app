@@ -14,6 +14,6 @@ export class RegisterDriverAccount {
   constructor(private router: Router) {}
 
   goToNext() {
-    this.router.navigate(['/auth/register/driver']); // página paso 2
+    this.router.navigate(['/auth/register/driver/vehicle']); // página paso 2
   }
 }

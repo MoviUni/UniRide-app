@@ -8,7 +8,7 @@
     </div>
 
     <!-- Steps -->
-    <div class="steps">
+         <div class="steps">
 
       <div class="step">
         <div class="circle"></div>
@@ -18,18 +18,19 @@
       <div class="line"></div>
 
       <div class="step">
-        <div class="circle"></div>
-        <span class="label">Vehículo</span>
+        <div class="circle active"></div>
+        <span class="label">Cuenta</span>
       </div>
 
       <div class="line"></div>
 
       <div class="step">
-        <div class="circle active"></div>
-        <span class="label">Cuenta</span>
+        <div class="circle"></div>
+        <span class="label">Vehículo</span>
       </div>
 
     </div>
+
 
     <h2>Crear una cuenta</h2>
 
@@ -47,7 +48,7 @@
       <label>Confirmar contraseña</label>
       <input type="password" placeholder="Empty label" />
 
-      <button type="button">Registrarse</button>
+      <button type="button" (click)="goToNext()">Continuar</button>
     </form>
 
     <hr/>
