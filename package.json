@@ -33,13 +33,9 @@
     "ng2-charts": "^8.0.0",
     "postcss": "^8.5.6",
     "rxjs": "~7.8.0",
-<<<<<<< HEAD
     "tailwindcss": "^4.1.17",
-    "tslib": "^2.3.0"
-=======
     "tslib": "^2.3.0",
     "zone.js": "^0.15.1"
->>>>>>> feature/modulo-2
   },
   "devDependencies": {
     "@angular/build": "^20.3.9",
