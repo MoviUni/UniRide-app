@@ -2,11 +2,8 @@ import { Injectable, inject, signal } from '@angular/core';
 import { HttpClient, HttpParams, HttpParamsOptions} from '@angular/common/http';
 import { Observable, tap } from 'rxjs';
 import { environment } from '../../../environments/environment';
-import { RutaCardResponse, RutaRequest, RutaResponse } from '../models/ruta.model';
+import { RutaCardResponse, RutaRequestDTO, RutaResponse } from '../models/ruta.model';
 
-import { HttpClient } from '@angular/common/http';
-import { Observable } from 'rxjs';
-import { environment } from '../../../environments/environment';
 import { RutaFrecuenteResponseDTO, RutaResponseDTO, EstadoRuta } from '../models/ruta.model';
 
 @Injectable({
@@ -62,7 +59,7 @@ export class RutaService {
   }
 
   // POST - Crear
-  create(data: RutaRequest): Observable<RutaResponse> {
+  create(data: RutaRequestDTO): Observable<RutaResponse> {
     return this.http.post<RutaResponse>(this.apiUrl, data, this.getHeaders()).pipe(
       tap(newItem => {
         this._rutas.update(current => [...current, newItem]);
