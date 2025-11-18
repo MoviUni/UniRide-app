@@ -1,5 +1,7 @@
-import { Component } from '@angular/core';
+import { Component, OnInit, inject } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { ActivatedRoute } from '@angular/router';
+import { RoutesService, RutaResponseDto, EstadoRuta }   from '../../../core/services/routes.service';;
 
 interface Passenger {
   id: number;
@@ -22,18 +24,26 @@ interface Passenger {
       </p>
 
       <!-- Resumen de la ruta -->
-      <section class="card route-summary">
+      <section class="card route-summary" *ngIf="ruta">
         <header class="card-header">
           <div>
-            <h2>Av. Angamos Este 1234 &rarr; UPC Monterrico</h2>
+            <h2>{{ ruta.origen }} &rarr; {{ ruta.destino }}</h2>
             <p>
-              Fecha de salida: 22/09/2025 &middot;
-              Hora de salida: 5:50 pm &middot;
-              Asientos disponibles: {{ availableSeats }}/{{ totalSeats }}
+              Fecha de salida:
+              {{ ruta.fechaSalida | date:'dd/MM/yyyy' }}
+              &middot; Hora de salida: {{ ruta.horaSalida }}
+              &middot;
+              Asientos disponibles:
+              {{ ruta.asientosDisponibles ?? 0 }}
             </p>
           </div>
-          <span class="status-pill" [ngClass]="tripStatus === 'Confirmado' ? 'status-pill-confirmed' : 'status-pill-scheduled'">
-            {{ tripStatus }}
+          <span
+            class="status-pill"
+            [ngClass]="ruta.estadoRuta === 'ACTIVA'
+              ? 'status-pill-confirmed'
+              : 'status-pill-scheduled'"
+          >
+            {{ statusLabel(ruta) }}
           </span>
         </header>
 
@@ -42,7 +52,7 @@ interface Passenger {
             class="btn-primary"
             type="button"
             (click)="confirmTrip()"
-            [disabled]="tripStatus === 'Confirmado' || tripStatus === 'Cancelado'"
+            [disabled]="ruta.estadoRuta === 'ACTIVA' || ruta.estadoRuta === 'CANCELADA'"
           >
             Confirmar viaje
           </button>
@@ -50,12 +60,12 @@ interface Passenger {
             class="btn-danger"
             type="button"
             (click)="cancelTrip()"
-            [disabled]="tripStatus === 'Cancelado'"
+            [disabled]="ruta.estadoRuta === 'CANCELADA'"
           >
             Cancelar viaje
           </button>
           <span class="cutoff">
-            Habilitado hasta las: 4:50 pm
+            Habilitado hasta una hora antes de la salida.
           </span>
         </div>
 
@@ -69,7 +79,7 @@ interface Passenger {
         </div>
       </section>
 
-      <!-- Listas de pasajeros -->
+      <!-- Listas de pasajeros (mock, aún sin backend de reservas) -->
       <section class="grid">
         <div class="card">
           <header class="card-header">
@@ -401,10 +411,11 @@ interface Passenger {
     }
   `]
 })
-export class ManageTripComponent {
-  totalSeats = 4;
-  availableSeats = 2;
-  tripStatus: 'Programado' | 'Confirmado' | 'Cancelado' = 'Programado';
+export class ManageTripComponent implements OnInit {
+  private routesService = inject(RoutesService);
+  private route = inject(ActivatedRoute);
+
+  ruta: RutaResponseDto | null = null;
 
   pendingPassengers: Passenger[] = [
     { id: 1, name: 'José Méndez', career: 'Ingeniería Industrial', district: 'San Miguel' },
@@ -418,6 +429,33 @@ export class ManageTripComponent {
   feedbackMessage = '';
   feedbackType: 'success' | 'error' | '' = '';
 
+  ngOnInit(): void {
+    const idParam = this.route.snapshot.paramMap.get('id');
+    const idRuta = idParam ? Number(idParam) : NaN;
+    if (!idRuta || Number.isNaN(idRuta)) {
+      this.showFeedback('ID de ruta inválido en la URL.', 'error');
+      return;
+    }
+
+    this.routesService.getById(idRuta).subscribe({
+      next: (ruta) => this.ruta = ruta,
+      error: (err) => {
+        console.error(err);
+        this.showFeedback('No se pudo cargar la información de la ruta.', 'error');
+      }
+    });
+  }
+
+  statusLabel(r: RutaResponseDto): string {
+    switch (r.estadoRuta) {
+      case 'ACTIVA': return 'Programado';
+      case 'PENDIENTE': return 'Pendiente';
+      case 'FINALIZADA': return 'Finalizado';
+      case 'CANCELADA': return 'Cancelado';
+      default: return 'Sin estado';
+    }
+  }
+
   private showFeedback(message: string, type: 'success' | 'error') {
     this.feedbackMessage = message;
     this.feedbackType = type;
@@ -427,33 +465,58 @@ export class ManageTripComponent {
     }, 3500);
   }
 
+  confirmTrip(): void {
+    if (!this.ruta) return;
+    const idRuta = this.ruta.idRuta;
+    const nuevoEstado: EstadoRuta = 'ACTIVA';
+
+    this.routesService.updateEstado(idRuta, nuevoEstado).subscribe({
+      next: (updated) => {
+        this.ruta = updated;
+        this.showFeedback('Viaje confirmado con éxito.', 'success');
+      },
+      error: (err) => {
+        console.error(err);
+        this.showFeedback('No se pudo confirmar el viaje.', 'error');
+      }
+    });
+  }
+
+  cancelTrip(): void {
+    if (!this.ruta) return;
+    const idRuta = this.ruta.idRuta;
+    const nuevoEstado: EstadoRuta = 'CANCELADA';
+
+    this.routesService.updateEstado(idRuta, nuevoEstado).subscribe({
+      next: (updated) => {
+        this.ruta = updated;
+        this.showFeedback('Viaje cancelado con éxito. No podrá reactivarse.', 'success');
+      },
+      error: (err) => {
+        console.error(err);
+        this.showFeedback('No se pudo cancelar el viaje.', 'error');
+      }
+    });
+  }
+
   acceptPassenger(p: Passenger): void {
-    if (this.availableSeats <= 0 || this.tripStatus === 'Cancelado') {
-      this.showFeedback('No hay asientos disponibles o el viaje fue cancelado.', 'error');
+    if (!this.ruta) return;
+    if ((this.ruta.asientosDisponibles ?? 0) <= 0) {
+      this.showFeedback('No hay asientos disponibles para confirmar más pasajeros.', 'error');
       return;
     }
+
     this.pendingPassengers = this.pendingPassengers.filter(x => x.id !== p.id);
     this.confirmedPassengers = [...this.confirmedPassengers, p];
-    this.availableSeats = Math.max(0, this.availableSeats - 1);
+    this.ruta = {
+      ...this.ruta,
+      asientosDisponibles: (this.ruta.asientosDisponibles ?? 0) - 1,
+    };
     this.showFeedback('Pasajero confirmado con éxito.', 'success');
   }
 
   rejectPassenger(p: Passenger): void {
     this.pendingPassengers = this.pendingPassengers.filter(x => x.id !== p.id);
     this.showFeedback('La solicitud del pasajero fue rechazada.', 'success');
-  }
-
-  confirmTrip(): void {
-    if (this.tripStatus === 'Cancelado') {
-      this.showFeedback('No puedes confirmar un viaje cancelado.', 'error');
-      return;
-    }
-    this.tripStatus = 'Confirmado';
-    this.showFeedback('Viaje confirmado con éxito.', 'success');
-  }
-
-  cancelTrip(): void {
-    this.tripStatus = 'Cancelado';
-    this.showFeedback('Viaje cancelado con éxito. No podrá reactivarse.', 'success');
   }
 }

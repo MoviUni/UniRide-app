@@ -1,18 +1,11 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { RouterModule } from '@angular/router';
-
-interface DriverRouteCard {
-  id: number;
-  origin: string;
-  destination: string;
-  date: string;      // yyyy-MM-dd
-  time: string;      // HH:mm
-  availableSeats: number;
-  totalSeats: number;
-  status: 'Programado' | 'Confirmado';
-  pendingRequests: number;
-}
+import {
+  RoutesService,
+  RutaResponseDto
+} from '../../../core/services/routes.service';
+import { AuthService } from '../../../core/services/auth.service';
 
 @Component({
   selector: 'app-my-routes',
@@ -32,32 +25,39 @@ interface DriverRouteCard {
         <section class="card main-trip" *ngIf="nextRoute">
           <header class="card-header">
             <h2>Viaje por iniciar</h2>
-            <span class="status-pill"
-                  [ngClass]="nextRoute.status === 'Confirmado' ? 'status-pill-confirmed' : 'status-pill-scheduled'">
-              {{ nextRoute.status }}
+            <span
+              class="status-pill"
+              [ngClass]="statusType(nextRoute) === 'confirmed'
+                ? 'status-pill-confirmed'
+                : 'status-pill-scheduled'"
+            >
+              {{ statusLabel(nextRoute) }}
             </span>
           </header>
 
           <div class="trip-body">
             <p class="trip-route">
-              {{ nextRoute.origin }} &rarr; {{ nextRoute.destination }}
+              {{ nextRoute.origen }} &rarr; {{ nextRoute.destino }}
             </p>
             <p class="trip-meta">
-              {{ nextRoute.date | date:'dd/MM/yyyy' }} a las {{ nextRoute.time }}
+              {{ nextRoute.fechaSalida | date:'dd/MM/yyyy' }}
+              a las {{ nextRoute.horaSalida }}
             </p>
             <p class="trip-meta">
               Asientos disponibles:
-              <strong>{{ nextRoute.availableSeats }}/{{ nextRoute.totalSeats }}</strong>
+              <strong>
+                {{ availableSeats(nextRoute) }}/{{ totalSeats(nextRoute) }}
+              </strong>
             </p>
             <p class="trip-meta muted">
-              {{ nextRoute.pendingRequests }} solicitudes pendientes
+              Estado: {{ statusLabel(nextRoute) }}
             </p>
           </div>
 
           <div class="trip-actions">
             <button
               class="btn-outline"
-              [routerLink]="['/home/gestionar-viaje', nextRoute.id]"
+              [routerLink]="['/home/gestionar-viaje', nextRoute.idRuta]"
             >
               Gestionar viaje
             </button>
@@ -74,22 +74,25 @@ interface DriverRouteCard {
             <ul class="route-list">
               <li class="route-item" *ngFor="let r of upcomingRoutes">
                 <div class="route-main">
-                  <p class="route-line">{{ r.origin }} &rarr; {{ r.destination }}</p>
+                  <p class="route-line">{{ r.origen }} &rarr; {{ r.destino }}</p>
                   <p class="route-meta">
-                    {{ r.date | date:'dd/MM/yyyy' }} &middot; {{ r.time }} &middot;
-                    Asientos: {{ r.availableSeats }}/{{ r.totalSeats }}
+                    {{ r.fechaSalida | date:'dd/MM/yyyy' }} &middot;
+                    {{ r.horaSalida }} &middot;
+                    Asientos: {{ availableSeats(r) }}/{{ totalSeats(r) }}
                   </p>
                 </div>
                 <div class="route-side">
                   <span
                     class="status-chip"
-                    [ngClass]="r.status === 'Confirmado' ? 'status-chip-confirmed' : 'status-chip-scheduled'"
+                    [ngClass]="statusType(r) === 'confirmed'
+                      ? 'status-chip-confirmed'
+                      : 'status-chip-scheduled'"
                   >
-                    {{ r.status }}
+                    {{ statusLabel(r) }}
                   </span>
                   <button
                     class="link-button"
-                    [routerLink]="['/home/gestionar-viaje', r.id]"
+                    [routerLink]="['/home/gestionar-viaje', r.idRuta]"
                   >
                     Gestionar viaje
                   </button>
@@ -114,7 +117,6 @@ interface DriverRouteCard {
       --ur-soft-blue: #CFE4FF;
       --ur-bg: #F5F7FF;
       --ur-border: #E5E7EB;
-      --ur-success: #16A34A;
 
       display: block;
       min-height: 100vh;
@@ -346,62 +348,77 @@ interface DriverRouteCard {
     }
   `]
 })
-export class MyRoutesComponent {
-  routes: DriverRouteCard[] = [
-    {
-      id: 1,
-      origin: 'Av. Angamos Este 2102',
-      destination: 'UPC Monterrico',
-      date: '2025-09-22',
-      time: '17:30',
-      availableSeats: 2,
-      totalSeats: 4,
-      status: 'Programado',
-      pendingRequests: 4,
-    },
-    {
-      id: 2,
-      origin: 'Av. Angamos Este 2310',
-      destination: 'UPC Monterrico',
-      date: '2025-09-29',
-      time: '18:20',
-      availableSeats: 1,
-      totalSeats: 4,
-      status: 'Programado',
-      pendingRequests: 2,
-    },
-    {
-      id: 3,
-      origin: 'Av. Angamos Este 604',
-      destination: 'UPC Monterrico',
-      date: '2025-09-25',
-      time: '17:30',
-      availableSeats: 3,
-      totalSeats: 4,
-      status: 'Confirmado',
-      pendingRequests: 0,
-    },
-  ];
+export class MyRoutesComponent implements OnInit {
 
-  get nextRoute(): DriverRouteCard | null {
-    if (!this.routes.length) {
-      return null;
-    }
-    const sorted = [...this.routes].sort((a, b) =>
-      new Date(`${a.date}T${a.time}`).getTime() -
-      new Date(`${b.date}T${b.time}`).getTime()
+  // ID de conductor fijo de PRUEBAS.
+  // Cuando tu backend devuelva el id real en el login, aquí ya lo cambias.
+  private readonly idConductorActual = 1;
+
+  constructor(
+    private routesService: RoutesService,
+    private authService: AuthService
+  ) {}
+
+  ngOnInit(): void {
+    // Carga tus rutas desde el backend y las deja en el signal this.routesService.rutas
+    this.routesService.getMisRutas(this.idConductorActual).subscribe();
+  }
+
+  private parseFechaHora(r: RutaResponseDto): number {
+    const fecha = r.fechaSalida ?? '';
+    const hora = r.horaSalida ?? '00:00';
+    return new Date(`${fecha}T${hora}`).getTime();
+  }
+
+  get nextRoute(): RutaResponseDto | null {
+    const list = this.routesService.rutas() as RutaResponseDto[];
+    if (!list.length) return null;
+    const sorted = [...list].sort(
+      (a: RutaResponseDto, b: RutaResponseDto) =>
+        this.parseFechaHora(a) - this.parseFechaHora(b)
     );
     return sorted[0];
   }
 
-  get upcomingRoutes(): DriverRouteCard[] {
+  get upcomingRoutes(): RutaResponseDto[] {
     const next = this.nextRoute;
-    if (!next) { return []; }
-    return this.routes
-      .filter(r => r.id !== next.id)
-      .sort((a, b) =>
-        new Date(`${a.date}T${a.time}`).getTime() -
-        new Date(`${b.date}T${b.time}`).getTime()
+    const list = this.routesService.rutas() as RutaResponseDto[];
+    if (!next) return [];
+    return list
+      .filter((r: RutaResponseDto) => r.idRuta !== next.idRuta)
+      .sort((a: RutaResponseDto, b: RutaResponseDto) =>
+        this.parseFechaHora(a) - this.parseFechaHora(b)
       );
   }
+
+  availableSeats(r: RutaResponseDto): number {
+    return r.asientosDisponibles ?? 0;
+  }
+
+  totalSeats(r: RutaResponseDto): number {
+    return r.capacidad ?? (r.asientosDisponibles ?? 0);
+  }
+
+  statusLabel(r: RutaResponseDto): string {
+    switch (r.estadoRuta) {
+      case 'ACTIVA':
+        return 'Programado';
+      case 'PENDIENTE':
+        return 'Pendiente';
+      case 'FINALIZADA':
+        return 'Finalizado';
+      case 'CANCELADA':
+        return 'Cancelado';
+      default:
+        return 'Sin estado';
+    }
+  }
+
+  statusType(r: RutaResponseDto): 'scheduled' | 'confirmed' {
+    if (r.estadoRuta === 'FINALIZADA' || r.estadoRuta === 'CANCELADA') {
+      return 'confirmed';
+    }
+    return 'scheduled';
+  }
 }
+

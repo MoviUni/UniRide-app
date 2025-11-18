@@ -1,26 +1,17 @@
-import { Component, inject } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
-
-interface PublishRouteForm {
-  origin: string;
-  destination: string;
-  date: string;
-  time: string;
-  vehicle: string;
-  capacity: number;
-  price: number | null;
-}
-
-interface DriverRoute {
-  id: number;
-  origin: string;
-  destination: string;
-  date: string;
-  time: string;
-  capacity: number;
-  price?: number;
-}
+import {
+  FormBuilder,
+  FormGroup,
+  ReactiveFormsModule,
+  Validators
+} from '@angular/forms';
+import {
+  RoutesService,
+  RutaRequestDto,
+  RutaResponseDto
+} from '../../../core/services/routes.service';
+import { AuthService } from '../../../core/services/auth.service';
 
 @Component({
   selector: 'app-publish-route',
@@ -166,26 +157,28 @@ interface DriverRoute {
         </form>
       </section>
 
-      <section class="card card-list" *ngIf="routes.length">
+      <section class="card card-list" *ngIf="ultimasRutas.length">
         <header class="card-header">
           <h2>Últimas rutas publicadas</h2>
-          <p>Solo se muestran rutas activas creadas en esta sesión.</p>
+          <p>Se muestran tus rutas más recientes como conductor.</p>
         </header>
 
         <ul class="route-list">
-          <li class="route-item" *ngFor="let r of routes">
+          <li class="route-item" *ngFor="let r of ultimasRutas">
             <div class="route-main">
               <p class="route-line">
-                {{ r.origin }} &rarr; {{ r.destination }}
+                {{ r.origen }} &rarr; {{ r.destino }}
               </p>
               <p class="route-meta">
-                {{ r.date | date:'dd/MM/yyyy' }} &middot; {{ r.time }}
-                &middot; Capacidad: {{ r.capacity }} pasajeros
+                {{ r.fechaSalida | date:'dd/MM/yyyy' }} &middot; {{ r.horaSalida }}
+                <span *ngIf="r.asientosDisponibles !== undefined">
+                  &middot; Asientos: {{ r.asientosDisponibles }}
+                </span>
               </p>
             </div>
             <div class="route-side">
-              <span class="price-chip" *ngIf="r.price !== undefined">
-                s/. {{ r.price | number:'1.2-2' }}
+              <span class="price-chip" *ngIf="r.tarifa !== undefined">
+                s/. {{ r.tarifa | number:'1.2-2' }}
               </span>
             </div>
           </li>
@@ -428,6 +421,11 @@ interface DriverRoute {
       color: #6B7280;
     }
 
+    .route-side {
+      display: flex;
+      align-items: center;
+    }
+
     .price-chip {
       display: inline-flex;
       align-items: center;
@@ -454,22 +452,47 @@ interface DriverRoute {
     }
   `]
 })
-export class PublishRouteComponent {
-  private fb = inject(FormBuilder);
+export class PublishRouteComponent implements OnInit {
+  form!: FormGroup;
 
-  form: FormGroup = this.fb.group({
-    origin: ['', Validators.required],
-    destination: ['', Validators.required],
-    date: ['', Validators.required],
-    time: ['', Validators.required],
-    vehicle: ['', Validators.required],
-    capacity: [1, [Validators.required, Validators.min(1)]],
-    price: [null, [Validators.min(0)]],
-  });
-
-  routes: DriverRoute[] = [];
   successMessage: string | null = null;
   errorMessage: string | null = null;
+
+  constructor(
+    private fb: FormBuilder,
+    private routesService: RoutesService,
+    private authService: AuthService
+  ) {}
+
+  // ID de conductor fijo de PRUEBAS.
+  // Luego lo podrás sacar del token / backend.
+  private readonly idConductorActual = 1;
+
+  ngOnInit(): void {
+    this.form = this.fb.group({
+      origin: ['', Validators.required],
+      destination: ['', Validators.required],
+      date: ['', Validators.required],
+      time: ['', Validators.required],
+      vehicle: ['', Validators.required],
+      capacity: [1, [Validators.required, Validators.min(1)]],
+      price: [null, [Validators.min(0)]],
+    });
+
+    // Carga rutas existentes del conductor (para validar duplicados y mostrar historial)
+    this.routesService.getMisRutas(this.idConductorActual).subscribe();
+  }
+
+  get ultimasRutas(): RutaResponseDto[] {
+    const data = this.routesService.rutas();
+    return [...data]
+      .sort((a: RutaResponseDto, b: RutaResponseDto) => {
+        const da = new Date(`${a.fechaSalida}T${a.horaSalida}`).getTime();
+        const db = new Date(`${b.fechaSalida}T${b.horaSalida}`).getTime();
+        return db - da;
+      })
+      .slice(0, 5);
+  }
 
   isInvalid(controlName: string): boolean {
     const ctrl = this.form.get(controlName);
@@ -485,56 +508,73 @@ export class PublishRouteComponent {
       return;
     }
 
-    const value = this.form.value as PublishRouteForm;
+    const value = this.form.value as {
+      origin: string;
+      destination: string;
+      date: string;
+      time: string;
+      vehicle: string;
+      capacity: number;
+      price: number | null;
+    };
+
+    // RN5 - No horarios pasados
     const departure = new Date(`${value.date}T${value.time}`);
     const now = new Date();
-
-    // RN5: no horarios pasados
     if (departure <= now) {
       this.errorMessage = 'No se pueden publicar rutas con horarios pasados.';
       return;
     }
 
-    // RN5: rutas duplicadas mismo origen/destino, fecha y hora
-    const duplicate = this.routes.some(r =>
-      r.origin.trim().toLowerCase() === value.origin.trim().toLowerCase() &&
-      r.destination.trim().toLowerCase() === value.destination.trim().toLowerCase() &&
-      r.date === value.date &&
-      r.time === value.time
+    // RN5/RN6 - Capacidad mínima
+    if (value.capacity < 1) {
+      this.errorMessage =
+        'Cada ruta debe tener al menos 1 pasajero como capacidad mínima.';
+      return;
+    }
+
+    // RN5 - Rutas duplicadas (mismo conductor, origen, destino, fecha, hora)
+    const existentes = this.routesService.rutas();
+    const duplicada = existentes.some((r: RutaResponseDto) =>
+      r.origen.trim().toLowerCase() === value.origin.trim().toLowerCase() &&
+      r.destino.trim().toLowerCase() === value.destination.trim().toLowerCase() &&
+      r.fechaSalida === value.date &&
+      r.horaSalida === value.time
     );
 
-    if (duplicate) {
-      this.errorMessage = 'Ya publicaste una ruta con el mismo origen, destino, fecha y hora.';
+    if (duplicada) {
+      this.errorMessage =
+        'Ya publicaste una ruta con el mismo origen, destino, fecha y hora.';
       return;
     }
 
-    // RN5 / RN6: capacidad mínima positiva
-    if (value.capacity < 1) {
-      this.errorMessage = 'Cada ruta debe tener al menos 1 pasajero como capacidad mínima.';
-      return;
-    }
-
-    const newRoute: DriverRoute = {
-      id: this.routes.length + 1,
-      origin: value.origin,
-      destination: value.destination,
-      date: value.date,
-      time: value.time,
-      capacity: value.capacity,
-      price: value.price ?? undefined,
+    const dto: RutaRequestDto = {
+      origen: value.origin,
+      destino: value.destination,
+      fechaSalida: value.date,
+      horaSalida: value.time,
+      tarifa: value.price ?? undefined,
+      asientosDisponibles: value.capacity,
+      idConductor: this.idConductorActual,
     };
 
-    this.routes.push(newRoute);
-    this.successMessage = 'Ruta publicada correctamente.';
-
-    this.form.reset({
-      origin: '',
-      destination: '',
-      date: '',
-      time: '',
-      vehicle: '',
-      capacity: 1,
-      price: null,
+    this.routesService.publicar(dto).subscribe({
+      next: () => {
+        this.successMessage = 'Ruta publicada correctamente.';
+        this.form.reset({
+          origin: '',
+          destination: '',
+          date: '',
+          time: '',
+          vehicle: '',
+          capacity: 1,
+          price: null,
+        });
+      },
+      error: (err: unknown) => {
+        console.error(err);
+        this.errorMessage = 'Ocurrió un error al publicar la ruta.';
+      },
     });
   }
 }
