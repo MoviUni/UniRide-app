@@ -3,7 +3,6 @@ import { AuthLayoutComponent } from './shared/layouts/auth-layout.component';
 import { LandingLayoutComponent } from './shared/layouts/landing-layout.component';
 
 export const routes: Routes = [
-<<<<<<< HEAD
     {
         path: '',
         component: AuthLayoutComponent,
@@ -23,8 +22,7 @@ export const routes: Routes = [
     {
         path: '**', 
         redirectTo: '/home/landing' //aquí muestra la ruta por defecto
-    }
-=======
+    },
   {
     path: 'auth',
     loadChildren: () =>
@@ -44,5 +42,4 @@ export const routes: Routes = [
     path: '**',
     redirectTo: 'auth/login',
   },
->>>>>>> feature/modulo-2
 ];
