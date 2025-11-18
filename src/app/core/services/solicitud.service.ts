@@ -2,7 +2,7 @@ import { Injectable, inject, signal } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable, tap } from 'rxjs';
 import { environment } from '../../../environments/environment';
-import { SolicitudEstadoRequest, SolicitudEstadoResponse, SolicitudViajeRequest, SolicitudViajeResponse } from '../models/solicitud.model';
+import { SolicitudCardResponse, SolicitudEstadoRequest, SolicitudEstadoResponse, SolicitudViajeRequest, SolicitudViajeResponse } from '../models/solicitud.model';
 
 @Injectable({
   providedIn: 'root'
@@ -42,6 +42,15 @@ export class SolicitudService {
     );
   }
 
+  private _info = signal<SolicitudCardResponse[]>([]);
+  info = this._info.asReadonly();
+  // GET - Obtener todos
+  getInfo(): Observable<SolicitudCardResponse[]> {
+    return this.http.get<SolicitudCardResponse[]>(`${this.apiUrl}/info`, this.getHeaders()).pipe(
+      tap(data => this._info.set(data))
+    );
+  }
+
   // POST - Crear
   create(data: SolicitudViajeRequest): Observable<SolicitudViajeResponse> {
     return this.http.post<SolicitudViajeResponse>(this.apiUrl, data, this.getHeaders()).pipe(
@@ -51,13 +60,18 @@ export class SolicitudService {
     );
   }
 
+
   // PATCH
-  cancelSolicitud(data:SolicitudEstadoRequest, idSolicitud:number){
-    return this.http.patch<SolicitudViajeResponse>(`${this.apiUrl}/${idSolicitud}/estado`, data)
+  cancelSolicitud(idSolicitud:number){
+    return this.http.patch<SolicitudViajeResponse>(`${this.apiUrl}/${idSolicitud}/cancelar`,null,this.getHeaders()).pipe(
+      tap(newItem => {
+        this._items.update(current => [...current, newItem]);
+      })
+    );
   }
 
   updateSolicitud(data:SolicitudEstadoRequest, idSolicitud:number){
-    return this.http.patch<SolicitudViajeResponse>(`${this.apiUrl}/${idSolicitud}/estado`, data)
+    return this.http.patch<SolicitudViajeResponse>(`${this.apiUrl}/${idSolicitud}/estado`, data, this.getHeaders())
   }
 
 }

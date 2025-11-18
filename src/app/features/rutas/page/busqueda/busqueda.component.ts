@@ -4,10 +4,10 @@ import { LOCALE_ID } from '@angular/core';
 import { CommonModule, formatDate } from '@angular/common';
 import { RouterModule } from '@angular/router';
 import { RutaService } from '../../../../core/services/ruta.service';
-import { RutaResponse } from '@core/models/ruta.model';
+import { RutaResponse, RutaCardResponse } from '@core/models/ruta.model';
 import { ConductorService } from '@core/services/conductor.service';
 import { SolicitudService } from '@core/services/solicitud.service';
-import { EstadoSolicitud, SolicitudViajeRequest, SolicitudViajeResponse } from '@core/models/solicitud.model';
+import { EstadoSolicitud, SolicitudViajeRequest, SolicitudViajeResponse, SolicitudCardResponse } from '@core/models/solicitud.model';
 import { ConductorResponse } from '@core/models/usuario.model';
 
 
@@ -58,7 +58,7 @@ import { ConductorResponse } from '@core/models/usuario.model';
             <button type="button" class="solicitarunirse_01" (click)="sendForm(tx)">Solicitar Unirse</button>
 
           </div>
-          <div class="conductor-text1"><span>{{conductores()[$index].nombre + ' ' + conductores()[$index].apellido}}</span></div>
+          <div class="conductor-text1"><span>{{tx.nombreConductor + ' ' + tx.apellidoConductor}}</span></div>
           
           <div class="origen-text-1">
           <span>{{tx.origen}}</span>
@@ -247,8 +247,8 @@ export class BusquedaRutasComponent implements OnInit{
   showSolicitudForm = false;
   showErrorForm = false;
 
-  allRutas = signal<RutaResponse[]>([]);
-  rutas = signal<RutaResponse[]>([]);
+  allRutas = signal<RutaCardResponse[]>([]);
+  rutas = signal<RutaCardResponse[]>([]);
   conductores = signal<ConductorResponse[]>([]);
   loading = signal(true);
 
@@ -281,13 +281,12 @@ export class BusquedaRutasComponent implements OnInit{
   }
 
   loadRutas() {
-    this.rutaService.get().subscribe({
+    this.rutaService.getInfo().subscribe({
       next: (rutas) => {
         this.loading.set(false);
         this.rutas.set(rutas);
         this.allRutas.set(rutas);
-        this.getDatosConductores(this.rutas());
-        
+
       },
       error: (error) => {
         console.error('Error cargando rutas:', error);
@@ -296,21 +295,6 @@ export class BusquedaRutasComponent implements OnInit{
       }
     });
 
-  }
-
-  loadRutasByFilter(origen:string){
-    this.rutaService.getByOrigen(origen).subscribe({
-      next: (ruta) => {
-        this.loading.set(false);
-        this.rutas.set(ruta);
-        
-      },
-      error: (error) => {
-        console.error('Error cargando rutas:', error);
-        // Mostrar mensaje informativo en lugar de error
-        this.errorMessage.set('No existen rutas bajo los filtros aplicados');
-      }
-    });
   }
 
   diferenciaFechas(date1:string){
@@ -321,21 +305,6 @@ export class BusquedaRutasComponent implements OnInit{
     return Math.ceil(diffInMs / (1000 * 60 * 60 * 24));
   }
 
-  getDatosConductores(rutas:RutaResponse[]){
-      for (let i = 0; i < rutas.length; i++) {
-        this.conductorService.getById(rutas[i].idConductor).subscribe({
-        next: (conductor) => {
-          this.conductores.update((currentArray) => [...currentArray, conductor]);
-          
-        },
-        error: (error) => {
-          console.error('Error buscando conductor por ID:', error);
-          // Mostrar mensaje informativo en lugar de error
-          this.errorMessage.set('No existen con este ID');
-        }
-      });
-    }
-  }
 
   clearFilters(){
     this.rutas.set(this.allRutas());
@@ -435,14 +404,14 @@ export class BusquedaRutasComponent implements OnInit{
     
   }
 
-  sendForm(dt:RutaResponse){
+  sendForm(dt:RutaCardResponse){
 
     this.registerForm(dt)
   }
 
   constructor(@Inject(LOCALE_ID) private locale: string) {}
 
-  registerForm(dt:RutaResponse){
+  registerForm(dt:RutaCardResponse){
     const currentDate = formatDate(new Date(), 'yyyy-MM-dd', this.locale);
     const currentTime= new Date().toLocaleTimeString();
 
@@ -450,22 +419,18 @@ export class BusquedaRutasComponent implements OnInit{
       estadoSolicitud: EstadoSolicitud.PENDIENTE,
       fecha: currentDate,
       hora: currentTime,
-      pasajeroId: 2,
+      pasajeroId: 1,
       rutaId: dt.idRuta,
       updatedAt: currentDate
     };
 
      this.solicitudService.create(solicitudReq).subscribe({
-        complete: () =>{
-          this.openForm();
-          console.error('Exito creando solicitud');
-        },
         next: () => {
-          
+          alert('Exito creando solicitud');
           
         },
         error: (error) => {
-          this.openErrorForm();
+          alert(error);
           console.error('Error creando solicitud de viaje:');
           this.errorMessage.set('Ha ocurrido un error solicitando unirse a este viaje.');
         }

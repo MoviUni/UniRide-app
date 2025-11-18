@@ -2,7 +2,7 @@ import { Injectable, inject, signal } from '@angular/core';
 import { HttpClient, HttpParams, HttpParamsOptions} from '@angular/common/http';
 import { Observable, tap } from 'rxjs';
 import { environment } from '../../../environments/environment';
-import { RutaRequest, RutaResponse } from '../models/ruta.model';
+import { RutaCardResponse, RutaRequest, RutaResponse } from '../models/ruta.model';
 
 
 @Injectable({
@@ -34,6 +34,16 @@ export class RutaService {
   get(): Observable<RutaResponse[]> {
     return this.http.get<RutaResponse[]>(this.apiUrl, this.getHeaders()).pipe(
       tap(data => this._rutas.set(data))
+    );
+  }
+
+
+    private _info = signal<RutaCardResponse[]>([]);
+
+  // GET - Obtener todos
+  getInfo(): Observable<RutaCardResponse[]> {
+    return this.http.get<RutaCardResponse[]>(`${this.apiUrl}/info`, this.getHeaders()).pipe(
+      tap(data => this._info.set(data))
     );
   }
 
