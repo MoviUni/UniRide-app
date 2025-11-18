@@ -77,7 +77,7 @@ export class AuthService {
       id: '', // No disponible desde AuthResponse
       email: response.email,
       name: response.name,
-      role: RoleType.ROLE_USER, // Valor por defecto, actualizar desde backend si es necesario
+      role: RoleType.ROLE_CONDUCTOR, // Valor por defecto, actualizar desde backend si es necesario
       active: true,
       createdAt: new Date().toISOString(),
       updatedAt: new Date().toISOString()

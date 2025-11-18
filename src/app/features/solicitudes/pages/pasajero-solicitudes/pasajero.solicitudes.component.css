@@ -1,9 +1,4 @@
 
-@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;700&display=swap');
-div {
-  font-family: "Poppins", sans-serif;
-}
-
 .solicitarunirse_span {
   color: white;
   font-size: 16.17px;
@@ -24,9 +19,7 @@ div {
   flex-direction: column;
 }
 
-.estado-btn{
-  
-}
+
 
 
 .s1200_span {
@@ -192,17 +185,8 @@ div {
 
 }
 
-.image-conductor {
-  width: 30px;
-  height: 29px;
-  left: 25px;
-  top: -195px;
-  position:relative;
-
-}
-
 .conductor-text1 {
-  width: 192.61px;
+  width: 92.61px;
   height: 22.05px;
   left: 70px;
   top: -70px;
@@ -212,7 +196,7 @@ div {
   color: black;
   font-size: 17.64px;
   font-family: Poppins;
-
+  font-weight: 500;
   word-wrap: break-word;
   
 }
@@ -220,10 +204,10 @@ div {
 .origen-text-1 {
   width: 497.60px;
   height: 22.05px;
-  font-weight: 600;
   left: 20px;
-  top: -180px;
+  top: -190px;
   position: relative;
+  font-size: large;
 }
 .hora-salida1 {
   width: 497.60px;
@@ -255,16 +239,16 @@ div {
   width: 123.48px;
   height: 33.08px;
   font-size: 26.46px;
-  left: 645px;
-  top: -240px;
+  left: 650px;
+  top: -260px;
   position: relative;
 }
 
 .ruta-list-box{
   width: 830px;
   height: 800px;
-  left: 550px;
-  top: 170px;
+  left: 240px;
+  top: 270px;
 
   flex-wrap: wrap; 
 
@@ -370,6 +354,14 @@ div {
   position: absolute;
 }
 
+
+.title-sol{
+  font-size:x-large;
+  font-weight:600;
+  left:224.17px;
+  top:100px;
+  position: relative;
+}
 .inicio_span {
   color: #2635D6;
   font-size: 17.64px;
@@ -379,10 +371,11 @@ div {
 }
 
 .inicio {
+  color: #2635D6;
   width: 48.51px;
   height: 26.46px;
   left: 224.17px;
-  top: 113.19px;
+  top: 140px;
   position: absolute;
 }
 
@@ -398,7 +391,7 @@ div {
   width: 8.82px;
   height: 26.46px;
   left: 282.24px;
-  top: 113.19px;
+  top: 140px;
   position: absolute;
 }
 
@@ -414,7 +407,7 @@ div {
   width: 214.62px;
   height: 26.46px;
   left: 302.82px;
-  top: 113.19px;
+  top: 140px;
   position: absolute;
 }
 
@@ -432,7 +425,7 @@ div {
   color: black;
   font-size: 26.46px;
   font-family: Poppins;
-  font-weight: 500;
+  font-weight: 600;
   word-wrap: break-word;
 }
 
@@ -638,7 +631,7 @@ div {
   margin-top: 0.5vh;
   color: gray;
   border-radius: 2vh;
-  width: 38vh;
+  width: 35vh;
   height: 4vh;
   border: 2px solid;
   border-color:#6BC8C9;
@@ -650,7 +643,7 @@ div {
   margin-top: 0.5vh;
   color: gray;
   border-radius: 2vh;
-  width: 38vh;
+  width: 35vh;
   height: 4vh;
   border: 2px solid;
   border-color:#6BC8C9;
@@ -675,21 +668,6 @@ div {
   position: relative;
 }
 
-.btn-clear{
-  top: -563px;
-  left: 40px;
-  padding: 0.5rem 1rem;
-  border-radius: 4px;
-  text-decoration: none;
-  font-weight: 500;
-  border: none;
-  cursor: pointer;
-  position: relative;
-  color:#2635D6;
-
-  margin: 1vh;
-}
-
 .solicitarunirse_01{
 
   padding-top: 0.5vh;
@@ -707,6 +685,44 @@ div {
 .solicitarunirse_01:hover{
   background-color:#620713;
   cursor: pointer;
+}
+
+.cancelar-btn{
+  width: 171.99px;
+  height: 36.75px;
+  left: 600px;
+  top: -65px;
+  position: relative;
+}
+
+.cancelar{
+
+  top: -5vh;
+  width: 171.99px;
+  height: 36.75px;
+  color: red;
+  overflow: hidden;
+}
+
+.cancelar:hover{
+  color:rgb(198, 0, 23);
+  cursor: pointer;
+}
+
+.estado-btn{
+  padding-top: 0.5vh;
+  width: 171.99px;
+  height: 30px;
+  color: white;
+  background-color:#880D1E;
+
+  box-shadow: 0px 2.93999981880188px 2.93999981880188px rgba(0, 0, 0, 0.25);
+  overflow: hidden;
+  border-radius: 26.46px;
+  text-align: center;
+  top: -17vh;
+  left: 55.5vh;
+  position: relative;
 }
 
 .filters-form{

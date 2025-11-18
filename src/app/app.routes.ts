@@ -12,6 +12,11 @@ export const routes: Routes = [
                 loadChildren: () => import('./features/rutas/ruta.routes').then((m) => m.RUTA_ROUTES)
             },
             {
+                path:'solicitudes',
+                loadChildren: () => import('./features/solicitudes/solicitud.routes').then((m) => m.SOLICITUD_ROUTES)
+            },
+            {
+                
                 path:'main',
                 loadChildren: () => import('./features/main-page/main.routes').then((m) => m.MAIN_ROUTES)
             }
