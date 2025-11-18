@@ -379,3 +379,84 @@
   font-weight: 400;
   word-wrap: break-word;
 }
+
+/* Fondo oscuro (antes .poppup) */
+.popup-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(108, 108, 108, 0.4);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 99999;
+}
+
+/* Caja blanca (antes .rectangle-188) */
+.popup-box {
+  width: 90%;
+  max-width: 900px;
+  height: 639px;
+  padding: 50px 40px;
+  background: white;
+  border-radius: 40px;
+  position: relative;
+  text-align: center;
+
+   /* Forzar centrado vertical y horizontal */
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+/* X para cerrar */
+.popup-close {
+  position: absolute;
+  right: 30px;
+  top: 20px;
+  font-size: 48px;
+  font-family: Poppins;
+  font-weight: 500;
+  cursor: pointer;
+  user-select: none;
+}
+
+/* Ícono de error */
+.popup-icon {
+  width: 100px;
+  height: 100px;
+  margin-bottom: 90px;
+  margin-top: 70px;
+}
+
+/* Texto del mensaje */
+.popup-message {
+  font-size: 48px;
+  font-family: Poppins, sans-serif;
+  font-weight: 500;
+  color: black;
+  max-width: 700px;
+  margin: 0 auto;
+  line-height: 1.2;
+}
+
+/* Ajustes responsive */
+@media (max-width: 768px) {
+  .popup-box {
+    padding: 40px 20px;
+    border-radius: 30px;
+  }
+  
+  .popup-message {
+    font-size: 32px;
+  }
+  
+  .popup-close {
+    font-size: 36px;
+  }
+
+  .popup-icon {
+    width: 80px;
+    height: 80px;
+  }
+}
+

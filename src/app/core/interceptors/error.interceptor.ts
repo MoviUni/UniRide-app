@@ -10,29 +10,31 @@ export const errorInterceptor: HttpInterceptorFn = (req, next) => {
 
   return next(req).pipe(
     catchError((error: HttpErrorResponse) => {
-      let errorMessage = 'Ocurrió un error';
+      let errorMessage = 'Ocurrió un error inesperado';
 
       if (error.error instanceof ErrorEvent) {
-        // Error del cliente
-        errorMessage = `Error: ${error.error.message}`;
+        // Error del lado del cliente / red
+        errorMessage = error.error.message;
       } else {
-        // Error del servidor
-        errorMessage = `Error ${error.status}: ${error.error?.message || error.message}`;
+        errorMessage = error.message || errorMessage;
 
-        // Si el error es 401 (Unauthorized), hacer logout
-        if (error.status === 401) {
+        // 401 → sin autenticación / token inválido
+        if (error.status === 401 || error.status === 0) {
+          console.warn('[HTTP 401] Cerrando sesión y yendo al login');
           authService.logout();
-          router.navigate(['/login']);
+          // tu login REAL está en /auth/login
+          router.navigate(['/auth/login']);
         }
 
-        // Si el error es 403 (Forbidden), redirigir
+        // 403 → autenticado pero sin permisos
         if (error.status === 403) {
+          console.warn('[HTTP 403] Sin permisos, redirigiendo al inicio');
           router.navigate(['/']);
         }
       }
 
-      console.error(errorMessage);
-      return throwError(() => new Error(errorMessage));
+      console.error('[HTTP ERROR]', errorMessage, error);
+      return throwError(() => error);
     })
   );
 };

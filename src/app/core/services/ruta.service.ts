@@ -2,7 +2,11 @@ import { Injectable, inject, signal } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { environment } from '../../../environments/environment';
+<<<<<<< HEAD
 import { RutaFrecuenteResponseDTO, RutaResponseDTO, EstadoRuta } from '../models/ruta.model';
+=======
+import { RutaFrecuenteResponseDTO } from '../models/ruta.model';
+>>>>>>> origin/master
 
 @Injectable({
   providedIn: 'root'
@@ -11,9 +15,14 @@ export class RutaService {
   private http = inject(HttpClient);
   private apiUrl = `${environment.apiUrl}/rutas`;
 
+<<<<<<< HEAD
   // token hardcodeado para pruebas
   private token =
     'eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJtYXJpYW5hLmc1bWV6QGV4YW1wbGUuY29tIiwicm9sZSI6IlJPTEVfQ09ORFVDVE9SIiwiZXhwIjoxNzY1NTYwNzc5fQ.u23huAEkcj49xEAgPhtArJtlDxbB_vxRB-77Ba5mx9vsfc5DogP5JOvxu7PtOdtiZeFm8ZirwVpmXZqmDxZWJw';
+=======
+  //token hardcodeado para pruebas
+  private token = 'eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJtYXJpYW5hLmc1bWV6QGV4YW1wbGUuY29tIiwicm9sZSI6IlJPTEVfQ09ORFVDVE9SIiwiZXhwIjoxNzY1NTYwNzc5fQ.u23huAEkcj49xEAgPhtArJtlDxbB_vxRB-77Ba5mx9vsfc5DogP5JOvxu7PtOdtiZeFm8ZirwVpmXZqmDxZWJw';
+>>>>>>> origin/master
 
   private getHeaders() {
     return {
@@ -57,6 +66,7 @@ export class RutaService {
     );
   }
 
+<<<<<<< HEAD
   descargarHistorialPDF(conductorId: number): void {
     this.http
       .get(`${this.apiUrl}/conductor/${conductorId}/historial/pdf`, {
@@ -103,3 +113,17 @@ export class RutaService {
     );
   }
 }
+=======
+  // GET - Exportar historial de rutas en PDF
+  descargarHistorialPDF(conductorId: number): Observable<Blob> {
+  return this.http.get(`${this.apiUrl}/conductor/${conductorId}/historial/pdf`, {
+    ...this.getHeaders(),
+    responseType: 'blob'  
+  });
+}
+
+
+
+  
+}
+>>>>>>> origin/master
