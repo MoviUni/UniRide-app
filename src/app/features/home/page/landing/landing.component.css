@@ -49,6 +49,11 @@
   background-color: #a0142b;
 }
 
+.btn-comienza:active {
+  background-color: #5a0a14; /* más oscuro al hacer click */
+  transform: translateY(1px); /* efecto de presionar */
+}
+
 .hero-image {
   flex: 1 1 300px; /* Crece y se encoge, mínimo 300px */
   max-width: 900px;

@@ -68,6 +68,16 @@
   
 }
 
+.login_button:hover {
+  background: #f0f0f0; /* ligeramente gris al pasar el mouse */
+  
+}
+
+.login_button:active {
+  background: #e0e0e0; /* gris más oscuro al hacer click */
+  transform: translateY(1px); /* efecto de presionar */
+}
+
 .login_span {
   color: #5B5B5B;
   font-size: 20px;
@@ -87,27 +97,12 @@
   font-weight: 500;
 }
 
-/* ----- RESPONSIVE: para pantallas pequeñas ----- */
-@media (max-width: 900px) {
-  .nav_links {
-    display: none; /* oculta navbar en móviles */
-  }
-
-  .landing_header {
-    justify-content: space-between;
-  }
+.signup_button:hover {
+  background: #1f2535; /* más oscuro al pasar el mouse */
+  transform: translateY(-2px);
 }
 
-@media (max-width: 500px) {
-  .buttons {
-    display: none; /* opcional: oculta botones en móvil */
-  }
-
-  .uniride_span {
-    font-size: 24px;
-  }
-
-  .image-39 {
-    width: 55px;
-  }
+.signup_button:active {
+  background: #161c28; /* aún más oscuro al hacer click */
+  transform: translateY(1px);
 }
