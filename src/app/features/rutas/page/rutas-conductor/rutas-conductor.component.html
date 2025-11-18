@@ -1,0 +1,121 @@
+<div class="page">
+
+  <!-- VIAJE POR INICIAR -->
+  <section class="section">
+    <h2 class="section-title">Viaje por iniciar</h2>
+
+    <!-- Estado vacío -->
+    <div class="next-trip-empty-card" *ngIf="!viajePorIniciar(); else viajeIniciado">
+      <div class="next-trip-icon-wrapper">
+        <img src="assets/clock-icon.png" alt="Reloj" class="next-trip-icon">
+      </div>
+
+      <div class="next-trip-empty-text-main">Aquí verás tu viaje en curso.</div>
+      <div class="next-trip-empty-text-sub">
+        Por ahora, ninguno está listo para comenzar en los próximos 30 minutos.
+      </div>
+    </div>
+
+    <!-- Cuando SÍ hay viaje por iniciar -->
+    <ng-template #viajeIniciado>
+      <ng-container *ngIf="viajePorIniciar() as viaje">
+        <div class="trip-card">
+          <div class="trip-left">
+
+            <div class="trip-status">
+              {{ viaje.estadoRuta === 'CONFIRMADO' ? 'Confirmado' : 'Programado' }}
+            </div>
+
+            <div class="trip-route-row">
+              <span class="trip-icon">📍</span>
+              <span class="trip-route">
+                {{ viaje.origen }} → {{ viaje.destino }}
+              </span>
+            </div>
+
+            <div class="trip-meta">
+              <div class="trip-meta-row">
+                <span class="trip-icon">📅</span>
+                <span>{{ viaje.fechaSalida }} a las {{ viaje.horaSalida }}</span>
+              </div>
+
+              <div class="trip-meta-row">
+                <span class="trip-icon">🪑</span>
+                <span>Asientos disponibles: {{ viaje.asientosDisponibles }} / {{ viaje.capacidadVehiculo}}</span>
+              </div>
+
+              <div class="trip-meta-row">
+                <span class="trip-icon">💰</span>
+                <span>Tarifa: S/ {{ viaje.tarifa }}</span>
+              </div>
+            </div>
+
+          </div>
+        </div>
+      </ng-container>
+    </ng-template>
+
+  </section>
+
+  <hr class="divider">
+
+  <!-- PRÓXIMOS VIAJES -->
+  <section class="section">
+    <h2 class="section-title">Próximos viajes</h2>
+
+    <!-- Cuando sí hay próximos viajes -->
+    <div class="trips-list" *ngIf="proximosViajes().length > 0; else sinProximos">
+      <article class="trip-card" *ngFor="let ruta of proximosViajes()">
+        <div class="trip-left">
+
+          <div class="trip-status">
+            {{ ruta.estadoRuta === 'CONFIRMADO' ? 'Confirmado' : 'Programado' }}
+          </div>
+
+          <div class="trip-route-row">
+            <span class="trip-icon">📍</span>
+            <span class="trip-route">{{ ruta.origen }} → {{ ruta.destino }}</span>
+          </div>
+
+          <div class="trip-meta">
+
+            <div class="trip-meta-row">
+              <span class="trip-icon">📅</span>
+              <span>{{ ruta.fechaSalida }} a las {{ ruta.horaSalida }}</span>
+            </div>
+
+            <div class="trip-meta-row">
+              <span class="trip-icon">🪑</span>
+              <span>Asientos disponibles: {{ ruta.asientosDisponibles }}/{{ ruta.capacidadVehiculo}}</span>
+            </div>
+
+            <div class="trip-meta-row">
+              <span class="trip-icon">💰</span>
+              <span>Tarifa: S/ {{ ruta.tarifa }}</span>
+            </div>
+
+          </div>
+
+        </div>
+
+        <div class="trip-right">
+          <button class="btn-manage" (click)="gestionarViaje(ruta)">Gestionar viaje</button>
+
+          <div class="trip-requests">
+            <span class="trip-requests-icon">👥</span>
+            <span>{{ ruta.solicitudesPendientes }} solicitudes pendientes</span>
+          </div>
+        </div>
+      </article>
+    </div>
+
+    <!-- No hay próximos viajes -->
+    <ng-template #sinProximos>
+      <p class="next-trip-empty-text-sub">
+        No tienes próximos viajes programados.
+      </p>
+    </ng-template>
+
+  </section>
+
+</div>

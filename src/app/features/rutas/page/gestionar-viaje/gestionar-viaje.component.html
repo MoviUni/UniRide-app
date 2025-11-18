@@ -1,0 +1,156 @@
+<!-- src/app/features/rutas/page/gestiona-tu-viaje/gestiona-tu-viaje.component.html -->
+
+<div class="page" *ngIf="!error(); else errorTpl">
+  <h1 class="page-title">Gestiona tu viaje</h1>
+  <p class="page-subtitle">
+    Revisa y gestiona a los pasajeros antes de confirmar o cancelar tu viaje.
+  </p>
+
+  <!-- CARD PRINCIPAL RUTA -->
+  <section class="route-card" *ngIf="ruta(); else cargandoRutaTpl">
+    <div class="route-main">
+      <div class="route-title">
+        {{ ruta()?.origen }} → {{ ruta()?.destino }}
+      </div>
+
+      <div class="route-meta">
+        Fecha de salida: {{ ruta()?.fechaSalida | date:'dd/MM/yyyy' }}·
+        Hora de salida: {{ ruta()?.horaSalida }} ·
+        Asientos disponibles:
+        {{ ruta()?.asientosDisponibles }}/{{ ruta()?.capacidadVehiculo}}
+      </div>
+
+      <div class="route-actions">
+        <button
+          class="btn btn-primary"
+          (click)="confirmarViaje()"
+          [disabled]="ruta()?.estadoRuta === 'CONFIRMADO'"
+        >
+          Confirmar viaje
+        </button>
+
+        <button
+          class="btn btn-danger"
+          (click)="cancelarViaje()"
+          [disabled]="ruta()?.estadoRuta === 'CANCELADO'"
+        >
+          Cancelar viaje
+        </button>
+
+        <span class="route-hint">
+          <!-- texto informativo genérico, podrías calcular la hora límite desde backend -->
+          Estará habilitado hasta el {{ limiteHabilitacion() }}.
+        </span>
+      </div>
+    </div>
+
+    <div class="route-status">
+      {{ ruta()?.estadoRuta }}
+    </div>
+  </section>
+
+  <!-- GRID INFERIOR -->
+  <div class="grid">
+    <!-- Solicitudes pendientes -->
+    <section class="card">
+      <header class="card-header">
+        <h2 class="card-title">Solicitudes de pasajeros</h2>
+        <p class="card-subtitle">
+          Acepta o rechaza las solicitudes pendientes.
+        </p>
+      </header>
+
+      <ng-container *ngIf="!loadingSolicitudes(); else cargandoSolicitudesTpl">
+        <div
+          class="request-list"
+          *ngIf="solicitudesPendientes().length > 0; else sinPendientesTpl"
+        >
+          <article
+            class="request-item"
+            *ngFor="let s of solicitudesPendientes()"
+          >
+            <div class="request-info">
+              <div class="request-name">
+                {{ nombreCompleto(s) }}
+              </div>
+              <div class="request-extra">
+                Carrera: {{ s.pasajeroCarrera || 'No indicada' }}<br />
+                {{ s.pasajeroDescripcion }}
+              </div>
+            </div>
+
+            <div class="request-actions">
+              <button class="btn-accept" (click)="aceptarSolicitud(s)">
+                Aceptar
+              </button>
+              <button class="btn-reject" (click)="rechazarSolicitud(s)">
+                Rechazar
+              </button>
+            </div>
+          </article>
+        </div>
+      </ng-container>
+    </section>
+
+    <!-- Pasajeros confirmados -->
+    <section class="card">
+      <header class="card-header">
+        <h2 class="card-title">Pasajeros confirmados</h2>
+      </header>
+
+      <ng-container *ngIf="!loadingSolicitudes(); else cargandoSolicitudesTpl">
+        <ng-container *ngIf="pasajerosConfirmados().length > 0; else sinConfirmadosTpl">
+          <div class="request-list">
+            <article
+              class="request-item"
+              *ngFor="let s of pasajerosConfirmados()"
+            >
+              <div class="request-info">
+                <div class="request-name">
+                  {{ nombreCompleto(s) }}
+                </div>
+                <div class="request-extra">
+                  Carrera: {{ s.pasajeroCarrera || 'No indicada' }}<br />
+                  {{ s.pasajeroDescripcion }}
+                </div>
+              </div>
+            </article>
+          </div>
+        </ng-container>
+      </ng-container>
+    </section>
+  </div>
+</div>
+
+<!-- TEMPLATES AUXILIARES -->
+
+<ng-template #errorTpl>
+  <div class="page">
+    <h1 class="page-title">Gestiona tu viaje</h1>
+    <p class="page-subtitle" style="color: #b91c1c">
+      {{ error() }}
+    </p>
+  </div>
+</ng-template>
+
+<ng-template #cargandoRutaTpl>
+  <section class="route-card">
+    Cargando información del viaje...
+  </section>
+</ng-template>
+
+<ng-template #cargandoSolicitudesTpl>
+  <p class="empty-text">Cargando solicitudes...</p>
+</ng-template>
+
+<ng-template #sinPendientesTpl>
+  <p class="empty-text">
+    No tienes solicitudes pendientes por ahora.
+  </p>
+</ng-template>
+
+<ng-template #sinConfirmadosTpl>
+  <p class="empty-text">
+    Aún no hay pasajeros confirmados.
+  </p>
+</ng-template>

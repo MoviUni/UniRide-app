@@ -21,14 +21,18 @@ export interface SolicitudViajeResponse{
     hora:string,
     rutaId:number,
     pasajeroId:number,
-    updatedAt:string
+    updatedAt:string,
+    pasajeroNombre: string;
+    pasajeroApellido: string;
+    pasajeroCarrera: string | null;
+    pasajeroDescripcion: string | null;
 }
 
 export interface SolicitudEstadoRequest{
-    estadoSolicitud: EstadoSolicitud
+    estado: EstadoSolicitud
 }
 
 export interface SolicitudEstadoResponse{
-    estadoSolicitud: EstadoSolicitud
+    estado: EstadoSolicitud
 }
 
