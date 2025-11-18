@@ -3,6 +3,7 @@ import { AuthLayoutComponent } from './shared/layouts/auth-layout.component';
 import { LandingLayoutComponent } from './shared/layouts/landing-layout.component';
 
 export const routes: Routes = [
+<<<<<<< HEAD
     {
         path: '',
         component: AuthLayoutComponent,
@@ -23,4 +24,25 @@ export const routes: Routes = [
         path: '**', 
         redirectTo: '/home/landing' //aquí muestra la ruta por defecto
     }
+=======
+  {
+    path: 'auth',
+    loadChildren: () =>
+      import('./features/auth/auth.routes').then(m => m.AUTH_ROUTES),
+  },
+  {
+    path: 'home',
+    loadChildren: () =>
+      import('./features/home/home.routes').then(m => m.HOME_ROUTES),
+  },
+  {
+    path: '',
+    pathMatch: 'full',
+    redirectTo: 'auth/login',   // que abra el login al inicio
+  },
+  {
+    path: '**',
+    redirectTo: 'auth/login',
+  },
+>>>>>>> feature/modulo-2
 ];
