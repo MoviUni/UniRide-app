@@ -6,9 +6,6 @@ import { ChangeDetectorRef } from '@angular/core'; // fuerza a Angular a detecta
 
 //Para formularios reactivos
 import { ReactiveFormsModule } from '@angular/forms';
-import { HttpResponse } from '@angular/common/http';
-
-
 
 //Para las gráficas
 import { BaseChartDirective } from 'ng2-charts';
@@ -21,7 +18,7 @@ Chart.register(CategoryScale, LinearScale, BarElement, Title, Tooltip, Legend, B
 @Component({
   selector: 'app-estadisticas',
   standalone: true,
-  imports: [CommonModule, BaseChartDirective, CommonModule, ReactiveFormsModule],
+  imports: [CommonModule, BaseChartDirective, ReactiveFormsModule],
   templateUrl: './estadisticas.component.html',
   styleUrls: ['./estadisticas.component.css']
 })

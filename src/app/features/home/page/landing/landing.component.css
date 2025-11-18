@@ -1,0 +1,417 @@
+.hero-section {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 5% 5%; /* Espacio lateral proporcional */
+  background: #FDE5DF;
+  gap: 5%; /* Separación proporcional */
+  flex-wrap: wrap; /* Permite que el texto y la imagen se acomoden en móvil */
+  width: 100%; /* IMPORTANTE: que ocupe todo el ancho disponible */
+  box-sizing: border-box; /* Incluye padding en el ancho total */
+}
+
+.hero-text {
+  flex: 1 1 400px; /* Crece y se encoge, mínimo 400px */
+  max-width: 600px;
+}
+
+.hero-text h1 {
+  font-family: Poppins;
+  font-size: clamp(24px, 5vw, 54px); /* Escala con la pantalla */
+  font-weight: 700;
+  color: #2A324B;
+  margin-bottom: 20px;
+}
+
+.hero-text p {
+  font-family: 'Nunito Sans', sans-serif;
+  font-size: clamp(16px, 2.5vw, 24px); /* Escala con la pantalla */
+  font-weight: 700;
+  line-height: 1.6;
+  color: black;
+  margin-bottom: 30px;
+}
+
+.btn-comienza {
+  background-color: #880D1E;
+  color: white;
+  font-family: Poppins;
+  font-weight: 500;
+  font-size: clamp(16px, 2vw, 22px);
+  padding: clamp(10px, 2vw, 15px) clamp(20px, 4vw, 40px);
+  border: none;
+  border-radius: 36px;
+  cursor: pointer;
+  transition: 0.3s;
+}
+
+.btn-comienza:hover {
+  background-color: #a0142b;
+}
+
+.btn-comienza:active {
+  background-color: #5a0a14; /* más oscuro al hacer click */
+  transform: translateY(1px); /* efecto de presionar */
+}
+
+.hero-image {
+  flex: 1 1 300px; /* Crece y se encoge, mínimo 300px */
+  max-width: 900px;
+}
+
+.hero-image img {
+  width: 100%;
+  height: auto;
+  border-radius: 25px;
+}
+
+
+/* Seccion ¿Que es UniRide */
+/* Contenedor principal */
+.section-uniride {
+  width: 100%;
+  padding: 50px 5%;
+  text-align: center;
+  
+  box-sizing: border-box;
+}
+
+/* Título */
+.uniride-title {
+  font-family: Poppins, sans-serif;
+  font-weight: 700;
+  line-height: 64.8px;
+  margin-bottom: 20px;
+  font-size: 36px;
+  margin-top: 50px;
+}
+
+.title-normal {
+  color: #2A324B;
+}
+
+.title-highlight {
+  color: #DD2D4A;
+}
+
+/* Descripción */
+.uniride-description {
+  font-family: Poppins, sans-serif;
+  font-weight: 400;
+  font-size: 24px;
+  line-height: 43.2px;
+  color: black;
+  max-width: 837px;
+  margin: 0 auto 150px auto;
+}
+
+/* Contenedor de tarjetas */
+.cards-container {
+  display: flex;
+  gap: 30px;
+  justify-content: center;
+  flex-wrap: wrap;
+}
+
+/* Tarjetas individuales */
+.card {
+  box-shadow: 0px 10px 60px rgba(38, 45, 118, 0.08);
+  border-radius: 20px;
+  padding: 60px 20px 20px 20px; /* espacio superior para la imagen fuera de la tarjeta */
+  flex: 1 1 300px;
+  max-width: 450px;
+  max-height: 372px;
+  text-align: center;
+  position: relative;
+  margin-bottom: 30px;
+  
+}
+
+/* Círculo de la imagen */
+.circle-image {
+  width: 100px;
+  height: 100px;
+  background-color: #880D1E; /* rojo */
+  border-radius: 50%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: absolute;
+  top: -60px; /* mitad fuera de la tarjeta */
+  left: 50%;
+  transform: translateX(-50%);
+  overflow: hidden;
+}
+
+.circle-image img {
+  width: 80%;
+  height: auto;
+  border-radius: 50%;
+}
+
+/* Títulos de tarjetas */
+.card-title {
+  font-family: Poppins;
+  font-weight: 500;
+  font-size: 30px;
+  color: #880D1E;
+  margin-top: 40px;
+}
+
+/* Descripciones de tarjetas */
+.card-description {
+  font-family: Poppins;
+  font-weight: 400;
+  font-size: 20px;
+  line-height: 36px;
+  color: black;
+  margin-bottom: 30px;
+  padding-left: 30px;
+  padding-right: 30px;
+  
+}
+
+
+/*funcionalidades section*/
+.section-funcionalidades {
+  width: 100%;
+  padding: 50px 5%;
+  background: #FDE5DF;
+  text-align: center;
+  box-sizing: border-box;
+}
+
+/* Título */
+.funcionalidades-title {
+  font-family: Poppins, sans-serif;
+  font-weight: 700;
+  font-size: 36px;
+  line-height: 64.8px;
+  color: #2A324B;
+  margin-bottom: 50px;
+}
+
+/* Grid de cartillas */
+.funcionalidades-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 30px;
+}
+
+/* Cartilla */
+.card_funcionalidad {
+  background: white;
+  box-shadow: 0px 10px 60px rgba(38, 45, 118, 0.08);
+  border-radius: 20px;
+  padding: 20px;
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+/* Imagen dentro de la cartilla */
+.card-image {
+  width: 100px;
+  height: auto;
+  margin-bottom: 20px;
+}
+
+/* Título de la cartilla */
+.card-title {
+  font-family: Poppins, sans-serif;
+  font-weight: 500;
+  font-size: 30px;
+  color: #880D1E;
+  margin-bottom: 10px;
+}
+
+/* Descripción de la cartilla */
+.card-description {
+  font-family: Poppins, sans-serif;
+  font-weight: 400;
+  font-size: 20px;
+  line-height: 36px;
+  color: black;
+}
+
+/* Seccion testimonios */
+.section-testimonios {
+  width: 100%;
+  padding: 50px 5%;
+
+  box-sizing: border-box;
+  text-align: center;
+}
+
+.testimonios-title {
+  font-family: Poppins, sans-serif;
+  font-weight: 600;
+  font-size: 44px;
+  line-height: 79.2px;
+  color: #2A324B;
+  margin-bottom: 50px;
+}
+
+/* Grid de testimonios */
+.testimonios-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: 30px;
+  justify-items: center;
+  width: 100%;
+}
+
+
+/* Tarjeta de testimonio */
+.testimonial-card {
+  background: #FEF1ED;
+  box-shadow: 0px 18.83px 47.08px rgba(47, 50, 125, 0.1);
+  border-radius: 20px;
+  padding: 20px;
+  width: 100%;
+  max-width: 396px;
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+/* Imagen */
+.testimonial-image {
+  width: 100%;
+  max-width: 354px;
+  height: auto;
+  border-radius: 25px;
+  margin-bottom: 20px;
+}
+
+/* Nombre y rol */
+.testimonial-name {
+  font-family: Poppins, sans-serif;
+  font-weight: 500;
+  font-size: 24px;
+  color: #252641;
+  margin-bottom: 10px;
+}
+
+.testimonial-role {
+  display: block;
+  color: rgba(37, 38, 65, 0.45);
+  font-size: 24px;
+  font-weight: 500;
+}
+
+/* Texto */
+.testimonial-text {
+  font-family: Poppins, sans-serif;
+  font-weight: 400;
+  font-size: 18px;
+  line-height: 32.4px;
+  color: black;
+}
+
+.servicio-section {
+  width: 100%;
+  background: #FEF1ED;
+  padding: 50px 5%;
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.servicio-container {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: center; /* centra el texto y la imagen */
+  gap: 30px;
+  max-width: 1200px;
+  width: 100%;
+}
+
+.servicio-text-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center; /* centra el texto y el botón */
+  text-align: center;
+  gap: 20px; /* separación entre texto y botón */
+}
+
+.servicio-text {
+  max-width: 600px;
+  font-family: Poppins;
+  font-size: 36px;
+  font-weight: 1000;
+  line-height: 36px;
+  color: #2A324B;
+  text-align: center;
+}
+
+.btn-trabaja {
+  background-color: #2A324B;
+  color: #FEF1ED;
+  font-family: Poppins;
+  font-weight: 500;
+  font-size: 22px;
+  padding: 15px 40px;
+  border: none;
+  border-radius: 36px;
+  cursor: pointer;
+  transition: 0.3s;
+  margin-right: 500px;
+  margin-top: -100px;
+  margin-bottom: 80px;
+}
+
+.btn-trabaja:hover {
+  background-color: #1f273b;
+}
+
+.servicio-img {
+  width: 100%;
+  max-width: 450px;
+  border-radius: 20px;
+}
+
+.servicio-users {
+  display: flex;
+  gap: 30px;
+  margin-top: 40px;
+  justify-content: center;
+  flex-wrap: wrap; /* para que en pantallas pequeñas se acomoden */
+}
+
+.user-circle {
+  width: 100px;
+  height: 100px;
+  background: #880D1E;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+}
+
+.user-circle img {
+  width: 65px;
+  height: 65px;
+}
+
+/* Responsive */
+@media (max-width: 1024px) {
+  .servicio-text {
+    font-size: 28px;
+    line-height: 32px;
+  }
+
+  .btn-trabaja {
+    font-size: 20px;
+    padding: 12px 30px;
+  }
+
+  .servicio-container {
+    flex-direction: column;
+  }
+}

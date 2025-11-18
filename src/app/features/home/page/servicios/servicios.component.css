@@ -1,0 +1,190 @@
+.planes-section {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 5% 5%;
+  background: #FDE5DF;
+  gap: 5%;
+  flex-wrap: wrap;
+  width: 100%;
+  box-sizing: border-box;
+}
+
+/* Texto */
+.planes-text {
+  flex: 1 1 400px;
+  max-width: 600px;
+}
+
+.planes-text h1 {
+  font-family: Poppins;
+  font-size: clamp(32px, 6vw, 96px); /* RESPETA tu tamaño original, pero responsivo */
+  font-weight: 700;
+  color: #2A324B;
+  line-height: 1.1;
+  margin-bottom: 25px;
+}
+
+/* Elipse */
+.planes-ellipse {
+  width: 20px;
+  height: 20px;
+  background: #C4C4C4;
+  border-radius: 50%;
+}
+
+/* Imagen */
+.planes-image {
+  flex: 1 1 300px;
+  max-width: 1013px;
+  max-height: 675px;
+}
+
+.planes-image img {
+  width: 100%;
+  height: auto;
+  border-radius: 25px;
+}
+
+.upc-section {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  padding: 40px 5%;
+  box-sizing: border-box;
+}
+
+.upc-text {
+  max-width: 900px;
+  text-align: center;
+  font-family: "Nunito Sans", sans-serif;
+  font-weight: 600;
+  font-size: 28px;
+  color: #2A324B;
+  line-height: 1.4;
+  margin-top: 80px;
+}
+
+
+/*beneficios section*/
+.section {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 40px;
+  margin: 50px 0;
+}
+
+/* Textos */
+.section .text {
+  width: 50%;
+}
+
+/* Imágenes */
+.section .photo {
+  width: 45%;
+  border-radius: 50px;
+}
+
+/* Segunda sección: imagen a la izquierda */
+.section.left-img {
+  flex-direction: row;
+}
+
+
+/*SEGMENTOO BENEFICIOS*/
+/* SEGMENTO BENEFICIOS */
+.section {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: clamp(20px, 4vw, 60px); 
+  padding: clamp(40px, 6vw, 100px) 5%;
+  box-sizing: border-box;
+  flex-wrap: wrap;
+}
+
+/* La segunda sección tendrá la imagen a la izquierda */
+.section.left-img {
+  flex-direction: row; /* Imagen izquierda → texto derecha */
+}
+
+.section-text {
+  flex: 1 1 350px;
+  max-width: 600px;
+}
+
+.section-text h2 {
+  font-size: clamp(24px, 4vw, 44px);
+  font-family: Poppins;
+  font-weight: 600;
+  color: #880D1E;
+  margin-bottom: 15px;
+}
+
+.section-text p {
+  font-size: clamp(16px, 2.3vw, 24px);
+  font-family: Nunito Sans;
+  font-weight: 400;
+  line-height: 1.5;
+  color: black;
+}
+
+.section-img {
+  flex: 1 1 350px;
+  max-width: 550px;
+  width: 100%;
+  border-radius: 50px;
+}
+
+
+
+
+/* PREGUNTAS FRECUENTES */
+.preguntas-title {
+  text-align: center;
+  font-family: Poppins;
+  font-size: 48px;
+  font-weight: 700;
+  margin-top: 80px;
+  margin-bottom: 40px;
+  color: #2A324B;
+}
+
+.faq-container {
+  width: 100%;
+  max-width: 1400px;
+  margin: auto;
+  display: flex;
+  flex-direction: column;
+  gap: 40px;
+  padding: 0 5%;
+  box-sizing: border-box;
+  margin-bottom: 80px;
+}
+
+.faq-card {
+  background: white;
+  padding: 40px;
+  border-radius: 50px;
+  box-shadow: 0px 8px 10px 4px rgba(0, 0, 0, 0.30);
+  opacity: 0.95;
+  width: 100%;
+  box-sizing: border-box;
+}
+
+.faq-card h3 {
+  font-family: Poppins;
+  font-size: 32px;
+  font-weight: 600;
+  color: #2A324B;
+  margin-bottom: 15px;
+}
+
+.faq-card p {
+  font-family: Nunito Sans;
+  font-size: 22px;
+  line-height: 1.6;
+  color: black;
+}
+
