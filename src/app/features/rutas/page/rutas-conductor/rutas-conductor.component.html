@@ -36,7 +36,9 @@
             <div class="trip-meta">
               <div class="trip-meta-row">
                 <span class="trip-icon">📅</span>
-                <span>{{ viaje.fechaSalida }} a las {{ viaje.horaSalida }}</span>
+                <span>{{ viaje.fechaSalida | date:'dd/MM/yyyy' }}
+                  a las {{ viaje.horaSalida | slice:0:5 }} 
+                </span>
               </div>
 
               <div class="trip-meta-row">
@@ -81,7 +83,9 @@
 
             <div class="trip-meta-row">
               <span class="trip-icon">📅</span>
-              <span>{{ ruta.fechaSalida }} a las {{ ruta.horaSalida }}</span>
+              <span>{{ ruta.fechaSalida | date:'dd/MM/yyyy' }} a las
+                {{ ruta.horaSalida | slice:0:5 }}
+              </span>
             </div>
 
             <div class="trip-meta-row">
