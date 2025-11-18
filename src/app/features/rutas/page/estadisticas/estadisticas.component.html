@@ -98,3 +98,16 @@
     <div class="conoce-ms"><span class="conocems_span">Descargar</span></div>
   </button>
 </div>
+
+@if (mostrarPopup) {
+  <div class="popup-overlay">
+    <div class="popup-box">
+      <div class="popup-close" (click)="mostrarPopup = false">x</div>
+      <img class="popup-icon" [src]="popupIcon" alt="icono" />
+      <p class="popup-message">{{ mensajePopup }}</p>
+
+    </div>
+  </div>
+}
+
+

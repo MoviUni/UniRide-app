@@ -173,8 +173,61 @@ obtenerRutasFrecuentes(conductorId: number): void {
   });
 }
   //=========== DESCARGAR HISTORIAL EN PDF ===========
-    descargarHistorialPDF(): void {
-    // Y también puedo usarla aquí
-    this.rutaService.descargarHistorialPDF(this.conductorId);
+  mostrarPopup: boolean = false;
+  mensajePopup: string = '';
+  popupIcon: string = '';   // ← AQUÍ va la imagen según el tipo
+
+descargarHistorialPDF() {
+  this.rutaService.descargarHistorialPDF(this.conductorId).subscribe({
+    next: (resp: Blob) => {
+      if (!resp || resp.size === 0) {
+        this.mostrarMensaje('warning');
+        return;
+      }
+
+      const url = window.URL.createObjectURL(resp);
+      const a = document.createElement('a');
+      a.href = url;
+      a.download = `historial_conductor_${this.conductorId}.pdf`;
+      a.click();
+      window.URL.revokeObjectURL(url);
+
+      this.mostrarMensaje('success');
+    },
+    error: () => {
+      this.mostrarMensaje('error');
+    }
+  });
+}
+
+
+
+cerrarPopup() {
+  this.mensajePopup = '';
+  this.mostrarPopup = false;
+}
+
+mostrarMensaje(tipo: 'success' | 'error' | 'warning') {
+  switch (tipo) {
+    case 'success':
+      this.mensajePopup = 'El reporte se exportó correctamente';
+      this.popupIcon = 'assets/check_mark.png';
+      break;
+    case 'error':
+      this.mensajePopup = 'Hubo un error al exportar tu reporte';
+      this.popupIcon = 'assets/error.png';
+      break;
+    case 'warning':
+      this.mensajePopup = 'No tienes viajes por exportar';
+      this.popupIcon = 'assets/error.png';
+      break;
   }
+
+  this.mostrarPopup = true;
+
+  this.cdr.detectChanges();
+}
+
+
+  
 }
