@@ -41,16 +41,12 @@ export class Login {
       console.log('Login OK, rol:', resp.rol);
 
       if (resp.rol === 'CONDUCTOR') {
-        this.router.navigate(['/rutas/mis-rutas']);
+        this.router.navigate(['/main/conductor']);
       } else if (resp.rol === 'PASAJERO') {
-        // 🔁 aquí pon la vista inicial del pasajero
-        this.router.navigate(['rutas/buscar']); 
-        // o '/solicitudes', o lo que tengan como dashboard de pasajero
+        this.router.navigate(['/main/pasajero']);   // 👈 AQUÍ ES
       } else if (resp.rol === 'ADMIN') {
-        // si tienen panel admin
         this.router.navigate(['/admin']);
       } else {
-        // fallback
         this.router.navigate(['/home/landing']);
       }
     },
@@ -59,5 +55,6 @@ export class Login {
     }
   });
 }
+
 
 }

@@ -1,18 +1,20 @@
-import { inject } from '@angular/core';
-import { Router, CanActivateFn } from '@angular/router';
+// auth.guard.ts
+import { Injectable } from '@angular/core';
+import { CanActivate, Router } from '@angular/router';
 import { AuthService } from '../services/auth.service';
 
-export const authGuard: CanActivateFn = (route, state) => {
-  const authService = inject(AuthService);
-  const router = inject(Router);
+@Injectable({
+  providedIn: 'root'
+})
+export class AuthGuard implements CanActivate {
+  constructor(private authService: AuthService, private router: Router) {}
 
-  if (authService.isAuthenticated()) {
-    return true;
+  canActivate(): boolean {
+    if (this.authService.isAuthenticated()) {
+      return true;
+    } else {
+      this.router.navigate(['/auth/login']);
+      return false;
+    }
   }
-
-  // Redirigir al login si no está autenticado
-  router.navigate(['/login'], {
-    queryParams: { returnUrl: state.url }
-  });
-  return false;
-};
+}
