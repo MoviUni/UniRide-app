@@ -142,6 +142,28 @@ export class AuthService {
   getToken(): string | null {
     return this._token();
   }
+  
+  // NUEVO: devolver el id del usuario como number
+  getUserId(): number | null {
+    const user = this._currentUser(); // puede ser CurrentUser o UserResponse o null
+    if (!user) return null;
+
+    // Caso 1: viene de AuthResponseDTO (CurrentUser) y tiene idUsuario
+    const anyUser = user as any;
+
+    if (anyUser.idUsuario != null) {
+      const idNum = Number(anyUser.idUsuario);
+      return Number.isNaN(idNum) ? null : idNum;
+    }
+
+    // Caso 2: viene de UserResponse y tiene id (string)
+    if (anyUser.id != null) {
+      const idNum = Number(anyUser.id);
+      return Number.isNaN(idNum) ? null : idNum;
+    }
+
+    return null;
+  }
 
   isAdmin(): boolean {
     const user = this._currentUser();

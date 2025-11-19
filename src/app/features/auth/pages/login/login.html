@@ -11,41 +11,34 @@
 
     <h2>Accede a tu cuenta</h2>
 
-    <!-- FORMULARIO CORRECTO -->
-    <form 
-      [formGroup]="loginForm"
-      (ngSubmit)="submit()"
-      class="login-form"
-    >
+    <form [formGroup]="loginForm" (ngSubmit)="submit()">
 
-      <!-- EMAIL -->
-      <label for="email">Email</label>
-      <input
-        id="email"
-        type="email"
-        formControlName="email"
-        placeholder="tu@correo.com"
-      />
+      <!-- Email -->
+      <label>Email</label>
+      <input type="email" formControlName="email" />
+      <p class="error" *ngIf="loginForm.get('email')?.touched && loginForm.get('email')?.invalid">
+        * Ingresa un email válido.
+      </p>
 
-      <!-- CONTRASEÑA -->
-      <label for="password">Contraseña</label>
-      <input
-        id="password"
-        type="password"
-        formControlName="password"
-        placeholder="********"
-      />
+      <!-- Password -->
+      <label>Contraseña</label>
+      <input type="password" formControlName="password" />
+      <p class="error" *ngIf="loginForm.get('password')?.touched && loginForm.get('password')?.invalid">
+        * La contraseña es obligatoria.
+      </p>
 
-      <button type="submit">
-        Acceder
-      </button>
+      <!-- BOTÓN -->
+      <button type="submit">Acceder</button>
+
+      <!-- Error de credenciales -->
+      <p class="error" *ngIf="loginError">
+        {{ loginError }}
+      </p>
 
     </form>
 
     <hr />
 
-    <p>¿No tienes cuenta? 
-      <a routerLink="/auth/register">Crear cuenta</a>
-    </p>
+    <p>¿No tienes cuenta? <a routerLink="/auth/register">Crear cuenta</a></p>
   </div>
 </div>
