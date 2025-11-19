@@ -5,7 +5,6 @@ import { Router, RouterLink } from '@angular/router';
 import { AuthService } from '@core/services/auth.service';
 import { LoginRequest } from '@core/models/usuario.model';
 
-
 @Component({
   selector: 'app-login',
   standalone: true,

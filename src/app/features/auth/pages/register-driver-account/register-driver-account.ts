@@ -1,7 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { Router, RouterModule } from '@angular/router';
 import { CommonModule } from '@angular/common';
-import { ReactiveFormsModule, FormBuilder, Validators } from '@angular/forms';
+import { ReactiveFormsModule, FormBuilder, Validators, FormGroup } from '@angular/forms';
+import { RegisterDriverStateService } from '../../../../core/services/register-driver-state.service';
 
 @Component({
   selector: 'app-register-driver-account',
@@ -12,9 +13,13 @@ import { ReactiveFormsModule, FormBuilder, Validators } from '@angular/forms';
 })
 export class RegisterDriverAccount implements OnInit {
 
-  accountForm: any;
+  accountForm!: FormGroup;
 
-  constructor(private router: Router, private fb: FormBuilder) {}
+  constructor(
+    private router: Router,
+    private fb: FormBuilder,
+    private driverState: RegisterDriverStateService
+  ) {}
 
   ngOnInit() {
     this.accountForm = this.fb.group({
@@ -23,6 +28,11 @@ export class RegisterDriverAccount implements OnInit {
       password: ['', [Validators.required, Validators.minLength(6)]],
       password2: ['', [Validators.required, Validators.minLength(6)]],
     });
+
+    const saved = this.driverState.getAccountData();
+    if (saved) {
+      this.accountForm.patchValue(saved);
+    }
   }
 
   goToNext() {
@@ -30,6 +40,10 @@ export class RegisterDriverAccount implements OnInit {
       this.accountForm.markAllAsTouched();
       return;
     }
+
+    // (opcional) validar que password = password2 aquí
+
+    this.driverState.setAccountData(this.accountForm.value);
 
     this.router.navigate(['/auth/register/driver/vehicle']);
   }

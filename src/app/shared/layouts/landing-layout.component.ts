@@ -1,6 +1,5 @@
 import { CommonModule } from '@angular/common';
 import { Component } from '@angular/core';
-
 import { RouterOutlet} from '@angular/router';
 import { FooterComponent } from '../components/footer/footer.component';
 import { NavbarLandingComponent } from '../components/navbar-landing/navbar-landing.component';

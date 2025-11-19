@@ -1,8 +1,10 @@
 import { Injectable, inject, signal } from '@angular/core';
-import { HttpClient, HttpParams, HttpParamsOptions} from '@angular/common/http';
-import { Observable, tap } from 'rxjs';
-import { environment } from '../../../environments/environment';
+
 import { RutaCardResponse, RutaRequestDTO, RutaResponse } from '../models/ruta.model';
+import { tap } from 'rxjs/operators';
+import { HttpClient } from '@angular/common/http';
+import { Observable } from 'rxjs';
+import { environment } from '../../../environments/environment';
 
 import { RutaFrecuenteResponseDTO, RutaResponseDTO, EstadoRuta } from '../models/ruta.model';
 
@@ -108,7 +110,6 @@ export class RutaService {
     });
   }
 
-
   // ======== MIS RUTAS (LISTAR RUTAS VÁLIDAS) =========
 
   getRutasActivasDelConductor(conductorId: number): Observable<RutaResponseDTO[]> {
@@ -139,4 +140,3 @@ export class RutaService {
     );
   }
 }
-

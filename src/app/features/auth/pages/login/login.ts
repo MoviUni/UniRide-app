@@ -29,21 +29,35 @@ export class Login {
   }
 
   submit(): void {
-    if (this.loginForm.invalid) {
-      this.loginForm.markAllAsTouched();
-      return;
-    }
-
-    const { email, password } = this.loginForm.value;
-
-    this.authService.login(email, password).subscribe({
-      next: () => {
-        this.router.navigate(['/routes']); // Cambia a la ruta que uses al iniciar sesión
-      },
-      error: err => {
-        console.error('Error en login:', err);
-      }
-    });
+  if (this.loginForm.invalid) {
+    this.loginForm.markAllAsTouched();
+    return;
   }
+
+  const { email, password } = this.loginForm.value;
+
+  this.authService.login(email, password).subscribe({
+    next: (resp) => {
+      console.log('Login OK, rol:', resp.rol);
+
+      if (resp.rol === 'CONDUCTOR') {
+        this.router.navigate(['/rutas/mis-rutas']);
+      } else if (resp.rol === 'PASAJERO') {
+        // 🔁 aquí pon la vista inicial del pasajero
+        this.router.navigate(['rutas/buscar']); 
+        // o '/solicitudes', o lo que tengan como dashboard de pasajero
+      } else if (resp.rol === 'ADMIN') {
+        // si tienen panel admin
+        this.router.navigate(['/admin']);
+      } else {
+        // fallback
+        this.router.navigate(['/home/landing']);
+      }
+    },
+    error: err => {
+      console.error('Error en login:', err);
+    }
+  });
+}
 
 }

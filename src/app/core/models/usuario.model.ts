@@ -43,10 +43,11 @@ export interface RegisterRequest {
 // ===== RESPONSES =====
 export interface AuthResponse {
   token: string;
-  type: string;
-  email: string;
-  name: string;
+  nombre: string;
+  apellido: string;
+  rol: 'ADMIN' | 'CONDUCTOR' | 'PASAJERO';
 }
+
 
 export interface UserResponse {
   id: string;

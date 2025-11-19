@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { Router, RouterModule } from '@angular/router';
 import { CommonModule } from '@angular/common';
 import { ReactiveFormsModule, FormBuilder, Validators, FormGroup } from '@angular/forms';
+import { RegisterDriverStateService } from '../../../../core/services/register-driver-state.service';
 
 @Component({
   selector: 'app-register-driver',
@@ -16,7 +17,8 @@ export class RegisterDriver implements OnInit {
 
   constructor(
     private router: Router,
-    private fb: FormBuilder
+    private fb: FormBuilder,
+    private driverState: RegisterDriverStateService
   ) {}
 
   ngOnInit(): void {
@@ -26,6 +28,12 @@ export class RegisterDriver implements OnInit {
       telefono: ['', [Validators.required, Validators.pattern(/^[0-9]{9}$/)]],
       dni: ['', [Validators.required, Validators.pattern(/^[0-9]{8}$/)]],
     });
+
+    // por si el usuario regresó hacia atrás
+    const saved = this.driverState.getDriverData();
+    if (saved) {
+      this.driverForm.patchValue(saved);
+    }
   }
 
   goToNext() {
@@ -33,6 +41,9 @@ export class RegisterDriver implements OnInit {
       this.driverForm.markAllAsTouched();
       return;
     }
+
+    // guardar datos en el estado global
+    this.driverState.setDriverData(this.driverForm.value);
 
     this.router.navigate(['/auth/register/driver/account']);
   }

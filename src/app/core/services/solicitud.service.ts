@@ -1,16 +1,13 @@
 // src/app/core/services/solicitud.service.ts
 
-import { Injectable, inject, signal } from '@angular/core';
+import { signal } from '@angular/core';
+import { Injectable, inject } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { Observable, tap } from 'rxjs';
-
-import {
-  EstadoSolicitud,
-  SolicitudViajeRequest,
-  SolicitudViajeResponse
-} from '../models/solicitud.model';
+import { Observable } from 'rxjs';
+import { tap } from 'rxjs/operators';
 import { environment } from '../../../environments/environment';
-import { SolicitudCardResponse, SolicitudEstadoRequest, SolicitudEstadoResponse } from '../models/solicitud.model';
+import { SolicitudCardResponse, EstadoSolicitud,SolicitudEstadoRequest, SolicitudEstadoResponse, SolicitudViajeRequest, SolicitudViajeResponse } from '../models/solicitud.model';
+
 
 @Injectable({
   providedIn: 'root'

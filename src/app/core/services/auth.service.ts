@@ -63,30 +63,31 @@ export class AuthService {
     this._currentUser.set(null);
     this._isAuthenticated.set(false);
     this._token.set(null);
-    this.router.navigate(['/login']);
+    this.router.navigate(['/auth/login']); 
   }
 
   // Helpers privados
-  private saveAuthData(response: AuthResponse): void {
-    this.storage.setItem('token', response.token);
-    this._token.set(response.token);
+// Helpers privados
+private saveAuthData(response: AuthResponse): void {
+  this.storage.setItem('token', response.token);
+  this._token.set(response.token);
 
-    // AuthResponse no incluye role ni otros campos de UserResponse
-    // Creamos un objeto parcial con valores por defecto
-    const user: UserResponse = {
-      id: '', // No disponible desde AuthResponse
-      email: response.email,
-      name: response.name,
-      role: RoleType.ROLE_CONDUCTOR, // Valor por defecto, actualizar desde backend si es necesario
-      active: true,
-      createdAt: new Date().toISOString(),
-      updatedAt: new Date().toISOString()
-    };
+  const user: UserResponse = {
+    id: '', // si luego el backend te devuelve id, lo usas
+    email: '', // <-- de momento lo dejamos vacío
+    name: `${response.nombre} ${response.apellido}`,
+    role: response.rol as RoleType,   // usamos el rol real
+    active: true,
+    createdAt: new Date().toISOString(),
+    updatedAt: new Date().toISOString()
+  };
 
-    this.storage.setItem('user', user);
-    this._currentUser.set(user);
-    this._isAuthenticated.set(true);
-  }
+  this.storage.setItem('user', user);
+  this._currentUser.set(user);
+  this._isAuthenticated.set(true);
+}
+
+
 
   private loadAuthData(): void {
     const token = this.storage.getItem<string>('token');
@@ -120,4 +121,13 @@ export class AuthService {
     const idNum = Number(user.id);
     return Number.isNaN(idNum) ? null : idNum;
   }
+   // 🔹 Registro de conductor (usa el endpoint /auth/registro/conductor)
+  registerDriver(body: any): Observable<any> {
+    return this.http.post<any>(`${this.apiUrl}/registro/conductor`, body);
+  }
+    // 🔹 Registro de pasajero
+  registerPassenger(body: any): Observable<any> {
+    return this.http.post<any>(`${this.apiUrl}/registro/pasajero`, body);
+  }
+
 }

@@ -2,6 +2,7 @@ import { Component } from '@angular/core';
 import { Router, RouterModule } from '@angular/router';
 import { CommonModule } from '@angular/common';
 import { FormBuilder, FormGroup, Validators, ReactiveFormsModule } from '@angular/forms';
+import { RegisterPassengerStateService } from '../../../../core/services/register-passenger-state.service';
 
 @Component({
   selector: 'app-register-passenger',
@@ -20,7 +21,8 @@ export class RegisterPassenger {
 
   constructor(
     private router: Router,
-    private fb: FormBuilder
+    private fb: FormBuilder,
+    private passengerState: RegisterPassengerStateService
   ) {
 
     this.passengerForm = this.fb.group({
@@ -41,6 +43,12 @@ export class RegisterPassenger {
         ]
       ]
     });
+
+    // por si vuelve atrás
+    const saved = this.passengerState.getPassengerData();
+    if (saved) {
+      this.passengerForm.patchValue(saved);
+    }
   }
 
   goToNext() {
@@ -49,10 +57,9 @@ export class RegisterPassenger {
       return;
     }
 
-    // Guarda los datos temporalmente (opcional)
-    localStorage.setItem('registerPassengerData', JSON.stringify(this.passengerForm.value));
+    // guardar en el estado
+    this.passengerState.setPassengerData(this.passengerForm.value);
 
-    // Navegar a la página de cuenta
     this.router.navigate(['/auth/register/passenger/account']);
   }
 }
