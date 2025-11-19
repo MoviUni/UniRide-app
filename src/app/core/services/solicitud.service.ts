@@ -5,6 +5,7 @@ import { HttpClient } from '@angular/common/http';
 import { Observable, tap } from 'rxjs';
 import { environment } from '../../../environments/environment';
 import { SolicitudCardResponse, EstadoSolicitud,SolicitudEstadoRequest, SolicitudEstadoResponse, SolicitudViajeRequest, SolicitudViajeResponse } from '../models/solicitud.model';
+import { AuthService } from './auth.service';
 
 
 @Injectable({
@@ -17,14 +18,15 @@ export class SolicitudService {
 
   // base URL para solicitudes
   private apiUrl = `${environment.apiUrl}/solicitudes`;
+  private auth = inject (AuthService);
 
   //token hardcodeado para pruebas
-  private token = 'eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJtYXJpYW5hLmc1bWV6QGV4YW1wbGUuY29tIiwicm9sZSI6IlJPTEVfQ09ORFVDVE9SIiwiZXhwIjoxNzY1NTYwNzc5fQ.u23huAEkcj49xEAgPhtArJtlDxbB_vxRB-77Ba5mx9vsfc5DogP5JOvxu7PtOdtiZeFm8ZirwVpmXZqmDxZWJw';
+  //private token = 'eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJtYXJpYW5hLmc1bWV6QGV4YW1wbGUuY29tIiwicm9sZSI6IlJPTEVfQ09ORFVDVE9SIiwiZXhwIjoxNzY1NTYwNzc5fQ.u23huAEkcj49xEAgPhtArJtlDxbB_vxRB-77Ba5mx9vsfc5DogP5JOvxu7PtOdtiZeFm8ZirwVpmXZqmDxZWJw';
 
   private getHeaders() {
     return {
       headers: {
-        Authorization: `Bearer ${this.token}`
+        Authorization: `Bearer ${this.auth.getToken()}`
       }
     };
   }

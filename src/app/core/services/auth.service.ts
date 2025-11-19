@@ -81,19 +81,23 @@ export class AuthService {
   // ======================
   //  SAVE LOGIN DATA
   // ======================
+  
   private saveLoginData(resp: AuthResponseDTO): void {
+    console.log('RESPUESTA LOGIN:', resp);
 
-    console.log('RESPUESTA LOGIN:', resp); 
-    
     this.storage.setItem('token', resp.token);
     this._token.set(resp.token);
 
     const user: CurrentUser = {
-      idRol: resp.idRol,
-      nombre: resp.nombre,
-      apellido: resp.apellido,
-      rol: resp.rol
-    };
+    idUsuario: resp.idUsuario,
+    idRol: resp.idRol,
+    nombre: resp.nombre,
+    apellido: resp.apellido,
+    rol: resp.rol,
+    idConductor: resp.idConductor ?? null,
+    idPasajero: resp.idPasajero ?? null,
+  };
+
 
     this.storage.setItem('user', user);
     this._currentUser.set(user);
@@ -143,32 +147,28 @@ export class AuthService {
     return this._token();
   }
   
-  // NUEVO: devolver el id del usuario como number
   getUserId(): number | null {
-    const user = this._currentUser(); // puede ser CurrentUser o UserResponse o null
-    if (!user) return null;
-
-    // Caso 1: viene de AuthResponseDTO (CurrentUser) y tiene idUsuario
-    const anyUser = user as any;
-
-    if (anyUser.idUsuario != null) {
-      const idNum = Number(anyUser.idUsuario);
-      return Number.isNaN(idNum) ? null : idNum;
-    }
-
-    // Caso 2: viene de UserResponse y tiene id (string)
-    if (anyUser.id != null) {
-      const idNum = Number(anyUser.id);
-      return Number.isNaN(idNum) ? null : idNum;
-    }
-
-    return null;
+    const user = this._currentUser() as CurrentUser | null;
+    return user?.idUsuario ?? null;
+  }
+  getConductorId(): number | null {
+    const user = this._currentUser() as CurrentUser | null;
+    return user?.idConductor ?? null;
   }
 
+  getPasajeroId(): number | null {
+    const user = this._currentUser() as CurrentUser | null;
+    return user?.idPasajero ?? null;
+  }
   isAdmin(): boolean {
     const user = this._currentUser();
     if (!user) return false;
     return (user as any).role === RoleType.ROLE_ADMIN || (user as any).rol === 'ADMIN';
+  }
+
+  getUserRole(): 'ADMIN' | 'CONDUCTOR' | 'PASAJERO' | null {
+    const user = this._currentUser() as CurrentUser | null;
+    return user?.rol ?? null;
   }
 
   getUserIdRol(): number | null {
