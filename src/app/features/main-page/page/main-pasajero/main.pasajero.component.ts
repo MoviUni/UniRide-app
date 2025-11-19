@@ -14,9 +14,16 @@ import { RouterModule } from '@angular/router';
         <p class="inicio"> Inicio </p>
         <div class="main-buttons">
           <div>
-            <button type="button" class="btn" routerLink="/solicitudes">
-              <p class="btn-text">  Mis solicitudes</p>
+            <button type="button" class="btn" routerLink="/rutas/buscar">
+              <p class="btn-text">  Buscar Rutas</p>
               <img class="image" src="assets/Ruta.png" />
+            </button>
+            
+          </div>
+          <div>
+            <button type="button" class="btn" routerLink="/solicitudes/pasajero">
+              <p class="btn-text">  Mis solicitudes</p>
+              <img class="image" src="assets/calendar.png" />
             </button>
             
           </div>
@@ -27,19 +34,12 @@ import { RouterModule } from '@angular/router';
             </button>
             
           </div>
-            
-          <div>
-            <button type="button" class="btn" routerLink="/rutas">
-              <p class="btn-text">  Estadísticas de viajes</p>
-              <img class="image" src="assets/Estadisticas.png" />
-            </button>
-            
-          </div>
+
             
           <div>
             <button type="button" class="btn" routerLink="/perfil" >
               <p class="btn-text">  Mi perfil</p>
-              <img class="image" src="assets/User.png" />
+              <img class="image" src="assets/user.png" />
             </button>
           </div>
         </div>

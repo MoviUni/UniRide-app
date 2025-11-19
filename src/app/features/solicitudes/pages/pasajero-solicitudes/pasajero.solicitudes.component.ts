@@ -100,7 +100,7 @@ export class PasajeroSolicitudesComponent implements OnInit {
         this.loadSolicitudes();
     }
 
-
+    
     loadSolicitudes() {
         this.solicitudService.getInfo().subscribe({
         next: (solicitudes) => {
