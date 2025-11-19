@@ -75,3 +75,22 @@ export interface PasajeroResponse{
   edad:number,
   descripcionPasajero:string
 }
+
+
+/////////////NUEVO/////////////////
+// ============RESPONSE============
+export interface AuthResponseDTO{
+  token: string;
+  nombre: string;
+  apellido: string;
+  rol: 'CONDUCTOR' | 'PASAJERO';
+  idRol: number;
+}
+
+// ===== USUARIO GUARDADO EN STORAGE =====
+export interface CurrentUser {
+  idRol: number;
+  nombre: string;
+  apellido: string;
+  rol: 'CONDUCTOR' | 'PASAJERO';
+}
