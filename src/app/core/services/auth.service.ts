@@ -109,7 +109,7 @@ private saveAuthData(response: AuthResponse): void {
     return this._token();
   }
   
-  // 👇 NUEVO: devolver el id del usuario como number
+  // NUEVO: devolver el id del usuario como number
   getUserId(): number | null {
     const user = this._currentUser(); // lo que guardaste en saveAuthData()
 
