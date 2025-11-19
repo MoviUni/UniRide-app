@@ -27,5 +27,12 @@ export const RUTA_ROUTES: Routes = [
     loadComponent: () =>
       import('./page/gestionar-viaje/gestionar-viaje.component')
         .then(m => m.GestionarViajeComponent)   // <-- nombre de la CLASE
-  }
+  },
+  {
+  path: 'buscar',
+  loadComponent: () =>
+    import('./page/busqueda/busqueda.component')
+      .then(m => m.BusquedaRutasComponent)
+}
+
 ];

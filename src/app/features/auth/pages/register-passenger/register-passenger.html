@@ -1,0 +1,90 @@
+<div class="register-container">
+  <div class="card">
+
+    <!-- Logo -->
+    <div class="logo">
+      <img src="assets/logo.png" alt="Logo">
+      <h1>UniRide</h1>
+    </div>
+
+    <!-- Steps -->
+    <div class="steps">
+      <div class="step">
+        <div class="circle active"></div>
+        <span class="label">Datos</span>
+      </div>
+
+      <div class="line"></div>
+
+      <div class="step">
+        <div class="circle"></div>
+        <span class="label">Cuenta</span>
+      </div>
+    </div>
+
+    <h2>Crear una cuenta</h2>
+
+    <!-- FORMULARIO REACTIVO -->
+    <form [formGroup]="passengerForm">
+
+      <!-- Nombres -->
+      <label>Nombres</label>
+      <input
+        type="text"
+        placeholder="Empty label"
+        formControlName="nombres"
+      />
+      <p class="error" *ngIf="passengerForm.get('nombres')?.touched && passengerForm.get('nombres')?.invalid">
+        * Ingresa al menos 3 caracteres.
+      </p>
+
+      <!-- Apellidos -->
+      <label>Apellidos</label>
+      <input
+        type="text"
+        placeholder="Empty label"
+        formControlName="apellidos"
+      />
+      <p class="error" *ngIf="passengerForm.get('apellidos')?.touched && passengerForm.get('apellidos')?.invalid">
+        * Ingresa al menos 3 caracteres.
+      </p>
+
+      <!-- Teléfono -->
+      <label>Teléfono</label>
+      <input
+        type="text"
+        placeholder="Empty label"
+        formControlName="telefono"
+      />
+      <p class="error" *ngIf="passengerForm.get('telefono')?.touched && passengerForm.get('telefono')?.invalid">
+        * Ingresa un teléfono válido de 9 dígitos.
+      </p>
+
+      <!-- DNI -->
+      <label>DNI</label>
+      <input
+        type="text"
+        placeholder="Empty label"
+        formControlName="dni"
+      />
+      <p class="error" *ngIf="passengerForm.get('dni')?.touched && passengerForm.get('dni')?.invalid">
+        * El DNI debe tener exactamente 8 dígitos.
+      </p>
+
+      <button
+        type="button"
+        (click)="goToNext()"
+        [disabled]="passengerForm.invalid"
+      >
+        Continuar
+      </button>
+    </form>
+
+    <hr/>
+
+    <p>
+      ¿Ya tienes una cuenta?
+      <a routerLink="/auth/login">Accede a tu cuenta</a>
+    </p>
+  </div>
+</div>

@@ -1,67 +1,7 @@
-.rectangle-187 {
-  width: 796.74px;
-  height: 144.79px;
-  left: -5.15px;
-  top: 30.13px;
-  position: absolute;
-  background: #F3F3F3;
-  border-radius: 29.40px;
-}
 
-.star {
-  width: 19.50px;
-  height: 30.69px;
-  left: 172.26px;
-  top: 124.95px;
-  position: absolute;
-}
-
-.star_01 {
-  width: 19.50px;
-  height: 30.69px;
-  left: 194.58px;
-  top: 124.95px;
-  position: absolute;
-}
-
-.star_02 {
-  width: 19.50px;
-  height: 30.69px;
-  left: 216.90px;
-  top: 124.95px;
-  position: absolute;
-}
-
-.star_03 {
-  width: 19.50px;
-  height: 30.69px;
-  left: 239.22px;
-  top: 124.95px;
-  position: absolute;
-}
-
-.star_04 {
-  width: 19.50px;
-  height: 30.69px;
-  left: 149.94px;
-  top: 124.95px;
-  position: absolute;
-}
-
-.hoy_span {
-  color: black;
-  font-size: 17.64px;
-  font-family: Poppins;
-  font-weight: 400;
-  word-wrap: break-word;
-}
-
-.hoy {
-  width: 38.95px;
-  height: 26.46px;
-  left: 0px;
-  top: -4.41px;
-  position: absolute;
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;700&display=swap');
+div {
+  font-family: "Poppins", sans-serif;
 }
 
 .solicitarunirse_span {
@@ -84,103 +24,10 @@
   flex-direction: column;
 }
 
-.mara_span {
-  color: black;
-  font-size: 14.70px;
-  font-family: Poppins;
-  font-weight: 400;
-  word-wrap: break-word;
+.estado-btn{
+  
 }
 
-.mara {
-  width: 92.61px;
-  height: 22.05px;
-  left: 77.91px;
-  top: 129.36px;
-  position: absolute;
-}
-
-.avangamoseste1234upcmonterrico_span_01 {
-  color: black;
-  font-size: 17.64px;
-  font-family: Poppins;
-  font-weight: 500;
-  word-wrap: break-word;
-}
-
-.avangamoseste1234upcmonterrico_span_02 {
-  color: black;
-  font-size: 17.64px;
-  font-family: Poppins;
-  font-weight: 400;
-  word-wrap: break-word;
-}
-
-.avangamoseste1234upcmonterrico_span_03 {
-  color: black;
-  font-size: 17.64px;
-  font-family: Poppins;
-  font-weight: 500;
-  word-wrap: break-word;
-}
-
-.av-angamos-este-1234-upc-monterrico {
-  width: 497.60px;
-  height: 22.05px;
-  left: 23.52px;
-  top: 47.04px;
-  position: absolute;
-}
-
-.horadesalida0550_span {
-  color: black;
-  font-size: 17.64px;
-  font-family: Poppins;
-  font-weight: 400;
-  word-wrap: break-word;
-}
-
-.hora-de-salida-0550 {
-  width: 497.60px;
-  height: 22.05px;
-  left: 23.52px;
-  top: 80.12px;
-  position: absolute;
-}
-
-.capacidad2personas_span {
-  color: black;
-  font-size: 14.70px;
-  font-family: Poppins;
-  font-weight: 400;
-  word-wrap: break-word;
-}
-
-.capacidad-2-personas {
-  width: 213.88px;
-  height: 22.05px;
-  left: 413.80px;
-  top: 129.36px;
-  position: absolute;
-}
-
-.ellipse-129 {
-  width: 41.16px;
-  height: 41.16px;
-  left: 23.52px;
-  top: 119.80px;
-  position: absolute;
-  background: #D9D9D9;
-  border-radius: 9999px;
-}
-
-.image-36 {
-  width: 117.75px;
-  height: 58.68px;
-  left: -34.48px;
-  top: 121.05px;
-  position: absolute;
-}
 
 .s1200_span {
   color: black;
@@ -198,15 +45,7 @@
   position: absolute;
 }
 
-.rectangle-187_01 {
-  width: 796.74px;
-  height: 144.79px;
-  left: -5.15px;
-  top: 30.13px;
-  position: absolute;
-  background: #F3F3F3;
-  border-radius: 29.40px;
-}
+
 
 .star_05 {
   width: 19.50px;
@@ -256,13 +95,6 @@
   word-wrap: break-word;
 }
 
-.hoy_01 {
-  width: 38.95px;
-  height: 26.46px;
-  left: 0px;
-  top: -4.41px;
-  position: absolute;
-}
 
 .solicitarunirse_01_span {
   color: white;
@@ -291,88 +123,164 @@
   font-weight: 400;
   word-wrap: break-word;
 }
+.rectangle1 {
+  width: 796.74px;
+  height: 144.79px;
+  left: 0px;
+  top: 35px;
+  position: relative;
+  background: #F3F3F3;
+  border-radius: 29.40px;
+}
 
-.mara_01 {
-  width: 92.61px;
+.rectangle-form {
+  width:  280vh;
+  height: 150vh;
+  position:absolute;
+  background-color: rgba(100, 100, 100, 0.5);
+
+  z-index: 10;
+}
+
+.form-content {
+  top: 45vh;
+  left: 60vh;
+  width:  90vh;
+  height: 60vh;
+  align-content: center;
+
+  text-align: center;
+  position:absolute;
+  background-color:white;
+  border-radius: 2vh;
+  z-index: 10;
+}
+
+.big-text-form{
+  font-size:xx-large;
+
+}
+.small-text-form{
+  font-size:larger;
+}
+
+.sol-button-form{
+  width: 200px;
+  height: 60px;
+  border-radius: 2vh;
+  background-color:#880D1E;
+  color: white;
+}
+.sol-button-form:hover{
+  cursor: pointer;
+  background-color:#620713;
+
+}
+
+.cerrar-text-form{
+  color: #2635D6;
+  font-size: medium;
+  cursor: pointer;
+}
+
+.hoy_01 {
+  width: 200px;
+  height: 26.46px;
+  left: 0px;
+  top: -140px;
+  position: relative;
+
+}
+
+.image-conductor {
+  width: 30px;
+  height: 29px;
+  left: 25px;
+  top: -195px;
+  position:relative;
+
+}
+
+.conductor-text1 {
+  width: 192.61px;
   height: 22.05px;
-  left: 77.91px;
-  top: 129.36px;
-  position: absolute;
+  left: 70px;
+  top: -70px;
+  position: relative;
 }
-
-.avangamoseste2310upcmonterrico_span_01 {
+.destino-text-1 {
   color: black;
   font-size: 17.64px;
   font-family: Poppins;
-  font-weight: 500;
+
   word-wrap: break-word;
+  
 }
 
-.avangamoseste2310upcmonterrico_span_02 {
-  color: black;
-  font-size: 17.64px;
-  font-family: Poppins;
-  font-weight: 400;
-  word-wrap: break-word;
-}
-
-.avangamoseste2310upcmonterrico_span_03 {
-  color: black;
-  font-size: 17.64px;
-  font-family: Poppins;
-  font-weight: 500;
-  word-wrap: break-word;
-}
-
-.av-angamos-este-2310-upc-monterrico {
+.origen-text-1 {
   width: 497.60px;
   height: 22.05px;
-  left: 23.52px;
-  top: 47.04px;
-  position: absolute;
+  font-weight: 600;
+  left: 20px;
+  top: -180px;
+  position: relative;
 }
-
-.horadesalida0550_01_span {
-  color: black;
-  font-size: 17.64px;
-  font-family: Poppins;
-  font-weight: 400;
-  word-wrap: break-word;
-}
-
-.hora-de-salida-0550_01 {
+.hora-salida1 {
   width: 497.60px;
   height: 22.05px;
-  left: 23.52px;
-  top: 80.11px;
-  position: absolute;
+  left: 20px;
+  top: -170px;
+  position: relative;
 }
 
-.capacidad2personas_01_span {
-  color: black;
-  font-size: 14.70px;
-  font-family: Poppins;
-  font-weight: 400;
-  word-wrap: break-word;
-}
-
-.capacidad-2-personas_01 {
+.capacidad-text1 {
   width: 213.88px;
   height: 22.05px;
-  left: 413.80px;
-  top: 129.36px;
-  position: absolute;
+  left: 400px;
+  top: -140px;
+  position: relative;
 }
 
-.ellipse-129_01 {
-  width: 41.16px;
-  height: 41.16px;
-  left: 23.52px;
-  top: 119.80px;
-  position: absolute;
-  background: #D9D9D9;
-  border-radius: 9999px;
+.btn_solicitar {
+  width: 171.99px;
+  height: 36.75px;
+  left: 600px;
+  top: -50px;
+  position: relative;
+
 }
+
+
+.precio-text-1 {
+  width: 123.48px;
+  height: 33.08px;
+  font-size: 26.46px;
+  left: 645px;
+  top: -240px;
+  position: relative;
+}
+
+.ruta-list-box{
+  width: 830px;
+  height: 800px;
+  left: 550px;
+  top: 170px;
+
+  flex-wrap: wrap; 
+
+  gap: 20px;
+  position: relative;
+  overflow-y: scroll
+}
+
+.ruta-box1 {
+
+  height: 190px;
+  overflow: hidden;
+}
+
+
+
 
 .image-36_01 {
   width: 117.75px;
@@ -382,87 +290,6 @@
   position: absolute;
 }
 
-.s1200_01_span {
-  color: black;
-  font-size: 26.46px;
-  font-family: Poppins;
-  font-weight: 600;
-  word-wrap: break-word;
-}
-
-.s-1200_01 {
-  width: 123.48px;
-  height: 33.08px;
-  left: 648.27px;
-  top: 41.89px;
-  position: absolute;
-}
-
-.rectangle-187_02 {
-  width: 796.74px;
-  height: 144.79px;
-  left: -5.15px;
-  top: 30.13px;
-  position: absolute;
-  background: #F3F3F3;
-  border-radius: 29.40px;
-}
-
-.star_10 {
-  width: 19.50px;
-  height: 30.69px;
-  left: 232.53px;
-  top: 124.95px;
-  position: absolute;
-}
-
-.star_11 {
-  width: 19.50px;
-  height: 30.69px;
-  left: 254.85px;
-  top: 124.95px;
-  position: absolute;
-}
-
-.star_12 {
-  width: 19.50px;
-  height: 30.69px;
-  left: 277.17px;
-  top: 124.95px;
-  position: absolute;
-}
-
-.star_13 {
-  width: 19.50px;
-  height: 30.69px;
-  left: 299.49px;
-  top: 124.95px;
-  position: absolute;
-}
-
-.star_14 {
-  width: 19.50px;
-  height: 30.69px;
-  left: 210.21px;
-  top: 124.95px;
-  position: absolute;
-}
-
-.hoy_02_span {
-  color: black;
-  font-size: 17.64px;
-  font-family: Poppins;
-  font-weight: 400;
-  word-wrap: break-word;
-}
-
-.hoy_02 {
-  width: 38.95px;
-  height: 26.46px;
-  left: 0px;
-  top: -4.41px;
-  position: absolute;
-}
 
 .solicitarunirse_02_span {
   color: white;
@@ -500,190 +327,6 @@
   position: absolute;
 }
 
-.juanvzquez_span {
-  color: black;
-  font-size: 14.70px;
-  font-family: Poppins;
-  font-weight: 400;
-  word-wrap: break-word;
-}
-
-.juan-vzquez {
-  width: 105.84px;
-  height: 22.05px;
-  left: 77.91px;
-  top: 129.36px;
-  position: absolute;
-}
-
-.avangamoseste2102upcmonterrico_span_01 {
-  color: black;
-  font-size: 17.64px;
-  font-family: Poppins;
-  font-weight: 500;
-  word-wrap: break-word;
-}
-
-.avangamoseste2102upcmonterrico_span_02 {
-  color: black;
-  font-size: 17.64px;
-  font-family: Poppins;
-  font-weight: 400;
-  word-wrap: break-word;
-}
-
-.avangamoseste2102upcmonterrico_span_03 {
-  color: black;
-  font-size: 17.64px;
-  font-family: Poppins;
-  font-weight: 500;
-  word-wrap: break-word;
-}
-
-.av-angamos-este-2102-upc-monterrico {
-  width: 497.60px;
-  height: 22.05px;
-  left: 23.52px;
-  top: 47.04px;
-  position: absolute;
-}
-
-.horadesalida0530_span {
-  color: black;
-  font-size: 17.64px;
-  font-family: Poppins;
-  font-weight: 400;
-  word-wrap: break-word;
-}
-
-.hora-de-salida-0530 {
-  width: 497.60px;
-  height: 22.05px;
-  left: 23.52px;
-  top: 80.12px;
-  position: absolute;
-}
-
-.capacidad4personas_span {
-  color: black;
-  font-size: 14.70px;
-  font-family: Poppins;
-  font-weight: 400;
-  word-wrap: break-word;
-}
-
-.capacidad-4-personas {
-  width: 213.88px;
-  height: 22.05px;
-  left: 413.80px;
-  top: 129.36px;
-  position: absolute;
-}
-
-.ellipse-129_02 {
-  width: 41.16px;
-  height: 41.16px;
-  left: 23.52px;
-  top: 119.80px;
-  position: absolute;
-  background: #D9D9D9;
-  border-radius: 9999px;
-}
-
-.image-38 {
-  width: 109.51px;
-  height: 72.76px;
-  left: -22.79px;
-  top: 117.60px;
-  position: absolute;
-}
-
-.rectangle-187_03 {
-  width: 796.74px;
-  height: 144.79px;
-  left: -5.15px;
-  top: 30.13px;
-  position: absolute;
-  background: #F3F3F3;
-  border-radius: 29.40px;
-}
-
-.star_15 {
-  width: 19.50px;
-  height: 30.69px;
-  left: 172.26px;
-  top: 124.95px;
-  position: absolute;
-}
-
-.star_16 {
-  width: 19.50px;
-  height: 30.69px;
-  left: 194.58px;
-  top: 124.95px;
-  position: absolute;
-}
-
-.star_17 {
-  width: 19.50px;
-  height: 30.69px;
-  left: 216.90px;
-  top: 124.95px;
-  position: absolute;
-}
-
-.star_18 {
-  width: 19.50px;
-  height: 30.69px;
-  left: 239.22px;
-  top: 124.95px;
-  position: absolute;
-}
-
-.star_19 {
-  width: 19.50px;
-  height: 30.69px;
-  left: 149.94px;
-  top: 124.95px;
-  position: absolute;
-}
-
-.hoy_03_span {
-  color: black;
-  font-size: 17.64px;
-  font-family: Poppins;
-  font-weight: 400;
-  word-wrap: break-word;
-}
-
-.hoy_03 {
-  width: 38.95px;
-  height: 26.46px;
-  left: 0px;
-  top: -4.41px;
-  position: absolute;
-}
-
-.solicitarunirse_03_span {
-  color: white;
-  font-size: 16.17px;
-  font-family: Poppins;
-  font-weight: 500;
-  letter-spacing: 0.32px;
-  word-wrap: break-word;
-}
-
-.solicitar-unirse_03 {
-  width: 124.95px;
-  height: 24.99px;
-  left: 23.52px;
-  top: 5.88px;
-  position: absolute;
-  justify-content: center;
-  display: flex;
-  flex-direction: column;
-}
-
 .s1400_span {
   color: black;
   font-size: 26.46px;
@@ -716,87 +359,8 @@
   position: absolute;
 }
 
-.avangamoseste604upcmonterrico_span_01 {
-  color: black;
-  font-size: 17.64px;
-  font-family: Poppins;
-  font-weight: 500;
-  word-wrap: break-word;
-}
 
-.avangamoseste604upcmonterrico_span_02 {
-  color: black;
-  font-size: 17.64px;
-  font-family: Poppins;
-  font-weight: 400;
-  word-wrap: break-word;
-}
 
-.avangamoseste604upcmonterrico_span_03 {
-  color: black;
-  font-size: 17.64px;
-  font-family: Poppins;
-  font-weight: 500;
-  word-wrap: break-word;
-}
-
-.av-angamos-este-604-upc-monterrico {
-  width: 497.60px;
-  height: 22.05px;
-  left: 23.52px;
-  top: 47.04px;
-  position: absolute;
-}
-
-.horadesalida0550_02_span {
-  color: black;
-  font-size: 17.64px;
-  font-family: Poppins;
-  font-weight: 400;
-  word-wrap: break-word;
-}
-
-.hora-de-salida-0550_02 {
-  width: 497.60px;
-  height: 22.05px;
-  left: 23.52px;
-  top: 80.12px;
-  position: absolute;
-}
-
-.capacidad4personas_01_span {
-  color: black;
-  font-size: 14.70px;
-  font-family: Poppins;
-  font-weight: 400;
-  word-wrap: break-word;
-}
-
-.capacidad-4-personas_01 {
-  width: 213.88px;
-  height: 22.05px;
-  left: 413.80px;
-  top: 129.36px;
-  position: absolute;
-}
-
-.ellipse-129_03 {
-  width: 41.16px;
-  height: 41.16px;
-  left: 23.52px;
-  top: 119.80px;
-  position: absolute;
-  background: #D9D9D9;
-  border-radius: 9999px;
-}
-
-.image-37 {
-  width: 108.78px;
-  height: 163.17px;
-  left: -5.15px;
-  top: 119.80px;
-  position: absolute;
-}
 
 .frame-427318923 {
   width: 73.50px;
@@ -868,7 +432,7 @@
   color: black;
   font-size: 26.46px;
   font-family: Poppins;
-  font-weight: 600;
+  font-weight: 500;
   word-wrap: break-word;
 }
 
@@ -928,69 +492,6 @@
   position: absolute;
 }
 
-.dadesalida_span {
-  color: black;
-  font-size: 17.64px;
-  font-family: Poppins;
-  font-weight: 400;
-  word-wrap: break-word;
-}
-
-.da-de-salida {
-  width: 170.52px;
-  height: 26.46px;
-  left: 23.52px;
-  top: 255.04px;
-  position: absolute;
-}
-
-.hoy_04_span {
-  color: black;
-  font-size: 14.70px;
-  font-family: Poppins;
-  font-weight: 400;
-  word-wrap: break-word;
-}
-
-.hoy_04 {
-  width: 170.52px;
-  height: 21.31px;
-  left: 65.41px;
-  top: 294.73px;
-  position: absolute;
-}
-
-.maana_span {
-  color: black;
-  font-size: 14.70px;
-  font-family: Poppins;
-  font-weight: 400;
-  word-wrap: break-word;
-}
-
-.maana {
-  width: 170.52px;
-  height: 22.05px;
-  left: 65.41px;
-  top: 332.22px;
-  position: absolute;
-}
-
-.horadesalida_span {
-  color: black;
-  font-size: 17.64px;
-  font-family: Poppins;
-  font-weight: 400;
-  word-wrap: break-word;
-}
-
-.hora-de-salida {
-  width: 170.52px;
-  height: 26.46px;
-  left: 23.52px;
-  top: 421.15px;
-  position: absolute;
-}
 
 .line-44 {
   width: 254.31px;
@@ -1002,193 +503,7 @@
   outline-offset: -0.37px;
 }
 
-.circle-point {
-  width: 26.46px;
-  height: 26.46px;
-  left: 23.52px;
-  top: 330.02px;
-  position: absolute;
-}
 
-.fdasams_span {
-  color: black;
-  font-size: 14.70px;
-  font-family: Poppins;
-  font-weight: 400;
-  word-wrap: break-word;
-}
-
-.text-2-das-a-ms {
-  width: 170.52px;
-  height: 22.05px;
-  left: 65.41px;
-  top: 373.38px;
-  position: absolute;
-}
-
-.circle-point_01 {
-  width: 26.46px;
-  height: 26.46px;
-  left: 23.52px;
-  top: 371.18px;
-  position: absolute;
-}
-
-.circle-point-checked {
-  width: 26.46px;
-  height: 26.46px;
-  left: 23.52px;
-  top: 292.53px;
-  position: absolute;
-}
-
-.antesdelas0600_span {
-  color: black;
-  font-size: 14.70px;
-  font-family: Poppins;
-  font-weight: 400;
-  word-wrap: break-word;
-}
-
-.antes-de-las-0600 {
-  width: 170.52px;
-  height: 21.31px;
-  left: 65.41px;
-  top: 460.11px;
-  position: absolute;
-}
-
-.f600-0900_span {
-  color: black;
-  font-size: 14.70px;
-  font-family: Poppins;
-  font-weight: 400;
-  word-wrap: break-word;
-}
-
-.text-0600---0900 {
-  width: 170.52px;
-  height: 22.05px;
-  left: 65.41px;
-  top: 501.27px;
-  position: absolute;
-}
-
-.circle-point_02 {
-  width: 26.46px;
-  height: 26.46px;
-  left: 23.52px;
-  top: 499.06px;
-  position: absolute;
-}
-
-.f900-1200_span {
-  color: black;
-  font-size: 14.70px;
-  font-family: Poppins;
-  font-weight: 400;
-  word-wrap: break-word;
-}
-
-.text-0900---1200 {
-  width: 170.52px;
-  height: 22.05px;
-  left: 65.41px;
-  top: 542.43px;
-  position: absolute;
-}
-
-.circle-point_03 {
-  width: 26.46px;
-  height: 26.46px;
-  left: 23.52px;
-  top: 540.23px;
-  position: absolute;
-}
-
-.f200-1500_span {
-  color: black;
-  font-size: 14.70px;
-  font-family: Poppins;
-  font-weight: 400;
-  word-wrap: break-word;
-}
-
-.text-1200---1500 {
-  width: 170.52px;
-  height: 22.05px;
-  left: 65.41px;
-  top: 583.59px;
-  position: absolute;
-}
-
-.circle-point_04 {
-  width: 26.46px;
-  height: 26.46px;
-  left: 23.52px;
-  top: 581.38px;
-  position: absolute;
-}
-
-.circle-point-checked_01 {
-  width: 26.46px;
-  height: 26.46px;
-  left: 23.52px;
-  top: 457.90px;
-  position: absolute;
-}
-
-.avangamoseste_span {
-  color: black;
-  font-size: 11.02px;
-  font-family: Poppins;
-  font-weight: 400;
-  word-wrap: break-word;
-}
-
-.av-angamos-este {
-  left: 16.90px;
-  top: 8.09px;
-  position: absolute;
-}
-
-.upcmonterrico_span {
-  color: black;
-  font-size: 11.02px;
-  font-family: Poppins;
-  font-weight: 400;
-  word-wrap: break-word;
-}
-
-.upc-monterrico {
-  left: 16.90px;
-  top: 8.08px;
-  position: absolute;
-}
-
-.f500-1800_span {
-  color: black;
-  font-size: 14.70px;
-  font-family: Poppins;
-  font-weight: 400;
-  word-wrap: break-word;
-}
-
-.text-1500---1800 {
-  width: 170.52px;
-  height: 22.05px;
-  left: 65.41px;
-  top: 624.02px;
-  position: absolute;
-}
-
-.circle-point_05 {
-  width: 26.46px;
-  height: 26.46px;
-  left: 23.52px;
-  top: 621.81px;
-  position: absolute;
-}
 
 .btn_trabaja {
   width: 171.99px;
@@ -1202,17 +517,7 @@
   border-radius: 26.46px;
 }
 
-.btn_trabaja_01 {
-  width: 171.99px;
-  height: 36.75px;
-  left: 599.76px;
-  top: 122.01px;
-  position: absolute;
-  background: #880D1E;
-  box-shadow: 0px 2.93999981880188px 2.93999981880188px rgba(0, 0, 0, 0.25);
-  overflow: hidden;
-  border-radius: 26.46px;
-}
+
 
 .btn_trabaja_02 {
   width: 171.99px;
@@ -1271,15 +576,6 @@
   overflow: hidden;
 }
 
-.frame-427318926 {
-  width: 797.47px;
-  height: 182.28px;
-  left: 550.52px;
-  top: 778.37px;
-  position: absolute;
-  overflow: hidden;
-}
-
 .frame-427318924 {
   width: 797.47px;
   height: 182.28px;
@@ -1322,4 +618,112 @@
   position: relative;
   background: white;
   overflow: hidden;
+}
+
+.filtro-text-destino{
+  padding: 2vh;
+  text-align: left;
+  margin-top: 0.5vh;
+  color: gray;
+  border-radius: 2vh;
+  width: 35vh;
+  height: 4vh;
+  border: 2px solid;
+  border-color:#6BC8C9;
+}
+
+.filtro-text-origen{
+  padding: 2vh;
+  text-align: left;
+  margin-top: 0.5vh;
+  color: gray;
+  border-radius: 2vh;
+  width: 38vh;
+  height: 4vh;
+  border: 2px solid;
+  border-color:#6BC8C9;
+}
+
+.form-control {
+  padding: 2vh;
+  text-align: left;
+  margin-top: 0.5vh;
+  color: gray;
+  border-radius: 2vh;
+  width: 38vh;
+  height: 4vh;
+  border: 2px solid;
+  border-color:#6BC8C9;
+
+}
+
+.fecha1{
+  padding: 100px;
+}
+
+.fecha2{
+  padding: 100px;
+}
+
+.fecha3{
+  padding: 100px;
+}
+
+.filters-form{
+  left: 20px;
+  top: 66.27px;
+  position: relative;
+}
+
+.btn-clear{
+  top: -563px;
+  left: 40px;
+  padding: 0.5rem 1rem;
+  border-radius: 4px;
+  text-decoration: none;
+  font-weight: 500;
+  border: none;
+  cursor: pointer;
+  position: relative;
+  color:#2635D6;
+
+  margin: 1vh;
+}
+
+.solicitarunirse_01{
+
+  padding-top: 0.5vh;
+  width: 171.99px;
+  height: 36.75px;
+  color: white;
+  background-color:#880D1E;
+
+
+  box-shadow: 0px 2.93999981880188px 2.93999981880188px rgba(0, 0, 0, 0.25);
+  overflow: hidden;
+  border-radius: 26.46px;
+}
+
+.solicitarunirse_01:hover{
+  background-color:#620713;
+  cursor: pointer;
+}
+
+.filters-form{
+  position: relative;
+
+}
+
+.btn {
+  padding: 0.5rem 1rem;
+  border-radius: 4px;
+  text-decoration: none;
+  font-weight: 500;
+  border: none;
+  cursor: pointer;
+  position: relative;
+  background: #003D7A;
+  color: white;
+
+  margin: 1vh;
 }
