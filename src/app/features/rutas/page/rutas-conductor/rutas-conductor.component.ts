@@ -14,6 +14,8 @@ import {
   SolicitudViajeResponse
 } from '../../../../core/models/solicitud.model';
 
+import { AuthService } from '@core/services/auth.service';
+
 type RutaConSolicitudes = RutaResponseDTO & { solicitudesPendientes: number };
 
 @Component({
@@ -25,8 +27,10 @@ type RutaConSolicitudes = RutaResponseDTO & { solicitudesPendientes: number };
 })
 export class RutasConductorComponent implements OnInit {
 
+  
+
   // Por ahora hardcodeado igual que en estadísticas
-  private readonly conductorId = 1;
+  //private readonly conductorId = 1;
 
   loading = signal(true);
   error = signal<string | null>(null);
@@ -37,7 +41,8 @@ export class RutasConductorComponent implements OnInit {
   constructor(
     private rutaService: RutaService,
     private solicitudService: SolicitudService,
-    private router: Router
+    private router: Router,
+    private authService: AuthService
   ) {}
 
   // Helper fecha+hora → Date
@@ -112,7 +117,15 @@ export class RutasConductorComponent implements OnInit {
     this.loading.set(true);
     this.error.set(null);
 
-    this.rutaService.getRutasActivasDelConductor(this.conductorId).subscribe({
+    const conductorId = this.authService.getUserIdRol(); // ✅ obtenemos el id
+    if (!conductorId) {
+    console.error('Usuario no autenticado');
+    this.error.set('No se pudo determinar tu usuario');
+    this.loading.set(false);
+    return;
+  }
+
+    this.rutaService.getRutasActivasDelConductor(conductorId).subscribe({
       next: (rutas) => {
         if (!rutas || rutas.length === 0) {
           this._rutas.set([]);

@@ -1,3 +1,4 @@
+import { AuthService } from '@core/services/auth.service';
 import { CommonModule } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
 import { RutaService } from '../../../../core/services/ruta.service';
@@ -26,13 +27,22 @@ export class EstadisticasComponent implements OnInit {
 
   //====== TOTAL DE VIAJES ======
   totalViajes: number = 0; // Valor inicial 0
-  conductorId: number = 2; // ID hardcodeado para ejemplo
+  
 
-  constructor(private rutaService: RutaService, private cdr: ChangeDetectorRef) {}
+  constructor(
+    private rutaService: RutaService, 
+    private cdr: ChangeDetectorRef,
+    private authService: AuthService) {}
 
   ngOnInit(): void {
     console.log('ngOnInit ejecutado');
-    const conductorId = 2; // ID hardcodeado para ejemplo
+    //const conductorId = 2; // ID hardcodeado para ejemplo
+    const conductorId = this.authService.getUserIdRol();
+    
+    if (!conductorId) {
+    console.error('Usuario no autenticado');
+    return;}
+
     this.obtenerTotalViajes(conductorId);
     this.cargarFrecuencia(conductorId);
     this.obtenerRutasFrecuentes(conductorId);
@@ -176,9 +186,17 @@ obtenerRutasFrecuentes(conductorId: number): void {
   mostrarPopup: boolean = false;
   mensajePopup: string = '';
   popupIcon: string = '';   // ← AQUÍ va la imagen según el tipo
-
+  
 descargarHistorialPDF() {
-  this.rutaService.descargarHistorialPDF(this.conductorId).subscribe({
+
+  const conductorId = this.authService.getUserIdRol(); // obtenemos el id aquí
+  if (!conductorId) {
+    console.error('Usuario no autenticado');
+    this.mostrarMensaje('warning');
+    return;
+  }
+  
+  this.rutaService.descargarHistorialPDF(conductorId).subscribe({
     next: (resp: Blob) => {
       if (!resp || resp.size === 0) {
         this.mostrarMensaje('warning');
@@ -188,7 +206,7 @@ descargarHistorialPDF() {
       const url = window.URL.createObjectURL(resp);
       const a = document.createElement('a');
       a.href = url;
-      a.download = `historial_conductor_${this.conductorId}.pdf`;
+      a.download = `historial_conductor_${conductorId}.pdf`;
       a.click();
       window.URL.revokeObjectURL(url);
 
