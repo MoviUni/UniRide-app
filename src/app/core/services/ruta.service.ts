@@ -7,6 +7,7 @@ import { Observable } from 'rxjs';
 import { environment } from '../../../environments/environment';
 
 import { RutaFrecuenteResponseDTO, RutaResponseDTO, EstadoRuta } from '../models/ruta.model';
+import { AuthService } from './auth.service';
 
 @Injectable({
   providedIn: 'root'
@@ -14,17 +15,20 @@ import { RutaFrecuenteResponseDTO, RutaResponseDTO, EstadoRuta } from '../models
 export class RutaService {
   private http = inject(HttpClient);
   private apiUrl = `${environment.apiUrl}/rutas`;
+  private auth = inject (AuthService);
 
   //token hardcodeado para pruebas
-  private token = 'eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJtYXJpYW5hLmc1bWV6QGV4YW1wbGUuY29tIiwicm9sZSI6IlJPTEVfQ09ORFVDVE9SIiwiZXhwIjoxNzY1NTYwNzc5fQ.u23huAEkcj49xEAgPhtArJtlDxbB_vxRB-77Ba5mx9vsfc5DogP5JOvxu7PtOdtiZeFm8ZirwVpmXZqmDxZWJw';
+  //private token = 'eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJtYXJpYW5hLmc1bWV6QGV4YW1wbGUuY29tIiwicm9sZSI6IlJPTEVfQ09ORFVDVE9SIiwiZXhwIjoxNzY1NTYwNzc5fQ.u23huAEkcj49xEAgPhtArJtlDxbB_vxRB-77Ba5mx9vsfc5DogP5JOvxu7PtOdtiZeFm8ZirwVpmXZqmDxZWJw';
 
   private getHeaders() {
+    const token = this.auth.getToken(); // toma el token actual
     return {
       headers: {
-        Authorization: `Bearer ${this.token}`
+        Authorization: `Bearer ${token}`
       }
     };
   }
+
 
   // Signals para ESTADO COMPARTIDO
   private _rutas = signal<RutaResponse[]>([]);
@@ -70,7 +74,7 @@ export class RutaService {
   }
 
   // id hardcodeado para pruebas
-  private conductorId = 1;
+  //private conductorId = 1;
 
   // Signals para ESTADO COMPARTIDO (si los usan en otros componentes)
   private _items = signal<any[]>([]);
