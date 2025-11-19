@@ -4,16 +4,15 @@ import { CommonModule } from '@angular/common';
 import { Component, OnInit, computed, signal } from '@angular/core';
 import { Router } from '@angular/router';
 
-import { RutaService } from '../../../../core/services/ruta.service';
-import { RutaResponseDTO, EstadoRuta } from '../../../../core/models/ruta.model';
+import { RutaService } from '@core/services/ruta.service';
+import { RutaResponseDTO, EstadoRuta } from '@core/models/ruta.model';
 import {
   SolicitudService
-} from '../../../../core/services/solicitud.service';
+} from '@core/services/solicitud.service';
 import {
   EstadoSolicitud,
   SolicitudViajeResponse
-} from '../../../../core/models/solicitud.model';
-
+} from '@core/models/solicitud.model';
 import { AuthService } from '@core/services/auth.service';
 
 type RutaConSolicitudes = RutaResponseDTO & { solicitudesPendientes: number };
@@ -117,7 +116,8 @@ export class RutasConductorComponent implements OnInit {
     this.loading.set(true);
     this.error.set(null);
 
-    const conductorId = this.authService.getUserIdRol(); // ✅ obtenemos el id
+    const conductorId = this.authService.getConductorId(); // ✅ obtenemos el id
+    console.log('conductorId desde auth:', conductorId);
     if (!conductorId) {
     console.error('Usuario no autenticado');
     this.error.set('No se pudo determinar tu usuario');
