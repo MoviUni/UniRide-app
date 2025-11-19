@@ -28,7 +28,6 @@ export class EstadisticasComponent implements OnInit {
   //====== TOTAL DE VIAJES ======
   totalViajes: number = 0; // Valor inicial 0
   
-
   constructor(
     private rutaService: RutaService, 
     private cdr: ChangeDetectorRef,

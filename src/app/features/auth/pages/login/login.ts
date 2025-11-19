@@ -45,12 +45,14 @@ export class Login {
         console.log('Login OK, rol:', resp.rol);
 
         if (resp.rol === 'CONDUCTOR') {
-          this.router.navigate(['/rutas/mis-rutas']);
-        } else if (resp.rol === 'PASAJERO') {
-          this.router.navigate(['/home/buscar']);
-        } else if (resp.rol === 'ADMIN') {
-          this.router.navigate(['/home/landing']);
-        }
+        this.router.navigate(['/main/conductor']);
+      } else if (resp.rol === 'PASAJERO') {
+        this.router.navigate(['/main/pasajero']);   // 👈 AQUÍ ES
+      } else if (resp.rol === 'ADMIN') {
+        this.router.navigate(['/admin']);
+      } else {
+        this.router.navigate(['/home/landing']);
+      }
       },
       error: err => {
         console.error('Error en login, status:', err.status, err);

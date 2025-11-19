@@ -20,7 +20,7 @@ import { RouterModule } from '@angular/router';
             
           </div>
           <div>
-            <button type="button" class="btn" routerLink="/historial">
+            <button type="button" class="btn" > <!--routerLink="/historial" -->
               <p class="btn-text">  Historial de viajes</p>
               <img class="image" src="assets/Book.png" />
             </button>
@@ -28,7 +28,7 @@ import { RouterModule } from '@angular/router';
           </div>
             
           <div>
-            <button type="button" class="btn" routerLink="/rutas">
+            <button type="button" class="btn" routerLink="/rutas"> 
               <p class="btn-text">  Estadísticas de viajes</p>
               <img class="image" src="assets/Estadisticas.png" />
             </button>
@@ -36,7 +36,7 @@ import { RouterModule } from '@angular/router';
           </div>
             
           <div>
-            <button type="button" class="btn" routerLink="/perfil" >
+            <button type="button" class="btn"  > <!--routerLink="/perfil" -->
               <p class="btn-text">  Mi perfil</p>
               <img class="image" src="assets/user.png" />
             </button>

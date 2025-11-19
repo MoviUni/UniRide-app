@@ -1,8 +1,10 @@
 import { Routes } from '@angular/router';
 import { AuthLayoutComponent } from './shared/layouts/auth-layout.component';
 import { LandingLayoutComponent } from './shared/layouts/landing-layout.component';
+import { RoleGuard } from '@core/guards/role.guard';
 
 export const routes: Routes = [
+  { path: '', redirectTo: 'home/landing', pathMatch: 'full' },
 
   //  Landing page pública
   {
@@ -24,6 +26,11 @@ export const routes: Routes = [
     path: '',
     component: AuthLayoutComponent,
     children: [
+      {
+        path: 'main',
+        loadChildren: () =>
+        import('./features/main-page/main.routes').then(m => m.MAIN_ROUTES),
+      },
       {
         path: 'rutas',
         loadChildren: () =>
