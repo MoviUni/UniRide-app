@@ -10,8 +10,8 @@ import {
   RoutesService,
   RutaRequestDto,
   RutaResponseDto
-} from '../../../core/services/routes.service';
-import { AuthService } from '../../../core/services/auth.service';
+} from '../../../../core/services/routes.service';
+import { AuthService } from '../../../../core/services/auth.service';
 
 @Component({
   selector: 'app-publish-route',

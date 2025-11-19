@@ -1,6 +1,6 @@
 import { Routes } from '@angular/router';
 import { MyRoutesComponent } from './pages/my-routes.component';
-import { PublishRouteComponent } from './pages/publish-route.component';
+import { PublishRouteComponent } from '../rutas/page/publicar-ruta/publish-route.component';
 import { ManageTripComponent } from './pages/manage-trip.component';
 import { HomeLayoutComponent } from '../../shared/layouts/home-layout';
 
