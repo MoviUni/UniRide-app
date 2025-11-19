@@ -4,7 +4,7 @@ import { LandingLayoutComponent } from './shared/layouts/landing-layout.componen
 
 export const routes: Routes = [
 
-  // ⭐ Landing page pública
+  //  Landing page pública
   {
     path: 'home',
     component: LandingLayoutComponent,
@@ -12,14 +12,14 @@ export const routes: Routes = [
       import('./features/home/home.routes').then(m => m.HOME_ROUTES),
   },
 
-  // ⭐ Auth pública (login / registro)
+  // Auth pública (login / registro)
   {
     path: 'auth',
     loadChildren: () =>
       import('./features/auth/auth.routes').then(m => m.AUTH_ROUTES),
   },
 
-  // ⭐ Rutas protegidas (dashboard del conductor)
+  // Rutas protegidas (dashboard del conductor)
   {
     path: '',
     component: AuthLayoutComponent,
@@ -42,7 +42,7 @@ export const routes: Routes = [
     ],
   },
 
-  // ⭐ Ruta de inicio → landing
+  //  Ruta de inicio → landing
   { path: '', pathMatch: 'full', redirectTo: 'home/landing' },
 
   // ⭐ Catch-all

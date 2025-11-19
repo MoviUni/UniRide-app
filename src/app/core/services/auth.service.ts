@@ -3,20 +3,30 @@ import { HttpClient } from '@angular/common/http';
 import { Observable, tap } from 'rxjs';
 import { Router } from '@angular/router';
 import { environment } from '../../../environments/environment';
-import { LoginRequest, RegisterRequest, AuthResponse, UserResponse, RoleType } from '../models/usuario.model';
+
+import { 
+  LoginRequest, 
+  RegisterRequest, 
+  AuthResponse,  // ESTE SE USA PARA REGISTRO (lo de tus compañeros)
+  UserResponse, 
+  RoleType,
+  AuthResponseDTO, // NUEVO: lo que devuelve el login REAL
+  CurrentUser      // NUEVO: lo que guardamos en el storage del login
+} from '../models/usuario.model';
+
 import { StorageService } from './storage.service';
 
 @Injectable({
   providedIn: 'root'
 })
 export class AuthService {
+
   private http = inject(HttpClient);
   private storage = inject(StorageService);
   private router = inject(Router);
   private apiUrl = `${environment.apiUrl}/auth`;
 
-  // Signals para ESTADO COMPARTIDO
-  private _currentUser = signal<UserResponse | null>(null);
+  private _currentUser = signal<CurrentUser | UserResponse | null>(null);
   private _isAuthenticated = signal<boolean>(false);
   private _token = signal<string | null>(null);
 
@@ -28,70 +38,96 @@ export class AuthService {
     this.loadAuthData();
   }
 
-  // POST - Login (con objeto)
-  loginWithCredentials(credentials: LoginRequest): Observable<AuthResponse> {
-    return this.http.post<AuthResponse>(`${this.apiUrl}/login`, credentials).pipe(
-      tap(response => {
-        this.saveAuthData(response);
-      })
+  // ======================
+  //       LOGIN REAL
+  // ======================
+  loginWithCredentials(credentials: LoginRequest): Observable<AuthResponseDTO> {
+    return this.http.post<AuthResponseDTO>(`${this.apiUrl}/login`, credentials).pipe(
+      tap((resp) => this.saveLoginData(resp))
     );
   }
 
-  // POST - Login (con parámetros separados)
-  login(email: string, password: string): Observable<AuthResponse> {
+  login(email: string, password: string): Observable<AuthResponseDTO> {
     return this.loginWithCredentials({ email, password });
   }
 
-  // POST - Register (con objeto)
+  // ======================
+  //      REGISTRO
+  // ======================
   registerWithData(data: RegisterRequest): Observable<AuthResponse> {
     return this.http.post<AuthResponse>(`${this.apiUrl}/register`, data).pipe(
-      tap(response => {
-        this.saveAuthData(response);
-      })
+      tap((resp) => this.saveRegisterData(resp))
     );
   }
 
-  // POST - Register (con parámetros separados)
   register(name: string, email: string, password: string): Observable<AuthResponse> {
     return this.registerWithData({ name, email, password });
   }
 
-  // Logout
+  // ======================
+  //     LOGOUT
+  // ======================
   logout(): void {
     this.storage.removeItem('token');
     this.storage.removeItem('user');
+
+    this._token.set(null);
     this._currentUser.set(null);
     this._isAuthenticated.set(false);
-    this._token.set(null);
-    this.router.navigate(['/auth/login']); 
+
+    this.router.navigate(['/auth/login']);
   }
 
-  // Helpers privados
-// Helpers privados
-private saveAuthData(response: AuthResponse): void {
-  this.storage.setItem('token', response.token);
-  this._token.set(response.token);
+  // ======================
+  //  SAVE LOGIN DATA
+  // ======================
+  private saveLoginData(resp: AuthResponseDTO): void {
 
-  const user: UserResponse = {
-    id: '', // si luego el backend te devuelve id, lo usas
-    email: '', // <-- de momento lo dejamos vacío
-    name: `${response.nombre} ${response.apellido}`,
-    role: response.rol as RoleType,   // usamos el rol real
-    active: true,
-    createdAt: new Date().toISOString(),
-    updatedAt: new Date().toISOString()
-  };
+    console.log('RESPUESTA LOGIN:', resp); 
+    
+    this.storage.setItem('token', resp.token);
+    this._token.set(resp.token);
 
-  this.storage.setItem('user', user);
-  this._currentUser.set(user);
-  this._isAuthenticated.set(true);
-}
+    const user: CurrentUser = {
+      idRol: resp.idRol,
+      nombre: resp.nombre,
+      apellido: resp.apellido,
+      rol: resp.rol
+    };
 
+    this.storage.setItem('user', user);
+    this._currentUser.set(user);
+    this._isAuthenticated.set(true);
+  }
 
+  // ======================
+  //  SAVE REGISTER DATA
+  // ======================
+  private saveRegisterData(resp: AuthResponse): void {
+    this.storage.setItem('token', resp.token);
+    this._token.set(resp.token);
 
+    const user: UserResponse = {
+      id: '',
+      email: '',
+      name: `${resp.nombre} ${resp.apellido}`,
+      role: resp.rol as RoleType,
+      active: true,
+      createdAt: new Date().toISOString(),
+      updatedAt: new Date().toISOString()
+    };
+
+    this.storage.setItem('user', user);
+    this._currentUser.set(user);
+    this._isAuthenticated.set(true);
+  }
+
+  // ======================
+  //     LOAD STORAGE
+  // ======================
   private loadAuthData(): void {
     const token = this.storage.getItem<string>('token');
-    const user = this.storage.getItem<UserResponse>('user');
+    const user = this.storage.getItem<CurrentUser | UserResponse>('user');
 
     if (token && user) {
       this._token.set(token);
@@ -100,34 +136,62 @@ private saveAuthData(response: AuthResponse): void {
     }
   }
 
-  // Getters para guards
-  isAdmin(): boolean {
-    return this._currentUser()?.role === RoleType.ROLE_ADMIN;
-  }
-
+  // ======================
+  //  GETTERS
+  // ======================
   getToken(): string | null {
     return this._token();
   }
   
   // NUEVO: devolver el id del usuario como number
   getUserId(): number | null {
-    const user = this._currentUser(); // lo que guardaste en saveAuthData()
+    const user = this._currentUser(); // puede ser CurrentUser o UserResponse o null
+    if (!user) return null;
 
-    if (!user || user.id == null || user.id === '') {
-      return null;
+    // Caso 1: viene de AuthResponseDTO (CurrentUser) y tiene idUsuario
+    const anyUser = user as any;
+
+    if (anyUser.idUsuario != null) {
+      const idNum = Number(anyUser.idUsuario);
+      return Number.isNaN(idNum) ? null : idNum;
     }
 
-    // En tu UserResponse el id es string, lo convertimos a número
-    const idNum = Number(user.id);
-    return Number.isNaN(idNum) ? null : idNum;
-  }
-   // 🔹 Registro de conductor (usa el endpoint /auth/registro/conductor)
-  registerDriver(body: any): Observable<any> {
-    return this.http.post<any>(`${this.apiUrl}/registro/conductor`, body);
-  }
-    // 🔹 Registro de pasajero
-  registerPassenger(body: any): Observable<any> {
-    return this.http.post<any>(`${this.apiUrl}/registro/pasajero`, body);
+    // Caso 2: viene de UserResponse y tiene id (string)
+    if (anyUser.id != null) {
+      const idNum = Number(anyUser.id);
+      return Number.isNaN(idNum) ? null : idNum;
+    }
+
+    return null;
   }
 
+  isAdmin(): boolean {
+    const user = this._currentUser();
+    if (!user) return false;
+    return (user as any).role === RoleType.ROLE_ADMIN || (user as any).rol === 'ADMIN';
+  }
+
+  getUserIdRol(): number | null {
+    const user = this._currentUser() as CurrentUser | null;
+    return user?.idRol ?? null;
+  }
+
+
+    // 🔹 Registro de conductor (usa el endpoint /auth/registro/conductor)
+  registerDriver(body: any): Observable<AuthResponseDTO> {
+  return this.http.post<AuthResponseDTO>(`${this.apiUrl}/registro/conductor`, body).pipe(
+    tap(resp => {
+      this.saveLoginData(resp); // guarda token y usuario
+    })
+  );
+}
+
+  // 🔹 Registro de pasajero
+ registerPassenger(body: any): Observable<AuthResponseDTO> {
+  return this.http.post<AuthResponseDTO>(`${this.apiUrl}/registro/pasajero`, body).pipe(
+    tap(resp => {
+      this.saveLoginData(resp); // guarda token y usuario
+    })
+  );
+ }
 }

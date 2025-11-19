@@ -262,17 +262,6 @@ export class BusquedaRutasComponent implements OnInit{
   });
   
 
-   rutaName = this.conductorService.getById(1).subscribe({
-      next: (conductor) => {
-        return conductor.idConductor;
-        
-      },
-      error: (error) => {
-        console.error('Error buscando conductor por ID:', error);
-        // Mostrar mensaje informativo en lugar de error
-        this.errorMessage.set('No existen con este ID');
-      }
-    });
   
   errorMessage = signal('');
 
