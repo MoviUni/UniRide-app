@@ -188,13 +188,16 @@ div {
 
 }
 
-.conductor-text1 {
-  width: 92.61px;
-  height: 22.05px;
-  left: 70px;
-  top: -70px;
-  position: relative;
+.conductor{
+  width: 200px;
+  height: 26.46px;
+  left: 0px;
+  top: -140px;
+  position: absolute;
+  z-index: 10;
+
 }
+
 .destino-text-1 {
   color: black;
   font-size: 17.64px;
@@ -237,12 +240,36 @@ div {
 
 }
 
+.image-conductor {
+  width: 30px;
+  height: 29px;
+  left: 25px;
+  top: -230px;
+  position:relative;
+
+}
+.conductor-text1{
+  width: 497.60px;
+  height: 22.05px;
+  left: 70px;
+  top: -205px;
+  position: relative;
+}
 
 .precio-text-1 {
   width: 123.48px;
   height: 33.08px;
   font-size: 26.46px;
   left: 650px;
+  top: -260px;
+  position: relative;
+}
+
+.precio-text-2 {
+  width: 123.48px;
+  height: 33.08px;
+  font-size: 26.46px;
+  left: 350px;
   top: -260px;
   position: relative;
 }
@@ -723,8 +750,8 @@ div {
   overflow: hidden;
   border-radius: 26.46px;
   text-align: center;
-  top: -17vh;
-  left: 55.5vh;
+  top: -120px;
+  left: 400px;
   position: relative;
 }
 

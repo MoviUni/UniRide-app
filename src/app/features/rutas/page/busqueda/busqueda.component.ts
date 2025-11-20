@@ -1,4 +1,4 @@
-import { Component, ElementRef, Inject, inject, OnInit, signal, ViewChild } from '@angular/core';
+import { ChangeDetectorRef, Component, ElementRef, Inject, inject, OnInit, signal, ViewChild } from '@angular/core';
 import { FormBuilder, FormsModule, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { LOCALE_ID } from '@angular/core';
 import { CommonModule, formatDate } from '@angular/common';
@@ -9,6 +9,7 @@ import { ConductorService } from '@core/services/conductor.service';
 import { SolicitudService } from '@core/services/solicitud.service';
 import { EstadoSolicitud, SolicitudViajeRequest, SolicitudViajeResponse, SolicitudCardResponse } from '@core/models/solicitud.model';
 import { ConductorResponse } from '@core/models/usuario.model';
+import { AuthService } from '@core/services/auth.service';
 
 
 
@@ -237,11 +238,16 @@ import { ConductorResponse } from '@core/models/usuario.model';
   styleUrls: ['./busqueda.component.css']
 })
 export class BusquedaRutasComponent implements OnInit{
+  constructor(
+    private rutaService: RutaService,
+    private solicitudService: SolicitudService, 
+    private cdr: ChangeDetectorRef,
+    private authService: AuthService,
+  @Inject(LOCALE_ID) private locale: string) {}
 
-
-  private rutaService = inject(RutaService);
+  
   private conductorService = inject(ConductorService);
-  private solicitudService = inject(SolicitudService);
+
   private fb = inject(FormBuilder);
 
   showSolicitudForm = false;
@@ -394,21 +400,24 @@ export class BusquedaRutasComponent implements OnInit{
   }
 
   sendForm(dt:RutaCardResponse){
-
-    this.registerForm(dt)
+    const pasajeroId = this.authService.getPasajeroId();
+    if (!pasajeroId) {
+      console.error('Usuario no autenticado');
+      return;}
+    this.registerForm(dt, pasajeroId);
   }
 
-  constructor(@Inject(LOCALE_ID) private locale: string) {}
+  
 
-  registerForm(dt:RutaCardResponse){
+  registerForm(dt:RutaCardResponse, pasajeroId:number){
     const currentDate = formatDate(new Date(), 'yyyy-MM-dd', this.locale);
     const currentTime= new Date().toLocaleTimeString();
-
+    console.log("Registrando pasajero de id: ", pasajeroId);
     const solicitudReq: SolicitudViajeRequest = {
       estadoSolicitud: EstadoSolicitud.PENDIENTE,
       fecha: currentDate,
       hora: currentTime,
-      pasajeroId: 1,
+      pasajeroId: pasajeroId,
       rutaId: dt.idRuta,
       updatedAt: currentDate
     };

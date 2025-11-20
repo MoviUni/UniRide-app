@@ -1,10 +1,11 @@
-import { Component, inject, OnInit, signal } from '@angular/core';
+import { ChangeDetectorRef, Component, inject, OnInit, signal } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { SolicitudService } from '@core/services/solicitud.service';
 import { EstadoSolicitud, SolicitudCardResponse, SolicitudViajeRequest } from '@core/models/solicitud.model';
 import { RutaService } from '@core/services/ruta.service';
 import { RutaResponse } from '@core/models/ruta.model';
 import { RouterModule } from '@angular/router';
+import { AuthService } from '@core/services/auth.service';
 
 @Component({
   selector: 'app-pasajero-solicitudes',
@@ -24,22 +25,23 @@ import { RouterModule } from '@angular/router';
               <div class="rectangle1"></div>
 
               <div class="hoy_01"><span class="hoy_01_span">{{'Empieza en '+ diferenciaFechas(tx.fechaSalida) + ' días'}} </span></div>
+              
               <div class= "estado-btn" [ngStyle]="{'background-color': getColor($index)}"> {{tx.estadoSolicitud}}</div>
-
-              <div class="cancelar-btn">
-                
-              </div>
-
+              
+              <div class="cancelar-btn"></div>
+              
               <div class="origen-text-1">
-                <span>{{tx.origen}}</span>
-                <span> → </span>
-                <span >{{tx.destino}}</span>
+              <span>{{tx.origen}}</span>
+              <span> → </span>
+              <span >{{tx.destino}}</span>
               </div>
               
               <div class="hora-salida1"><span>{{'Hora de salida: ' + tx.horaSalida}} </span></div>
               <div class="capacidad-text1"><span>{{'Capacidad personas: '+ tx.asientosDisponibles}}</span></div>
               <div class="precio-text-1"><span>{{ 's/.' + tx.tarifa}}</span></div>
-            </div>
+              <div class="conductor-text1"><span>{{tx.nombreConductor + ' ' + tx.apellidoConductor}}</span></div>
+              <img class="image-conductor" src="assets/ConductorLogo.png" />
+              </div>
           }
           @else{
             <div class="ruta-box1">
@@ -61,6 +63,8 @@ import { RouterModule } from '@angular/router';
               <div class="hora-salida1"><span>{{'Hora de salida: ' + tx.horaSalida}} </span></div>
               <div class="capacidad-text1"><span>{{'Capacidad personas: '+ tx.asientosDisponibles}}</span></div>
               <div class="precio-text-1"><span>{{ 's/.' + tx.tarifa}}</span></div>
+              <div class="conductor-text1"><span>{{tx.nombreConductor + ' ' + tx.apellidoConductor}}</span></div>
+              <img class="image-conductor" src="assets/ConductorLogo.png" />
             </div>
           }
             
@@ -85,7 +89,11 @@ import { RouterModule } from '@angular/router';
 })
 export class PasajeroSolicitudesComponent implements OnInit {
 
-    private solicitudService = inject(SolicitudService);
+  constructor(
+    private solicitudService: SolicitudService, 
+    private cdr: ChangeDetectorRef,
+    private authService: AuthService) {}
+    
 
 
     errorMessage = signal('');
@@ -96,18 +104,24 @@ export class PasajeroSolicitudesComponent implements OnInit {
     loading = signal(true);
     loadingRutas = signal(true);
 
+
     ngOnInit() {
-        this.loadSolicitudes();
+      const pasajeroId = this.authService.getPasajeroId();
+
+      if (!pasajeroId) {
+      console.error('Usuario no autenticado');
+      return;}
+      this.loadSolicitudes(pasajeroId);
     }
 
-    private pasajeroId = 1;
-    loadSolicitudes() {
-        this.solicitudService.getInfo(this.pasajeroId).subscribe({
+    
+    loadSolicitudes(pasajeroId:number) {
+        this.solicitudService.getInfo(pasajeroId).subscribe({
         next: (solicitudes) => {
             this.loading.set(false);
             this.solicitudes.set(solicitudes);
             this.allSolicitudes.set(solicitudes);
-            
+            console.log("Cargando solicitudes de pasajero ",pasajeroId, " tiene solicitudes: ", this.solicitudes.length);
         },
         error: (error) => {
             console.error('Error cargando solicitudes:', error);
