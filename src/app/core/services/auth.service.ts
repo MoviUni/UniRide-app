@@ -152,9 +152,31 @@ export class AuthService {
     return user?.idUsuario ?? null;
   }
   getConductorId(): number | null {
-    const user = this._currentUser() as CurrentUser | null;
-    return user?.idConductor ?? null;
+  const user = this._currentUser() as CurrentUser | null;
+  if (!user) {
+    return null;
   }
+
+  // 1) Si el backend ya envía idConductor, usamos eso
+  if (user.idConductor != null) {
+    return user.idConductor;
+  }
+
+  // 2) Fallback: si el rol es CONDUCTOR pero idConductor viene null,
+  //    usamos el idUsuario como identificador de conductor.
+  if (user.rol === 'CONDUCTOR' && user.idUsuario != null) {
+    console.warn(
+      '[AuthService] idConductor es null, usando idUsuario como fallback:',
+      user.idUsuario
+    );
+    return user.idUsuario;
+  }
+
+  // 3) En cualquier otro caso, no hay conductor
+  return null;
+}
+
+
 
   getPasajeroId(): number | null {
     const user = this._currentUser() as CurrentUser | null;

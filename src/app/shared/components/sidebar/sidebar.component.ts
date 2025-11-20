@@ -23,6 +23,20 @@ import { RoleType } from '../../../core/models/usuario.model';
 
       <div class="ur-divider"></div>
 
+      <!-- JOURNEY → publicar ruta -->
+      <button
+        class="ur-icon-btn"
+        type="button"
+        aria-label="Publicar ruta"
+        (click)="goPublicarRuta()"
+      >
+        <span class="ur-icon">
+          <img src="assets/sidebar/Journey.png" alt="Publicar ruta" />
+        </span>
+      </button>
+
+      <div class="ur-divider"></div>
+
       <!-- SOLICITUDES -->
       <button
         class="ur-icon-btn"
@@ -31,13 +45,13 @@ import { RoleType } from '../../../core/models/usuario.model';
         (click)="goSolicitudes()"
       >
         <span class="ur-icon">
-          <img src="assets/sidebar/Vector.png" alt="Solicitudes" />
+          <img src="assets/sidebar/Ubicacion.png" alt="Solicitudes" />
         </span>
       </button>
 
       <div class="ur-divider"></div>
 
-      <!-- HISTORIAL DE VIAJES (por ahora uso /rutas/estadisticas) -->
+      <!-- HISTORIAL DE VIAJES -->
       <button
         class="ur-icon-btn"
         type="button"
@@ -51,7 +65,7 @@ import { RoleType } from '../../../core/models/usuario.model';
 
       <div class="ur-divider"></div>
 
-      <!-- PERFIL (de momento lo mando a main según rol; cambia la ruta cuando tengas pantalla de perfil) -->
+      <!-- PERFIL -->
       <button
         class="ur-icon-btn"
         type="button"
@@ -88,12 +102,11 @@ import { RoleType } from '../../../core/models/usuario.model';
     }
 
     .ur-sidebar {
-      /* Colores Figma */
       --ur-bg: #FFE6DE;
       --ur-accent: #F4A69A;
       --ur-icon: #7C1034;
 
-      width: 82px;                 /* más finito */
+      width: 82px;
       min-height: calc(100vh - 48px);
       margin: 24px 0 24px 24px;
       padding: 24px 12px;
@@ -159,7 +172,6 @@ import { RoleType } from '../../../core/models/usuario.model';
       flex: 1;
     }
 
-    /* Mobile: barra abajo si algún día la quieres responsiva */
     @media (max-width: 900px) {
       .ur-sidebar {
         width: 100%;
@@ -186,7 +198,7 @@ export class SidebarComponent {
   private router = inject(Router);
   private authService = inject(AuthService);
 
-  /** Rol actual del usuario (CONDUCTOR / PASAJERO) */
+ /** Rol actual del usuario (CONDUCTOR / PASAJERO) */
   private readonly currentRole = computed(
     () => this.authService.getUserRole()
   );
@@ -200,9 +212,13 @@ export class SidebarComponent {
     } else if (role === RoleType.ROLE_PASAJERO) {
       this.router.navigate(['/main/pasajero']);
     } else {
-      // Si no hay sesión, lo mando a landing
       this.router.navigate(['/home/landing']);
     }
+  }
+
+  /** Journey → publicar ruta */
+  goPublicarRuta(): void {
+    this.router.navigate(['/rutas/publicar-ruta']);
   }
 
   /** Ubicación → solicitudes (depende de rol) */
@@ -210,38 +226,31 @@ export class SidebarComponent {
     const role = this.currentRole();
 
     if (role === RoleType.ROLE_PASAJERO) {
-      // Ya tienes esta ruta en SOLICITUD_ROUTES
       this.router.navigate(['/solicitudes/pasajero']);
     } else if (role === RoleType.ROLE_CONDUCTOR) {
-      // Aún no hay pantalla específica de solicitudes de conductor:
-      // lo llevo a "Mis rutas" donde gestiona las solicitudes.
       this.router.navigate(['/rutas/mis-rutas']);
-      // Cuando crees /solicitudes/conductor, cambia a:
+      // Cuando tengas /solicitudes/conductor:
       // this.router.navigate(['/solicitudes/conductor']);
     } else {
       this.router.navigate(['/auth/login']);
     }
   }
 
-  /** Libro → historial de viajes (por ahora uso estadísticas de rutas) */
+  /** Libro → historial de viajes (por ahora estadísticas de rutas) */
   goHistorial(): void {
     const role = this.currentRole();
 
     if (role === RoleType.ROLE_CONDUCTOR || role === RoleType.ROLE_PASAJERO) {
-      // Ruta que ya existe en RUTA_ROUTES
       this.router.navigate(['/rutas/estadisticas']);
-      // Si luego creas /rutas/historial/... actualiza aquí.
     } else {
       this.router.navigate(['/auth/login']);
     }
   }
 
-  /** Engranaje → perfil (placeholder hasta que tengas pantalla de perfil) */
+  /** Engranaje → perfil (por ahora main según rol) */
   goPerfil(): void {
     const role = this.currentRole();
 
-    // De momento lo reenvío al main según rol.
-    // Cuando tengas /perfil, /cuenta o similar, cambia esta línea.
     if (role === RoleType.ROLE_CONDUCTOR) {
       this.router.navigate(['/main/conductor']);
     } else if (role === RoleType.ROLE_PASAJERO) {

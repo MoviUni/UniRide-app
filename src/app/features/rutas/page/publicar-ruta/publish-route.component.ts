@@ -464,10 +464,6 @@ export class PublishRouteComponent implements OnInit {
     private authService: AuthService
   ) {}
 
-  // ID de conductor fijo de PRUEBAS.
-  // Luego lo podrás sacar del token / backend.
-  private readonly idConductorActual = 1;
-
   ngOnInit(): void {
     this.form = this.fb.group({
       origin: ['', Validators.required],
@@ -479,10 +475,16 @@ export class PublishRouteComponent implements OnInit {
       price: [null, [Validators.min(0)]],
     });
 
-    // Carga rutas existentes del conductor (para validar duplicados y mostrar historial)
-    this.routesService.getMisRutas(this.idConductorActual).subscribe();
+    const idConductor = this.getConductorId();
+    if (idConductor != null) {
+      // Cargar rutas existentes del conductor para mostrar últimas y validar duplicados
+      this.routesService.getMisRutas(idConductor).subscribe();
+    } else {
+      console.warn('No se encontró ID de conductor en el usuario autenticado.');
+    }
   }
 
+  /** Últimas 5 rutas del conductor (data viene del servicio, que llama al backend) */
   get ultimasRutas(): RutaResponseDto[] {
     const data = this.routesService.rutas();
     return [...data]
@@ -505,6 +507,12 @@ export class PublishRouteComponent implements OnInit {
 
     if (this.form.invalid) {
       this.form.markAllAsTouched();
+      return;
+    }
+
+    const idConductor = this.getConductorId();
+    if (idConductor == null) {
+      this.errorMessage = 'No se encontró un usuario autenticado para publicar la ruta.';
       return;
     }
 
@@ -555,7 +563,7 @@ export class PublishRouteComponent implements OnInit {
       horaSalida: value.time,
       tarifa: value.price ?? undefined,
       asientosDisponibles: value.capacity,
-      idConductor: this.idConductorActual,
+      idConductor: idConductor,
     };
 
     this.routesService.publicar(dto).subscribe({
@@ -577,4 +585,20 @@ export class PublishRouteComponent implements OnInit {
       },
     });
   }
+
+  /** Saca el ID del conductor desde AuthService.currentUser() de forma segura */
+private getConductorId(): number | null {
+  // currentUser es un signal, por eso lo llamamos como función
+  const rawUser = this.authService.currentUser();
+
+  // Lo casteamos a un tipo que sabemos que puede tener 'id'
+  const user = rawUser as { id?: number | string } | null;
+
+  if (!user || user.id == null) {
+    return null;
+  }
+
+  const parsed = Number(user.id);
+  return Number.isNaN(parsed) ? null : parsed;
+}
 }
