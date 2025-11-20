@@ -4,7 +4,7 @@ import { AuthService } from '../../../core/services/auth.service';
 import { RoleType } from '../../../core/models/usuario.model';
 
 @Component({
-  selector: 'app-sidebar',
+  selector: 'app-sidebar-pasajero',
   standalone: true,
   imports: [RouterModule],
   template: `
@@ -194,7 +194,7 @@ import { RoleType } from '../../../core/models/usuario.model';
     }
   `],
 })
-export class SidebarComponent {
+export class SidebarPasajeroComponent {
   private router = inject(Router);
   private authService = inject(AuthService);
 
@@ -218,46 +218,25 @@ export class SidebarComponent {
 
   /** Journey → publicar ruta */
   goPublicarRuta(): void {
-    this.router.navigate(['/rutas/publicar-ruta']);
+    this.router.navigate(['/rutas/pasajero/buscar']);
   }
 
   /** Ubicación → solicitudes (depende de rol) */
   goSolicitudes(): void {
-    const role = this.currentRole();
 
-    if (role === RoleType.ROLE_PASAJERO) {
-      this.router.navigate(['/solicitudes/pasajero/estados']);
-    } else if (role === RoleType.ROLE_CONDUCTOR) {
-      this.router.navigate(['/rutas/mis-rutas']);
-      // Cuando tengas /solicitudes/conductor:
-      // this.router.navigate(['/solicitudes/conductor']);
-    } else {
-      this.router.navigate(['/auth/login']);
-    }
+    this.router.navigate(['/solicitudes/pasajero/estados']);
   }
 
   /** Libro → historial de viajes (por ahora estadísticas de rutas) */
   goHistorial(): void {
-    const role = this.currentRole();
-
-    if (role === RoleType.ROLE_CONDUCTOR || role === RoleType.ROLE_PASAJERO) {
-      this.router.navigate(['/rutas/estadisticas']);
-    } else {
-      this.router.navigate(['/auth/login']);
-    }
+    this.router.navigate(['/auth/login']);
+    
   }
 
   /** Engranaje → perfil (por ahora main según rol) */
   goPerfil(): void {
-    const role = this.currentRole();
+    this.router.navigate(['/auth/login']);
 
-    if (role === RoleType.ROLE_CONDUCTOR) {
-      this.router.navigate(['/main/conductor']);
-    } else if (role === RoleType.ROLE_PASAJERO) {
-      this.router.navigate(['/main/pasajero']);
-    } else {
-      this.router.navigate(['/auth/login']);
-    }
   }
 
   /** Botón ON → logout */

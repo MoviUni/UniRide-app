@@ -1,7 +1,19 @@
 import { Routes } from '@angular/router';
 import { RutasLayoutComponent } from '../../shared/layouts/rutas-layout.component';
+import { RutasPasajeroLayoutComponent } from '@shared/layouts/rutas-pasajero-layout.component';
+
 
 export const RUTA_ROUTES: Routes = [
+  {
+    path: 'pasajero',
+    component: RutasPasajeroLayoutComponent,
+    children: [
+      {
+        path: 'buscar',
+        loadComponent: () => import('./page/busqueda/busqueda.component').then(m => m.BusquedaRutasComponent),
+      },
+    ]
+  },
   {
     path: '',
     component: RutasLayoutComponent,   // 👈 aquí va el layout con sidebar
@@ -37,13 +49,6 @@ export const RUTA_ROUTES: Routes = [
             .then(m => m.PublishRouteComponent),
       },
 
-      // Buscar rutas
-      {
-        path: 'buscar',
-        loadComponent: () =>
-          import('./page/busqueda/busqueda.component')
-            .then(m => m.BusquedaRutasComponent),
-      },
 
       // Gestionar solicitudes de una ruta
       {
@@ -60,4 +65,6 @@ export const RUTA_ROUTES: Routes = [
       },
     ],
   },
+  
+  
 ];

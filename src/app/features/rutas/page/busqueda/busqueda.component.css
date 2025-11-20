@@ -263,7 +263,7 @@ div {
 .ruta-list-box{
   width: 830px;
   height: 800px;
-  left: 550px;
+  left: 410px;
   top: 170px;
 
   flex-wrap: wrap; 
@@ -381,8 +381,8 @@ div {
 .inicio {
   width: 48.51px;
   height: 26.46px;
-  left: 224.17px;
-  top: 113.19px;
+  left: 20px;
+  top: 110px;
   position: absolute;
 }
 
@@ -397,8 +397,8 @@ div {
 .text- {
   width: 8.82px;
   height: 26.46px;
-  left: 282.24px;
-  top: 113.19px;
+  left: 80px;
+  top: 110px;
   position: absolute;
 }
 
@@ -413,8 +413,8 @@ div {
 .bsqueda-de-rutas {
   width: 214.62px;
   height: 26.46px;
-  left: 302.82px;
-  top: 113.19px;
+  left: 110px;
+  top: 110px;
   position: absolute;
 }
 
@@ -597,7 +597,7 @@ div {
 .filtros_01 {
   width: 330.01px;
   height: 665.17px;
-  left: 222.37px;
+  left: 40px;
   top: 66.27px;
   position: absolute;
   overflow: hidden;
@@ -606,7 +606,7 @@ div {
 .mi_cuenta_contenido {
   width: 1411.20px;
   height: 1031.20px;
-  left: 0.40px;
+
   top: -99.10px;
   position: absolute;
   overflow: hidden;
