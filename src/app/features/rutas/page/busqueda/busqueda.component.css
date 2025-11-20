@@ -381,8 +381,8 @@ div {
 .inicio {
   width: 48.51px;
   height: 26.46px;
-  left: 24px;
-  top: 113.19px;
+  left: 20px;
+  top: 110px;
   position: absolute;
 }
 
@@ -398,7 +398,7 @@ div {
   width: 8.82px;
   height: 26.46px;
   left: 80px;
-  top: 113.19px;
+  top: 110px;
   position: absolute;
 }
 
@@ -413,8 +413,8 @@ div {
 .bsqueda-de-rutas {
   width: 214.62px;
   height: 26.46px;
-  left: 100px;
-  top: 113.19px;
+  left: 110px;
+  top: 110px;
   position: absolute;
 }
 

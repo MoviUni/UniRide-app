@@ -21,7 +21,7 @@ import { RouterModule } from '@angular/router';
             
           </div>
           <div>
-            <button type="button" class="btn" routerLink="/solicitudes/pasajero">
+            <button type="button" class="btn" routerLink="/solicitudes/pasajero/estados">
               <p class="btn-text">  Mis solicitudes</p>
               <img class="image" src="assets/calendar.png" />
             </button>

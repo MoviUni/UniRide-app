@@ -1,4 +1,7 @@
-
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;700&display=swap');
+div {
+  font-family: "Poppins", sans-serif;
+}
 .solicitarunirse_span {
   color: white;
   font-size: 16.17px;
@@ -247,8 +250,8 @@
 .ruta-list-box{
   width: 830px;
   height: 800px;
-  left: 240px;
-  top: 270px;
+  left: 90px;
+  top: 240px;
 
   flex-wrap: wrap; 
 
@@ -358,8 +361,8 @@
 .title-sol{
   font-size:x-large;
   font-weight:600;
-  left:224.17px;
-  top:100px;
+  left:20px;
+  top:70px;
   position: relative;
 }
 .inicio_span {
@@ -374,8 +377,8 @@
   color: #2635D6;
   width: 48.51px;
   height: 26.46px;
-  left: 224.17px;
-  top: 140px;
+  left: 20px;
+  top: 110px;
   position: absolute;
 }
 
@@ -390,8 +393,8 @@
 .text- {
   width: 8.82px;
   height: 26.46px;
-  left: 282.24px;
-  top: 140px;
+  left: 80px;
+  top: 110px;
   position: absolute;
 }
 
@@ -406,8 +409,8 @@
 .bsqueda-de-rutas {
   width: 214.62px;
   height: 26.46px;
-  left: 302.82px;
-  top: 140px;
+  left: 110px;
+  top: 110px;
   position: absolute;
 }
 
