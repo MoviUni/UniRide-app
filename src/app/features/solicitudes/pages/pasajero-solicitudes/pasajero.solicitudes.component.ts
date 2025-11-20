@@ -100,9 +100,9 @@ export class PasajeroSolicitudesComponent implements OnInit {
         this.loadSolicitudes();
     }
 
-    
+    private pasajeroId = 1;
     loadSolicitudes() {
-        this.solicitudService.getInfo().subscribe({
+        this.solicitudService.getInfo(this.pasajeroId).subscribe({
         next: (solicitudes) => {
             this.loading.set(false);
             this.solicitudes.set(solicitudes);
