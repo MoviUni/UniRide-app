@@ -80,7 +80,7 @@ import { ConductorResponse } from '@core/models/usuario.model';
     </div>
 
     <div class="frame-427318923"></div>
-    <div class="inicio"><a routerLink='rutas' class="inicio_span">Inicio</a></div>
+    <div class="inicio"><a routerLink='/main/pasajero' class="inicio_span">Inicio</a></div>
     <div class="text-"><span class="fspan">></span></div>
     <div class="bsqueda-de-rutas"><span class="bsquedaderutas_span"> Búsqueda de rutas</span></div>
 
