@@ -4,20 +4,24 @@ import { RutasPasajeroLayoutComponent } from '@shared/layouts/rutas-pasajero-lay
 
 
 export const MAIN_ROUTES: Routes = [
-    { 
-      path: '',
-          component: RutasPasajeroLayoutComponent,   // 👈 aquí va el layout con sidebar
-          children: [
-    {
-      path: '', redirectTo: 'landing', pathMatch: 'full' },
-    {
-    path: 'pasajero',
-    loadComponent: () => import('./page/main-pasajero/main.pasajero.component').then((m) => m.MainPagePasajeroComponent)    
-    },
-    {
+  { 
     path: 'conductor',
-    loadComponent: () => import('./page/main-conductor/main.conductor.component').then((m) => m.MainPageConductorComponent)    
-    },
-   ],
+      component: RutasLayoutComponent,   // 👈 aquí va el layout con sidebar
+      children: [
+        {
+          path: '',
+          loadComponent: () => import('./page/main-conductor/main.conductor.component').then((m) => m.MainPageConductorComponent)    
+        },
+    ],
+  },
+  { 
+    path: 'pasajero',
+      component: RutasPasajeroLayoutComponent,   // 👈 aquí va el layout con sidebar
+      children: [
+        {
+          path: '',
+          loadComponent: () => import('./page/main-pasajero/main.pasajero.component').then((m) => m.MainPagePasajeroComponent)    
+        }
+    ],
   },
 ];
