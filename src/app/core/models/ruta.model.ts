@@ -40,6 +40,10 @@ export interface RutaCardResponse{
     asientosDisponibles:number,
     nombreConductor:string,
     apellidoConductor:number,
+    vehiculoColor:string,
+    vehiculoPlaca:string,
+    vehiculoModelo:string,
+    vehiculoDesc:string,
 }
 // =========================RESPONSE=========================
 

@@ -18,28 +18,6 @@ import { AuthService } from '@core/services/auth.service';
   standalone: true,
   imports: [CommonModule, ReactiveFormsModule, RouterModule],
   template: `
-  <div *ngIf="showSolicitudForm" class="solicitud-exitosa">
-    <div class="rectangle-form"></div>
-    <div class="form-content">
-      <p class="big-text-form"> !La solicitud ha sido enviada con éxito!</p>
-      <br>
-      <p class="small-text-form"> Revisa los detalles de tus viajes</p>
-      <br>
-      <input class = "sol-button-form" type="button" value="Ver mis solicitudes">
-      <br>
-
-      <button type="button" class = "cerrar-text-form" (click)="closeForm()">Continuar viendo las rutas</button>
-    </div>
-  </div>
-
-  <div *ngIf="showErrorForm" class="solicitud-error">
-    <div class="rectangle-form"></div>
-    <div class="form-content">
-      <p class="big-text-form"> Ha ocurrido un error al enviar la solictud.</p>
-      <br>
-      <button type="button" class = "cerrar-text-form" (click)="closeErrorForm()">Continuar viendo las rutas</button>
-    </div>
-  </div>
 
   <div class="frame-427318940">
 
@@ -51,13 +29,13 @@ import { AuthService } from '@core/services/auth.service';
       
       @for (tx of rutas()!; track $index) {
 
-        <div class="ruta-box1">
+        <button class="ruta-box1" (click)="mostrarMensaje(tx)">
           <div class="rectangle1"></div>
 
           <div class="hoy_01"><span class="hoy_01_span">{{'Empieza en '+ diferenciaFechas(tx.fechaSalida) + ' días'}} </span></div>
           <div class="btn_solicitar">
 
-            <button type="button" class="solicitarunirse_01" (click)="sendForm(tx)">Solicitar Unirse</button>
+            
 
           </div>
           <div class="conductor-text1"><span>{{tx.nombreConductor + ' ' + tx.apellidoConductor}}</span></div>
@@ -74,7 +52,8 @@ import { AuthService } from '@core/services/auth.service';
           
           <img class="image-conductor" src="assets/ConductorLogo.png" />
 
-        </div>
+        </button>
+        <button type="button" class="solicitarunirse_01" (click)="sendForm(tx)">Solicitar Unirse</button>
         
       }
         
@@ -235,7 +214,42 @@ import { AuthService } from '@core/services/auth.service';
     </form>
   </div>
 </div>
-  
+  @if (mostrarPopup) {
+  <div class="popup-overlay">
+    <div class="popup-box">
+      <div class="popup-close" (click)="mostrarPopup = false">x</div>
+
+      <p class="popup-message">{{ mensajePopup }}</p>
+      <div class="rectangle-trayecto">
+
+        <p class="popup-section"> Información del trayecto </p>
+        
+        <p class="popup-info">{{ "Origen y destino: " + rutaDetails()[0].origen + " -> " + rutaDetails()[0].destino}}</p>
+        
+        <p class="popup-info">{{"Hora y fecha de salida: " + rutaDetails()[0].horaSalida + " " + rutaDetails()[0].fechaSalida}}</p>
+        
+        <p class="popup-info">{{ "Precio: s/." + rutaDetails()[0].tarifa}}</p>
+
+        <p class="popup-info">{{ "Capacidad de pasajeros: " + rutaDetails()[0].asientosDisponibles}}</p>
+        <img class="trayectoria-img" src="assets/calendar.png" />
+      </div>
+      <div class="rectangle-conductor">
+        <p class="popup-section"> Información sobre el conductor </p>
+
+        <p class="popup-info">{{ "Nombre y apellido: " + rutaDetails()[0].nombreConductor + " " + rutaDetails()[0].apellidoConductor}}</p>
+
+        <p class="popup-section"> Información sobre el vehículo </p>
+
+        <p class="popup-info">{{ "Modelo: " +rutaDetails()[0].vehiculoModelo}}</p>
+        <p class="popup-info">{{ "Color: " + rutaDetails()[0].vehiculoColor}}</p>
+        <p class="popup-info">{{ "Placa: "+ rutaDetails()[0].vehiculoPlaca}}</p>
+        <p class="popup-info">{{ "Descripción: "+ rutaDetails()[0].vehiculoDesc}}</p>
+        <img class="veh-img" src="assets/search.png" />
+      </div>
+
+    </div>
+  </div>
+}
   `,
   styleUrls: ['./busqueda.component.css']
 })
@@ -259,6 +273,12 @@ export class BusquedaRutasComponent implements OnInit{
   rutas = signal<RutaCardResponse[]>([]);
   conductores = signal<ConductorResponse[]>([]);
   loading = signal(true);
+
+  // Popup que muestra los detalles de las rutas
+  mensajePopup: string = '';
+  mostrarPopup: boolean = false;
+  rutaDetails = signal<RutaCardResponse[]>([]);
+
 
   filterForm: FormGroup = this.fb.group({
     origen: [''],
@@ -300,6 +320,19 @@ export class BusquedaRutasComponent implements OnInit{
 
   }
 
+  cerrarPopup() {
+    this.mensajePopup = '';
+    this.mostrarPopup = false;
+  }
+
+  mostrarMensaje(dt:RutaCardResponse){
+    this.mensajePopup = 'Detalles de la ruta';
+    this.mostrarPopup = true;
+    this.rutaDetails.set([dt]);
+  }
+
+
+
   diferenciaFechas(date1:string){
     const _date1 = new Date(date1);
     const time1 = _date1.getTime();
@@ -313,18 +346,7 @@ export class BusquedaRutasComponent implements OnInit{
     this.rutas.set(this.allRutas());
   }
 
-  removeRuta(id:number){
-    console.log("Removing ruta with id ", id);
-    const filtered = this.allRutas().filter(tx => {
-      const toRemove = tx.idRuta;
-      if(toRemove){
-        return toRemove != id;
-      }
-      return true;
-    });
-    this.allRutas.set(filtered);
-    this.rutas.set(filtered);
-  }
+
 
   applyFilters() {
     const origen = this.filterForm.value.origen;
@@ -407,17 +429,9 @@ export class BusquedaRutasComponent implements OnInit{
   closeForm(){
     this.showSolicitudForm = false;
   }
-  closeErrorForm(){
-    this.showErrorForm = false;
-  }
 
   openForm(){
     this.showSolicitudForm = true;
-  }
-
-  openErrorForm(){
-    this.showErrorForm = true;
-    
   }
 
   sendForm(dt:RutaCardResponse){
@@ -429,7 +443,6 @@ export class BusquedaRutasComponent implements OnInit{
     
   }
 
-  
 
   registerForm(dt:RutaCardResponse, pasajeroId:number){
     const currentDate = formatDate(new Date(), 'yyyy-MM-dd', this.locale);
@@ -447,7 +460,7 @@ export class BusquedaRutasComponent implements OnInit{
      this.solicitudService.create(solicitudReq).subscribe({
         next: () => {
           alert('Exito creando solicitud');
-          this.removeRuta(dt.idRuta); // se elimina la cartilla de rutas
+          window.location.reload();
         },
         error: (error) => {
           alert(error);
