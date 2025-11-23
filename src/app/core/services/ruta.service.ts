@@ -45,8 +45,8 @@ export class RutaService {
     private _info = signal<RutaCardResponse[]>([]);
 
   // GET - Obtener todos
-  getInfo(): Observable<RutaCardResponse[]> {
-    return this.http.get<RutaCardResponse[]>(`${this.apiUrl}/info`, this.getHeaders()).pipe(
+  getInfo(pasajeroId:number): Observable<RutaCardResponse[]> {
+    return this.http.get<RutaCardResponse[]>(`${this.apiUrl}/info/${pasajeroId}`, this.getHeaders()).pipe(
       tap(data => this._info.set(data))
     );
   }

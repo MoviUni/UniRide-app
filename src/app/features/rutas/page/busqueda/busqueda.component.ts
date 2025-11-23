@@ -48,6 +48,7 @@ import { AuthService } from '@core/services/auth.service';
     @if (loading()) {
       <p>Cargando rutas...</p>
     } @else if (rutas()) {
+      
       @for (tx of rutas()!; track $index) {
 
         <div class="ruta-box1">
@@ -76,6 +77,7 @@ import { AuthService } from '@core/services/auth.service';
         </div>
         
       }
+        
     }
       
     </div>
@@ -272,11 +274,17 @@ export class BusquedaRutasComponent implements OnInit{
   errorMessage = signal('');
 
   ngOnInit() {
-    this.loadRutas();
+    const pasajeroId = this.authService.getPasajeroId();
+
+    if (!pasajeroId) {
+    console.error('Usuario no autenticado');
+    return;}
+    this.loadRutas(pasajeroId);
+    
   }
 
-  loadRutas() {
-    this.rutaService.getInfo().subscribe({
+  loadRutas(pasajeroId:number) {
+    this.rutaService.getInfo(pasajeroId).subscribe({
       next: (rutas) => {
         this.loading.set(false);
         this.rutas.set(rutas);
@@ -303,6 +311,19 @@ export class BusquedaRutasComponent implements OnInit{
 
   clearFilters(){
     this.rutas.set(this.allRutas());
+  }
+
+  removeRuta(id:number){
+    console.log("Removing ruta with id ", id);
+    const filtered = this.allRutas().filter(tx => {
+      const toRemove = tx.idRuta;
+      if(toRemove){
+        return toRemove != id;
+      }
+      return true;
+    });
+    this.allRutas.set(filtered);
+    this.rutas.set(filtered);
   }
 
   applyFilters() {
@@ -405,6 +426,7 @@ export class BusquedaRutasComponent implements OnInit{
       console.error('Usuario no autenticado');
       return;}
     this.registerForm(dt, pasajeroId);
+    
   }
 
   
@@ -425,12 +447,13 @@ export class BusquedaRutasComponent implements OnInit{
      this.solicitudService.create(solicitudReq).subscribe({
         next: () => {
           alert('Exito creando solicitud');
-          
+          this.removeRuta(dt.idRuta); // se elimina la cartilla de rutas
         },
         error: (error) => {
           alert(error);
           console.error('Error creando solicitud de viaje:');
           this.errorMessage.set('Ha ocurrido un error solicitando unirse a este viaje.');
+
         }
       }); 
 
