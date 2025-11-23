@@ -19,6 +19,14 @@ import { AuthService } from '@core/services/auth.service';
     @if (loading()) {
       <p>Cargando solicitudes...</p>
     } @else if (solicitudes()) {
+      @if(solicitudes().length == 0){
+          <div class="rectangle2">
+            <span class="sin-texto"> No tienes solicitudes de viaje registradas...</span>
+            <img class="sin-imagen" src="assets/history.png" />
+          </div>
+          
+        }
+      @else{
         @for (tx of solicitudes()!; track $index) {
           @if (tx.estadoSolicitud === "CANCELADO"){
             <div class="ruta-box1">
@@ -69,7 +77,8 @@ import { AuthService } from '@core/services/auth.service';
           }
             
         }
-      } 
+      }
+    } 
     
       
     </div>
@@ -100,7 +109,6 @@ export class PasajeroSolicitudesComponent implements OnInit {
     allSolicitudes = signal<SolicitudCardResponse[]>([]);
     solicitudes = signal<SolicitudCardResponse[]>([]);
     rutas = signal<RutaResponse[]>([]);
-    
     loading = signal(true);
     loadingRutas = signal(true);
 
@@ -116,19 +124,20 @@ export class PasajeroSolicitudesComponent implements OnInit {
 
     
     loadSolicitudes(pasajeroId:number) {
-        this.solicitudService.getInfo(pasajeroId).subscribe({
-        next: (solicitudes) => {
-            this.loading.set(false);
-            this.solicitudes.set(solicitudes);
-            this.allSolicitudes.set(solicitudes);
-            console.log("Cargando solicitudes de pasajero ",pasajeroId, " tiene solicitudes: ", this.solicitudes.length);
-        },
-        error: (error) => {
-            console.error('Error cargando solicitudes:', error);
-            // Mostrar mensaje informativo en lugar de error
-            this.errorMessage.set('No existen solicitudes para este usuario');
-        }
-        });
+      console.log("cantidad de solicitudes: ",this.solicitudes.length);
+      this.solicitudService.getInfo(pasajeroId).subscribe({
+      next: (solicitudes) => {
+          this.loading.set(false);
+          this.solicitudes.set(solicitudes);
+          this.allSolicitudes.set(solicitudes);
+          console.log("Cargando solicitudes de pasajero ",pasajeroId, " tiene solicitudes: ", this.solicitudes().length);
+      },
+      error: (error) => {
+          console.error('Error cargando solicitudes:', error);
+          // Mostrar mensaje informativo en lugar de error
+          this.errorMessage.set('No existen solicitudes para este usuario');
+      }
+      });
     }
 
     getColor(i:number):string{
