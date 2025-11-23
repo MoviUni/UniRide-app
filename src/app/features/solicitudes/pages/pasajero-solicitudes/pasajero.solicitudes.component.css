@@ -188,20 +188,48 @@ div {
 
 }
 
-.conductor-text1 {
-  width: 92.61px;
-  height: 22.05px;
-  left: 70px;
-  top: -70px;
-  position: relative;
+.conductor{
+  width: 200px;
+  height: 26.46px;
+  left: 0px;
+  top: -140px;
+  position: absolute;
+  z-index: 10;
+
 }
+
 .destino-text-1 {
   color: black;
   font-size: 17.64px;
   font-family: Poppins;
-  font-weight: 500;
+  font-weight: 600;
   word-wrap: break-word;
   
+}
+
+.sin-imagen{
+  padding-top: 30px;
+  width: 10%;
+  height: auto;
+  left:345px;
+  position: relative;
+}
+
+.sin-texto{
+  padding-top: 25px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.rectangle2 {
+  width: 796.74px;
+  height: 200px;
+  left: 0px;
+  top: 35px;
+  position: relative;
+  background: #e9e9e9;
+  border-radius: 29.40px;
 }
 
 .origen-text-1 {
@@ -209,6 +237,7 @@ div {
   height: 22.05px;
   left: 20px;
   top: -190px;
+  font-weight: 600;
   position: relative;
   font-size: large;
 }
@@ -237,12 +266,36 @@ div {
 
 }
 
+.image-conductor {
+  width: 30px;
+  height: 29px;
+  left: 25px;
+  top: -230px;
+  position:relative;
+
+}
+.conductor-text1{
+  width: 497.60px;
+  height: 22.05px;
+  left: 70px;
+  top: -205px;
+  position: relative;
+}
 
 .precio-text-1 {
   width: 123.48px;
   height: 33.08px;
   font-size: 26.46px;
   left: 650px;
+  top: -260px;
+  position: relative;
+}
+
+.precio-text-2 {
+  width: 123.48px;
+  height: 33.08px;
+  font-size: 26.46px;
+  left: 350px;
   top: -260px;
   position: relative;
 }
@@ -469,6 +522,7 @@ div {
   height: 26.46px;
   left: 23.52px;
   top: 91.14px;
+  font-weight: 600;
   position: absolute;
 }
 
@@ -485,6 +539,7 @@ div {
   height: 26.46px;
   left: 23.52px;
   top: 167.58px;
+  font-weight: 600;
   position: absolute;
 }
 
@@ -723,8 +778,8 @@ div {
   overflow: hidden;
   border-radius: 26.46px;
   text-align: center;
-  top: -17vh;
-  left: 55.5vh;
+  top: -120px;
+  left: 400px;
   position: relative;
 }
 

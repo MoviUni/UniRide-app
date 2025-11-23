@@ -103,6 +103,7 @@ div {
   font-weight: 500;
   letter-spacing: 0.32px;
   word-wrap: break-word;
+
 }
 
 .solicitar-unirse_01 {
@@ -111,9 +112,7 @@ div {
   left: 23.52px;
   top: 5.88px;
   position: absolute;
-  justify-content: center;
-  display: flex;
-  flex-direction: column;
+  margin-bottom: -100px;
 }
 
 .mara_01_span {
@@ -221,6 +220,7 @@ div {
   width: 497.60px;
   height: 22.05px;
   font-weight: 600;
+  text-align: left;
   left: 20px;
   top: -180px;
   position: relative;
@@ -228,6 +228,7 @@ div {
 .hora-salida1 {
   width: 497.60px;
   height: 22.05px;
+  text-align: left;
   left: 20px;
   top: -170px;
   position: relative;
@@ -236,7 +237,7 @@ div {
 .capacidad-text1 {
   width: 213.88px;
   height: 22.05px;
-  left: 400px;
+  left: 320px;
   top: -140px;
   position: relative;
 }
@@ -268,7 +269,6 @@ div {
 
   flex-wrap: wrap; 
 
-  gap: 20px;
   position: relative;
   overflow-y: scroll
 }
@@ -279,7 +279,9 @@ div {
   overflow: hidden;
 }
 
-
+.ruta-box1:hover{
+  cursor: pointer;
+}
 
 
 .image-36_01 {
@@ -471,7 +473,7 @@ div {
 .origen {
   width: 170.52px;
   height: 26.46px;
-  left: 23.52px;
+
   top: 91.14px;
   position: absolute;
 }
@@ -487,7 +489,7 @@ div {
 .destino {
   width: 170.52px;
   height: 26.46px;
-  left: 23.52px;
+
   top: 167.58px;
   position: absolute;
 }
@@ -691,16 +693,19 @@ div {
 }
 
 .solicitarunirse_01{
+  position: relative;
+  left: 600px;
+  top: -70px;
 
-  padding-top: 0.5vh;
+
   width: 171.99px;
   height: 36.75px;
+
   color: white;
   background-color:#880D1E;
 
-
   box-shadow: 0px 2.93999981880188px 2.93999981880188px rgba(0, 0, 0, 0.25);
-  overflow: hidden;
+
   border-radius: 26.46px;
 }
 
@@ -726,4 +731,150 @@ div {
   color: white;
 
   margin: 1vh;
+}
+
+/* Fondo oscuro (antes .poppup) */
+.popup-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(108, 108, 108, 0.4);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 99999;
+}
+
+/* Caja blanca (antes .rectangle-188) */
+.popup-box {
+  width: 90%;
+  max-width: 900px;
+  height: 639px;
+  padding: 50px 40px;
+  background: white;
+  border-radius: 10px;
+  position: relative;
+
+
+   /* Forzar centrado vertical y horizontal */
+
+  flex-direction: column;
+  align-items: center;
+}
+
+/* X para cerrar */
+.popup-close {
+  position: absolute;
+  right: 45px;
+  top: 20px;
+  font-size: 48px;
+  font-family: Poppins;
+  font-weight: 500;
+  cursor: pointer;
+  user-select: none;
+}
+
+/* Ícono de error */
+.popup-icon {
+  width: 100px;
+  height: 100px;
+  margin-bottom: 90px;
+  margin-top: 70px;
+}
+
+/* Texto del mensaje */
+.popup-message {
+  font-size: 32px;
+  font-family: Poppins, sans-serif;
+  font-weight: 600;
+  color:#620713;
+  max-width: 700px;
+
+  line-height: 1.2;
+}
+
+/* Texto del mensaje */
+.popup-section {
+  left:15px;
+  position: relative;
+  padding-top: 22px;
+  font-size: 18px;
+  font-family: Poppins, sans-serif;
+  font-weight: 600;
+  color: black;
+  max-width: 700px;
+
+  line-height: 1.2;
+}
+
+/* Texto del mensaje */
+.popup-info {
+  left:15px;
+  position: relative;
+  padding-top: 15px;
+  font-size: 16px;
+  font-family: Poppins, sans-serif;
+  font-weight: 500;
+  color: black;
+  max-width: 700px;
+
+  line-height: 1.2;
+}
+
+.rectangle-trayecto{
+  width: 796.74px;
+  height: 200px;
+  left: 0px;
+  top: 35px;
+  position: relative;
+  background: #F3F3F3;
+  border-radius: 10.40px;
+}
+
+.rectangle-conductor{
+  margin-top: 20px;
+  width: 796.74px;
+  height: 280px;
+  left: 0px;
+  top: 35px;
+  position: relative;
+  background: #F3F3F3;
+  border-radius: 10.40px;
+}
+
+
+.trayectoria-img{
+  left: 600px;
+  top: -105px;
+  width: 70px;
+  height: auto;
+  position: relative;
+}
+.veh-img{
+  left: 600px;
+  top: -135px;
+  width: 70px;
+  height: auto;
+  position: relative;
+}
+
+
+/* Ajustes responsive */
+@media (max-width: 768px) {
+  .popup-box {
+    padding: 40px 20px;
+    border-radius: 30px;
+  }
+  
+  .popup-message {
+    font-size: 32px;
+  }
+  
+  .popup-close {
+    font-size: 36px;
+  }
+
+  .popup-icon {
+    width: 80px;
+    height: 80px;
+  }
 }
