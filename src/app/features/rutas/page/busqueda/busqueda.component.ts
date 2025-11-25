@@ -26,8 +26,15 @@ import { AuthService } from '@core/services/auth.service';
     @if (loading()) {
       <p>Cargando rutas...</p>
     } @else if (rutas()) {
-      
-      @for (tx of rutas()!; track $index) {
+      @if(rutas().length == 0){
+          <div class="rectangle2">
+            <span class="sin-texto"> No se pudieron encontraron rutas... Prueba con otros filtros</span>
+            <img class="sin-imagen" src="assets/auto_icon.png" />
+          </div>
+          
+        }
+      @else{
+          @for (tx of rutas()!; track $index) {
 
         <button class="ruta-box1" (click)="mostrarMensaje(tx)">
           <div class="rectangle1"></div>
@@ -56,7 +63,7 @@ import { AuthService } from '@core/services/auth.service';
         <button type="button" class="solicitarunirse_01" (click)="sendForm(tx)">Solicitar Unirse</button>
         
       }
-        
+        }
     }
       
     </div>

@@ -29,14 +29,14 @@ import { AuthService } from '@core/services/auth.service';
       @else{
         @for (tx of solicitudes()!; track $index) {
           @if (tx.estadoSolicitud === "CANCELADO"){
-            <div class="ruta-box1">
+            <button class="ruta-box1" (click)="mostrarMensaje(tx)">
               <div class="rectangle1"></div>
 
               <div class="hoy_01"><span class="hoy_01_span">{{'Empieza en '+ diferenciaFechas(tx.fechaSalida) + ' días'}} </span></div>
               
               <div class= "estado-btn" [ngStyle]="{'background-color': getColor($index)}"> {{tx.estadoSolicitud}}</div>
               
-              <div class="cancelar-btn"></div>
+              
               
               <div class="origen-text-1">
               <span>{{tx.origen}}</span>
@@ -49,18 +49,15 @@ import { AuthService } from '@core/services/auth.service';
               <div class="precio-text-1"><span>{{ 's/.' + tx.tarifa}}</span></div>
               <div class="conductor-text1"><span>{{tx.nombreConductor + ' ' + tx.apellidoConductor}}</span></div>
               <img class="image-conductor" src="assets/ConductorLogo.png" />
-              </div>
+            </button>
+            <div class="cancelar-btn"></div>
           }
           @else{
-            <div class="ruta-box1">
+            <button class="ruta-box1" (click)="mostrarMensaje(tx)">
               <div class="rectangle1"></div>
 
               <div class="hoy_01"><span class="hoy_01_span">{{'Empieza en '+ diferenciaFechas(tx.fechaSalida) + ' días'}} </span></div>
               <div class= "estado-btn" [ngStyle]="{'background-color': getColor($index)}"> {{tx.estadoSolicitud}}</div>
-
-              <div class="cancelar-btn">
-                <button type="button" class="cancelar" (click)="cancelarSolicitud(tx)">Cancelar Solicitud</button>
-              </div>
 
               <div class="origen-text-1">
                 <span>{{tx.origen}}</span>
@@ -73,7 +70,8 @@ import { AuthService } from '@core/services/auth.service';
               <div class="precio-text-1"><span>{{ 's/.' + tx.tarifa}}</span></div>
               <div class="conductor-text1"><span>{{tx.nombreConductor + ' ' + tx.apellidoConductor}}</span></div>
               <img class="image-conductor" src="assets/ConductorLogo.png" />
-            </div>
+            </button>
+            <button type="button" class="cancelar" (click)="cancelarSolicitud(tx)">Cancelar Solicitud</button>
           }
             
         }
@@ -92,7 +90,42 @@ import { AuthService } from '@core/services/auth.service';
   </div>
   
 </div>
-  
+  @if (mostrarPopup) {
+  <div class="popup-overlay">
+    <div class="popup-box">
+      <div class="popup-close" (click)="mostrarPopup = false">x</div>
+
+      <p class="popup-message">{{ mensajePopup }}</p>
+      <div class="rectangle-trayecto">
+
+        <p class="popup-section"> Información del trayecto </p>
+        
+        <p class="popup-info">{{ "Origen y destino: " + rutaDetails()[0].origen + " -> " + rutaDetails()[0].destino}}</p>
+        
+        <p class="popup-info">{{"Hora y fecha de salida: " + rutaDetails()[0].horaSalida + " " + rutaDetails()[0].fechaSalida}}</p>
+        
+        <p class="popup-info">{{ "Precio: s/." + rutaDetails()[0].tarifa}}</p>
+
+        <p class="popup-info">{{ "Capacidad de pasajeros: " + rutaDetails()[0].asientosDisponibles}}</p>
+        <img class="trayectoria-img" src="assets/calendar.png" />
+      </div>
+      <div class="rectangle-conductor">
+        <p class="popup-section"> Información sobre el conductor </p>
+
+        <p class="popup-info">{{ "Nombre y apellido: " + rutaDetails()[0].nombreConductor + " " + rutaDetails()[0].apellidoConductor}}</p>
+
+        <p class="popup-section"> Información sobre el vehículo </p>
+
+        <p class="popup-info">{{ "Modelo: " +rutaDetails()[0].vehiculoModelo}}</p>
+        <p class="popup-info">{{ "Color: " + rutaDetails()[0].vehiculoColor}}</p>
+        <p class="popup-info">{{ "Placa: "+ rutaDetails()[0].vehiculoPlaca}}</p>
+        <p class="popup-info">{{ "Descripción: "+ rutaDetails()[0].vehiculoDesc}}</p>
+        <img class="veh-img" src="assets/search.png" />
+      </div>
+
+    </div>
+  </div>
+}
   `,
   styleUrls: ['./pasajero.solicitudes.component.css']
 })
@@ -112,6 +145,10 @@ export class PasajeroSolicitudesComponent implements OnInit {
     loading = signal(true);
     loadingRutas = signal(true);
 
+    // Popup que muestra los detalles de las rutas
+      mensajePopup: string = '';
+      mostrarPopup: boolean = false;
+      rutaDetails = signal<SolicitudCardResponse[]>([]);
 
     ngOnInit() {
       const pasajeroId = this.authService.getPasajeroId();
@@ -177,6 +214,12 @@ export class PasajeroSolicitudesComponent implements OnInit {
             this.errorMessage.set('No se ha podido cancelar la solicitud');
         }
         });
+    }
+
+    mostrarMensaje(dt:SolicitudCardResponse){
+      this.mensajePopup = 'Detalles de la solicitud';
+      this.mostrarPopup = true;
+      this.rutaDetails.set([dt]);
     }
 
 }

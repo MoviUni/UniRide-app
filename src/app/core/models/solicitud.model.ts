@@ -39,6 +39,10 @@ export interface SolicitudCardResponse{
     asientosDisponibles:number,
     nombreConductor:string,
     apellidoConductor:number,
+    vehiculoColor:string,
+    vehiculoPlaca:string,
+    vehiculoModelo:string,
+    vehiculoDesc:string,
 }
 
 export interface SolicitudEstadoRequest{
