@@ -8,7 +8,7 @@ import { RutaResponse, RutaCardResponse } from '@core/models/ruta.model';
 import { ConductorService } from '@core/services/conductor.service';
 import { SolicitudService } from '@core/services/solicitud.service';
 import { EstadoSolicitud, SolicitudViajeRequest, SolicitudViajeResponse, SolicitudCardResponse } from '@core/models/solicitud.model';
-import { ConductorResponse } from '@core/models/usuario.model';
+import { ConductorResponse } from '@core/models/conductor.model';
 import { AuthService } from '@core/services/auth.service';
 
 

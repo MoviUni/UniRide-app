@@ -6,8 +6,7 @@ export interface VehiculoRequest {
   modelo: string;
   marca: string;
   color: string;
-  capacidadVehiculo: number;
-  descripcionVehiculo: string;
+  capacidad: number;
 }
 
 export interface VehiculoResponse {
@@ -17,7 +16,6 @@ export interface VehiculoResponse {
   marca: string;
   color: string;
   capacidad: number;
-  descripcionVehiculo: string;
   idVehiculo: number;
   idConductor: number;
 }

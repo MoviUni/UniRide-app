@@ -2,7 +2,7 @@ import { Injectable, inject, signal } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable, tap } from 'rxjs';
 import { environment } from '@env/environment';
-import { ConductorRequest, ConductorResponse } from '@core/models/usuario.model';
+import { ConductorRequest, ConductorResponse } from '@core/models/conductor.model';
 
 @Injectable({
   providedIn: 'root'

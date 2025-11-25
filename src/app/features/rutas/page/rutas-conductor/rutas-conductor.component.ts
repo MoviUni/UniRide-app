@@ -116,7 +116,7 @@ export class RutasConductorComponent implements OnInit {
     this.loading.set(true);
     this.error.set(null);
 
-    const conductorId = this.authService.getConductorId(); // ✅ obtenemos el id
+    const conductorId = this.authService.getConductorId(); // obtenemos el id
     console.log('conductorId desde auth:', conductorId);
     if (!conductorId) {
     console.error('Usuario no autenticado');

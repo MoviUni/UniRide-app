@@ -1,21 +1,21 @@
+// src/app/core/services/routes.service.ts
 import { Injectable, inject, signal } from '@angular/core';
 import { HttpClient, HttpParams } from '@angular/common/http';
 import { Observable, tap } from 'rxjs';
 import { environment } from '../../../environments/environment';
 
-// TIPOS / DTOs
-export type EstadoRuta = 'ACTIVA' | 'PENDIENTE' | 'CANCELADA' | 'FINALIZADA';
+
+export type EstadoRuta = 'PROGRAMADO' | 'EN_PROGRESO' | 'CONFIRMADO' | 'CANCELADO' | 'FINALIZADO' | 'PENDIENTE' | 'ACTIVO';
 
 export interface RutaRequestDto {
   origen: string;
   destino: string;
-  fechaSalida: string;   // 'YYYY-MM-DD'
-  horaSalida: string;    // 'HH:mm'
-  tarifa?: number;
-  asientosDisponibles?: number;
-  capacidad?: number;
-  idConductor?: number;
-  [key: string]: unknown;
+  fechaSalida: string;      
+  horaSalida: string;       
+  tarifa?: number;          
+  asientosDisponibles: number;
+  estadoRuta: EstadoRuta;
+  conductorId: number;
 }
 
 export interface RutaResponseDto {
@@ -25,8 +25,8 @@ export interface RutaResponseDto {
   fechaSalida: string;
   horaSalida: string;
   tarifa?: number;
-  asientosDisponibles?: number;
-  estadoRuta?: EstadoRuta;
+  asientosDisponibles: number;
+  estadoRuta: EstadoRuta;
   capacidad?: number;
   [key: string]: unknown;
 }
@@ -62,7 +62,7 @@ export class RoutesService {
     };
   }
 
-  // Signals para ESTADO COMPARTIDO
+  // Signals para estado compartido
   private _rutas = signal<RutaResponseDto[]>([]);
   rutas = this._rutas.asReadonly();
 
@@ -114,11 +114,7 @@ export class RoutesService {
       );
   }
 
-  // ─────────────────────────
-  // Otros endpoints opcionales
-  // ─────────────────────────
-
-  // GET /rutas  -> disponibles
+  // GET /rutas -> disponibles
   getDisponibles(): Observable<RutaResponseDto[]> {
     return this.http
       .get<RutaResponseDto[]>(this.apiUrl, this.getHeaders())
@@ -150,19 +146,24 @@ export class RoutesService {
   getHistorial(rol: 'PASAJERO' | 'CONDUCTOR', idUsuario: number)
     : Observable<RutaResponseDto[]> {
     return this.http.get<RutaResponseDto[]>(
-      `${this.apiUrl}/historial/${rol}/${idUsuario}`, this.getHeaders()
+      `${this.apiUrl}/historial/${rol}/${idUsuario}`,
+      this.getHeaders()
     );
   }
 
   // GET /rutas/conductor/{conductorId}/total
   getTotalViajes(conductorId: number): Observable<number> {
-    return this.http.get<number>(`${this.apiUrl}/conductor/${conductorId}/total`, this.getHeaders());
+    return this.http.get<number>(
+      `${this.apiUrl}/conductor/${conductorId}/total`,
+      this.getHeaders()
+    );
   }
 
   // GET /rutas/conductor/{conductorId}/frecuencia
   getFrecuenciaViajes(conductorId: number): Observable<FrecuenciaViajesResponse> {
     return this.http.get<FrecuenciaViajesResponse>(
-      `${this.apiUrl}/conductor/${conductorId}/frecuencia`, this.getHeaders()
+      `${this.apiUrl}/conductor/${conductorId}/frecuencia`,
+      this.getHeaders()
     );
   }
 

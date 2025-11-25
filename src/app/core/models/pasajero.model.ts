@@ -1,6 +1,6 @@
-// src/app/core/models/conductor.model.ts
+// src/app/core/models/pasajero.model.ts
 
-export interface ConductorRequest {
+export interface PasajeroRequest {
   nombre: string;
   apellido: string;
   dni: string;
@@ -9,12 +9,12 @@ export interface ConductorRequest {
   carrera: string;
 }
 
-export interface ConductorResponse {
-  idConductor: number;
+export interface PasajeroResponse {
+  idPasajero: number;
   nombre: string;
   apellido: string;
+  dni: string;
   edad?: number;
   codigoUni: string;
   carrera: string;
 }
-

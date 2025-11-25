@@ -1,3 +1,5 @@
+// src/app/core/services/auth.service.ts
+
 import { Injectable, inject, signal } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable, tap } from 'rxjs';
@@ -6,12 +8,10 @@ import { environment } from '../../../environments/environment';
 
 import { 
   LoginRequest, 
-  RegisterRequest, 
-  AuthResponse,  // ESTE SE USA PARA REGISTRO (lo de tus compañeros)
-  UserResponse, 
-  RoleType,
-  AuthResponseDTO, // NUEVO: lo que devuelve el login REAL
-  CurrentUser      // NUEVO: lo que guardamos en el storage del login
+  RegisterRequest,
+  AuthResponse,      // registro simple
+  AuthResponseDTO,   // login + registro conductor/pasajero
+  CurrentUser        // usuario en storage
 } from '../models/usuario.model';
 
 import { StorageService } from './storage.service';
@@ -26,7 +26,7 @@ export class AuthService {
   private router = inject(Router);
   private apiUrl = `${environment.apiUrl}/auth`;
 
-  private _currentUser = signal<CurrentUser | UserResponse | null>(null);
+  private _currentUser = signal<CurrentUser | null>(null);
   private _isAuthenticated = signal<boolean>(false);
   private _token = signal<string | null>(null);
 
@@ -52,7 +52,7 @@ export class AuthService {
   }
 
   // ======================
-  //      REGISTRO
+  //      REGISTRO SIMPLE (si lo siguen usando)
   // ======================
   registerWithData(data: RegisterRequest): Observable<AuthResponse> {
     return this.http.post<AuthResponse>(`${this.apiUrl}/register`, data).pipe(
@@ -79,25 +79,23 @@ export class AuthService {
   }
 
   // ======================
-  //  SAVE LOGIN DATA
+  //  SAVE LOGIN DATA (LOGIN + REGISTRO CONDUCTOR/PASAJERO)
   // ======================
-  
   private saveLoginData(resp: AuthResponseDTO): void {
-    console.log('RESPUESTA LOGIN:', resp);
+    console.log('Login/Registro OK:', resp);
 
     this.storage.setItem('token', resp.token);
     this._token.set(resp.token);
 
     const user: CurrentUser = {
-    idUsuario: resp.idUsuario,
-    idRol: resp.idRol,
-    nombre: resp.nombre,
-    apellido: resp.apellido,
-    rol: resp.rol,
-    idConductor: resp.idConductor ?? null,
-    idPasajero: resp.idPasajero ?? null,
-  };
-
+      idUsuario: resp.idUsuario,
+      idRol: resp.idRol,
+      nombre: resp.nombre,
+      apellido: resp.apellido,
+      rol: resp.rol,
+      idConductor: resp.idConductor ?? null,
+      idPasajero: resp.idPasajero ?? null,
+    };
 
     this.storage.setItem('user', user);
     this._currentUser.set(user);
@@ -105,20 +103,21 @@ export class AuthService {
   }
 
   // ======================
-  //  SAVE REGISTER DATA
+  //  SAVE REGISTER SIMPLE
   // ======================
   private saveRegisterData(resp: AuthResponse): void {
     this.storage.setItem('token', resp.token);
     this._token.set(resp.token);
 
-    const user: UserResponse = {
-      id: '',
-      email: '',
-      name: `${resp.nombre} ${resp.apellido}`,
-      role: resp.rol as RoleType,
-      active: true,
-      createdAt: new Date().toISOString(),
-      updatedAt: new Date().toISOString()
+    // NO guardes UserResponse → ya no existe, guarda como CurrentUser mínimo.
+    const user: CurrentUser = {
+      idUsuario: resp.idUsuario ?? 0,
+      idRol: resp.idRol ?? 0,
+      nombre: resp.nombre,
+      apellido: resp.apellido,
+      rol: resp.rol,
+      idConductor: resp.idConductor ?? null,
+      idPasajero: resp.idPasajero ?? null,
     };
 
     this.storage.setItem('user', user);
@@ -131,7 +130,7 @@ export class AuthService {
   // ======================
   private loadAuthData(): void {
     const token = this.storage.getItem<string>('token');
-    const user = this.storage.getItem<CurrentUser | UserResponse>('user');
+    const user = this.storage.getItem<CurrentUser>('user');
 
     if (token && user) {
       this._token.set(token);
@@ -146,74 +145,48 @@ export class AuthService {
   getToken(): string | null {
     return this._token();
   }
-  
+
   getUserId(): number | null {
-    const user = this._currentUser() as CurrentUser | null;
-    return user?.idUsuario ?? null;
+    return this._currentUser()?.idUsuario ?? null;
   }
+
   getConductorId(): number | null {
-  const user = this._currentUser() as CurrentUser | null;
-  if (!user) {
-    return null;
+    return this._currentUser()?.idConductor ?? null;
   }
-
-  // 1) Si el backend ya envía idConductor, usamos eso
-  if (user.idConductor != null) {
-    return user.idConductor;
-  }
-
-  // 2) Fallback: si el rol es CONDUCTOR pero idConductor viene null,
-  //    usamos el idUsuario como identificador de conductor.
-  if (user.rol === 'CONDUCTOR' && user.idUsuario != null) {
-    console.warn(
-      '[AuthService] idConductor es null, usando idUsuario como fallback:',
-      user.idUsuario
-    );
-    return user.idUsuario;
-  }
-
-  // 3) En cualquier otro caso, no hay conductor
-  return null;
-}
-
-
 
   getPasajeroId(): number | null {
-    const user = this._currentUser() as CurrentUser | null;
-    return user?.idPasajero ?? null;
+    return this._currentUser()?.idPasajero ?? null;
   }
+
   isAdmin(): boolean {
     const user = this._currentUser();
     if (!user) return false;
-    return (user as any).role === RoleType.ROLE_ADMIN || (user as any).rol === 'ADMIN';
+    return user.rol === 'ADMIN';
   }
 
   getUserRole(): 'ADMIN' | 'CONDUCTOR' | 'PASAJERO' | null {
-    const user = this._currentUser() as CurrentUser | null;
-    return user?.rol ?? null;
+    return this._currentUser()?.rol ?? null;
   }
 
   getUserIdRol(): number | null {
-    const user = this._currentUser() as CurrentUser | null;
-    return user?.idRol ?? null;
+    return this._currentUser()?.idRol ?? null;
   }
 
-
-    // 🔹 Registro de conductor (usa el endpoint /auth/registro/conductor)
+  // ======================
+  //     REGISTRO CONDUCTOR
+  // ======================
   registerDriver(body: any): Observable<AuthResponseDTO> {
-  return this.http.post<AuthResponseDTO>(`${this.apiUrl}/registro/conductor`, body).pipe(
-    tap(resp => {
-      this.saveLoginData(resp); // guarda token y usuario
-    })
-  );
-}
+    return this.http.post<AuthResponseDTO>(`${this.apiUrl}/registro/conductor`, body).pipe(
+      tap(resp => this.saveLoginData(resp))
+    );
+  }
 
-  // 🔹 Registro de pasajero
- registerPassenger(body: any): Observable<AuthResponseDTO> {
-  return this.http.post<AuthResponseDTO>(`${this.apiUrl}/registro/pasajero`, body).pipe(
-    tap(resp => {
-      this.saveLoginData(resp); // guarda token y usuario
-    })
-  );
- }
+  // ======================
+  //     REGISTRO PASAJERO
+  // ======================
+  registerPassenger(body: any): Observable<AuthResponseDTO> {
+    return this.http.post<AuthResponseDTO>(`${this.apiUrl}/registro/pasajero`, body).pipe(
+      tap(resp => this.saveLoginData(resp))
+    );
+  }
 }
