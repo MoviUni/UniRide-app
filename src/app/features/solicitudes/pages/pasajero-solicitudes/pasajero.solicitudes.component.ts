@@ -28,7 +28,7 @@ import { AuthService } from '@core/services/auth.service';
         }
       @else{
         @for (tx of solicitudes()!; track $index) {
-          @if (tx.estadoSolicitud === "CANCELADO"){
+          @if (tx.estadoSolicitud != "PENDIENTE"){
             <button class="ruta-box1" (click)="mostrarMensaje(tx)">
               <div class="rectangle1"></div>
 
@@ -142,6 +142,11 @@ export class PasajeroSolicitudesComponent implements OnInit {
     allSolicitudes = signal<SolicitudCardResponse[]>([]);
     solicitudes = signal<SolicitudCardResponse[]>([]);
     rutas = signal<RutaResponse[]>([]);
+
+    filtro = signal<SolicitudCardResponse[]>([]);
+
+    resto = signal<SolicitudCardResponse[]>([]);
+
     loading = signal(true);
     loadingRutas = signal(true);
 
@@ -161,13 +166,31 @@ export class PasajeroSolicitudesComponent implements OnInit {
 
     
     loadSolicitudes(pasajeroId:number) {
-      console.log("cantidad de solicitudes: ",this.solicitudes.length);
+
       this.solicitudService.getInfo(pasajeroId).subscribe({
       next: (solicitudes) => {
-          this.loading.set(false);
-          this.solicitudes.set(solicitudes);
-          this.allSolicitudes.set(solicitudes);
-          console.log("Cargando solicitudes de pasajero ",pasajeroId, " tiene solicitudes: ", this.solicitudes().length);
+        // ordenar solicitudes para mostrar primero las aceptadas
+        this.filtro.set([]);
+        this.resto.set([]);
+        for (let i: number = 0; i < solicitudes.length; i++){
+          if(solicitudes[i].estadoSolicitud == "ACEPTADO"){
+
+            this.filtro.update(currentArray => [...currentArray,  solicitudes[i]]);
+            
+          }else{
+            this.resto.update(currentArray => [...currentArray, solicitudes[i]]);
+          }
+        }
+        for (let i: number = 0; i < this.resto().length; i++){
+          this.filtro.update(currentArray => [...currentArray, this.resto()[i]]);
+
+        }
+        
+
+        this.loading.set(false);
+        this.solicitudes.set(this.filtro());
+        this.allSolicitudes.set(this.filtro());
+        console.log("Cargando solicitudes de pasajero ",pasajeroId, " tiene solicitudes: ", solicitudes.length);
       },
       error: (error) => {
           console.error('Error cargando solicitudes:', error);
