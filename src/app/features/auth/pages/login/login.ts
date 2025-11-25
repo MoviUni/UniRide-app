@@ -47,7 +47,7 @@ export class Login {
         if (resp.rol === 'CONDUCTOR') {
         this.router.navigate(['/main/conductor']);
       } else if (resp.rol === 'PASAJERO') {
-        this.router.navigate(['/main/pasajero']);   // 👈 AQUÍ ES
+        this.router.navigate(['/main/pasajero']);   
       } else if (resp.rol === 'ADMIN') {
         this.router.navigate(['/admin']);
       } else {

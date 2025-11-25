@@ -39,7 +39,7 @@ interface Passenger {
           </div>
           <span
             class="status-pill"
-            [ngClass]="ruta.estadoRuta === 'ACTIVA'
+            [ngClass]="ruta.estadoRuta === 'ACTIVO'
               ? 'status-pill-confirmed'
               : 'status-pill-scheduled'"
           >
@@ -52,7 +52,7 @@ interface Passenger {
             class="btn-primary"
             type="button"
             (click)="confirmTrip()"
-            [disabled]="ruta.estadoRuta === 'ACTIVA' || ruta.estadoRuta === 'CANCELADA'"
+            [disabled]="ruta.estadoRuta === 'ACTIVO' || ruta.estadoRuta === 'CANCELADO'"
           >
             Confirmar viaje
           </button>
@@ -60,7 +60,7 @@ interface Passenger {
             class="btn-danger"
             type="button"
             (click)="cancelTrip()"
-            [disabled]="ruta.estadoRuta === 'CANCELADA'"
+            [disabled]="ruta.estadoRuta === 'CANCELADO'"
           >
             Cancelar viaje
           </button>
@@ -448,10 +448,10 @@ export class ManageTripComponent implements OnInit {
 
   statusLabel(r: RutaResponseDto): string {
     switch (r.estadoRuta) {
-      case 'ACTIVA': return 'Programado';
+      case 'ACTIVO': return 'Programado';
       case 'PENDIENTE': return 'Pendiente';
-      case 'FINALIZADA': return 'Finalizado';
-      case 'CANCELADA': return 'Cancelado';
+      case 'FINALIZADO': return 'Finalizado';
+      case 'CANCELADO': return 'Cancelado';
       default: return 'Sin estado';
     }
   }
@@ -468,7 +468,7 @@ export class ManageTripComponent implements OnInit {
   confirmTrip(): void {
     if (!this.ruta) return;
     const idRuta = this.ruta.idRuta;
-    const nuevoEstado: EstadoRuta = 'ACTIVA';
+    const nuevoEstado: EstadoRuta = 'ACTIVO';
 
     this.routesService.updateEstado(idRuta, nuevoEstado).subscribe({
       next: (updated) => {
@@ -485,7 +485,7 @@ export class ManageTripComponent implements OnInit {
   cancelTrip(): void {
     if (!this.ruta) return;
     const idRuta = this.ruta.idRuta;
-    const nuevoEstado: EstadoRuta = 'CANCELADA';
+    const nuevoEstado: EstadoRuta = 'CANCELADO';
 
     this.routesService.updateEstado(idRuta, nuevoEstado).subscribe({
       next: (updated) => {

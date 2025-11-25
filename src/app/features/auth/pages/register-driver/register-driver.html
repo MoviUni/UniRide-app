@@ -49,11 +49,11 @@
         * Ingresa al menos 3 caracteres.
       </p>
 
-      <!-- Teléfono -->
-      <label>Teléfono</label>
-      <input type="text" placeholder="Empty label" formControlName="telefono">
-      <p class="error" *ngIf="driverForm.get('telefono')?.touched && driverForm.get('telefono')?.invalid">
-        * Ingresa un número de 9 dígitos.
+      <!-- Edad -->
+      <label>Edad</label>
+      <input type="number" placeholder="Ingresa tu edad" formControlName="edad">
+      <p class="error" *ngIf="driverForm.get('edad')?.touched && driverForm.get('edad')?.invalid">
+        * Ingresa una edad válida (18 - 80).
       </p>
 
       <!-- DNI -->

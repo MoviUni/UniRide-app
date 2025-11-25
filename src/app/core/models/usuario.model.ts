@@ -11,28 +11,6 @@ export interface LoginRequest {
   password: string;
 }
 
-export interface ConductorRequest {
-  nombre:string,
-  apellido:string,
-  email:string,
-  password:string,
-  dni:string,
-  edad:number,
-  descripcionConductor:string
-  userId:number,
-  vehiculoId:number,
-}
-
-export interface PasajeroRequest {
-  nombre:string,
-  apellido:string,
-  email:string,
-  password:string,
-  dni:string,
-  edad:number,
-  descripcionPasajero:string
-}
-
 export interface RegisterRequest {
   name:string,
   email:string,
@@ -48,36 +26,8 @@ export interface AuthResponse {
   rol: 'ADMIN' | 'CONDUCTOR' | 'PASAJERO';
   idRol: number;
   idUsuario: number;
-    idConductor?: number | null;
+  idConductor?: number | null;
   idPasajero?: number | null;
-}
-
-
-export interface UserResponse {
-  id: string;
-  email: string;
-  name: string;
-  role: RoleType;
-  active: boolean;
-  createdAt: string;
-  updatedAt: string;
-}
-
-export interface ConductorResponse{
-  idConductor:number,
-  nombre:string,
-  apellido:string,
-  edad:number,
-  descripcionConductor:string
-}
-
-export interface PasajeroResponse{
-  idPasajero:number,
-  nombre:string,
-  apellido:string,
-  dni:string,
-  edad:number,
-  descripcionPasajero:string
 }
 
 
@@ -90,7 +40,7 @@ export interface AuthResponseDTO{
   rol: 'ADMIN'|'CONDUCTOR' | 'PASAJERO';
   idRol: number;
   idUsuario: number;
-    idConductor?: number | null;
+  idConductor?: number | null;
   idPasajero?: number | null;
 }
 

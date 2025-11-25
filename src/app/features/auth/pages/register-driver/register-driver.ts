@@ -23,11 +23,12 @@ export class RegisterDriver implements OnInit {
 
   ngOnInit(): void {
     this.driverForm = this.fb.group({
-      nombres: ['', [Validators.required, Validators.minLength(3)]],
-      apellidos: ['', [Validators.required, Validators.minLength(3)]],
-      telefono: ['', [Validators.required, Validators.pattern(/^[0-9]{9}$/)]],
-      dni: ['', [Validators.required, Validators.pattern(/^[0-9]{8}$/)]],
-    });
+    nombres: ['', [Validators.required, Validators.minLength(3)]],
+    apellidos: ['', [Validators.required, Validators.minLength(3)]],
+    edad: ['', [Validators.required, Validators.min(18), Validators.max(80)]],
+    dni: ['', [Validators.required, Validators.pattern(/^[0-9]{8}$/)]],
+  });
+
 
     // por si el usuario regresó hacia atrás
     const saved = this.driverState.getDriverData();

@@ -401,13 +401,13 @@ export class MyRoutesComponent implements OnInit {
 
   statusLabel(r: RutaResponseDto): string {
     switch (r.estadoRuta) {
-      case 'ACTIVA':
+      case 'ACTIVO':
         return 'Programado';
       case 'PENDIENTE':
         return 'Pendiente';
-      case 'FINALIZADA':
+      case 'FINALIZADO':
         return 'Finalizado';
-      case 'CANCELADA':
+      case 'CANCELADO':
         return 'Cancelado';
       default:
         return 'Sin estado';
@@ -415,7 +415,7 @@ export class MyRoutesComponent implements OnInit {
   }
 
   statusType(r: RutaResponseDto): 'scheduled' | 'confirmed' {
-    if (r.estadoRuta === 'FINALIZADA' || r.estadoRuta === 'CANCELADA') {
+    if (r.estadoRuta === 'FINALIZADO' || r.estadoRuta === 'CANCELADO') {
       return 'confirmed';
     }
     return 'scheduled';

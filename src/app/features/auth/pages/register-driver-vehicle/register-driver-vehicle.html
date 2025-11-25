@@ -36,11 +36,11 @@
     <form [formGroup]="vehicleForm">
 
       <!-- Matrícula -->
-      <label>Matrícula</label>
-      <input type="text" placeholder="Empty label" formControlName="matricula">
+      <label>Placa</label>
+      <input type="text" placeholder="Empty label" formControlName="placa">
       <div class="error"
-           *ngIf="vehicleForm.get('matricula')?.touched && vehicleForm.get('matricula')?.invalid">
-        <small *ngIf="vehicleForm.get('matricula')?.errors?.['required']">* Este campo es obligatorio.</small>
+           *ngIf="vehicleForm.get('placa')?.touched && vehicleForm.get('placa')?.invalid">
+        <small *ngIf="vehicleForm.get('placa')?.errors?.['required']">* Este campo es obligatorio.</small>
       </div>
 
       <!-- Marca -->

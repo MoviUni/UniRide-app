@@ -3,7 +3,7 @@ import { Injectable, signal } from '@angular/core';
 export interface DriverStepData {
   nombres: string;
   apellidos: string;
-  telefono: string;
+  edad: string;
   dni: string;
 }
 

@@ -25,12 +25,12 @@ export class RegisterDriverVehicle implements OnInit {
 
   ngOnInit() {
     this.vehicleForm = this.fb.group({
-      matricula: ['', Validators.required],
+      placa: ['', Validators.required],
       marca: ['', Validators.required],
       modelo: ['', Validators.required],
       capacidad: [null, [Validators.required, Validators.min(1)]],
       color: ['', Validators.required],
-      soat: ['', Validators.required],
+      soat: ['si', Validators.required] // 'si' | 'no'
     });
   }
 
@@ -45,48 +45,44 @@ export class RegisterDriverVehicle implements OnInit {
     const vehicle = this.vehicleForm.value;
 
     if (!driver || !account) {
-      console.error('Faltan datos de pasos anteriores del registro');
-      alert('Ocurrió un problema con los datos del registro. Vuelve a empezar.');
+      alert('Faltan datos del registro. Empieza nuevamente.');
       this.router.navigate(['/auth/register/driver']);
       return;
     }
 
-    // ⚠️ Ajusta los nombres de campos a lo que espera tu ConductorRequestDTO
-    const payload: any = {
-      // datos personales
-      nombre: driver.nombres,
-      apellido: driver.apellidos,
-      telefono: driver.telefono,
-      dni: driver.dni,
-
-      // cuenta / usuario
-      codigoUniversitario: account.codigo,
+    //  Construir EXACTAMENTE el DTO que espera el backend
+    const payload = {
       email: account.email,
       password: account.password,
-
-      // datos del vehículo (puede ser embebido o plano según tu DTO)
+      conductor: {
+        nombre: driver.nombres,
+        apellido: driver.apellidos,
+        dni: driver.dni,
+        edad: Number(driver.edad),
+        codigoUni: account.codigo,
+        carrera: null
+      },
       vehiculo: {
-        matricula: vehicle.matricula,
-        marca: vehicle.marca,
+        placa: vehicle.placa,
+        soat: vehicle.soat === 'si',
         modelo: vehicle.modelo,
-        capacidad: vehicle.capacidad,
+        marca: vehicle.marca,
         color: vehicle.color,
-        soatVigente: vehicle.soat === 'si'
+        capacidad: Number(vehicle.capacidad)
       }
     };
 
-    console.log('Payload de registro de conductor:', payload);
+    console.log('Payload final:', payload);
 
     this.authService.registerDriver(payload).subscribe({
       next: () => {
-        // limpiar estado del wizard
         this.driverState.clear();
-        // ir al login
+        alert('Registro completado correctamente.');
         this.router.navigate(['/auth/login']);
       },
       error: (err) => {
-        console.error('Error registrando conductor', err);
-        alert(err?.error?.message ?? 'No se pudo completar el registro de conductor');
+        console.error('Error al registrar:', err);
+        alert(err?.error?.message ?? 'No se pudo completar el registro.');
       }
     });
   }
