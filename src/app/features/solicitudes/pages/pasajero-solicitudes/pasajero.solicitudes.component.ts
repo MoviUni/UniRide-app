@@ -137,8 +137,6 @@ export class PasajeroSolicitudesComponent implements OnInit {
     private cdr: ChangeDetectorRef,
     private authService: AuthService) {}
     
-
-
     errorMessage = signal('');
     allSolicitudes = signal<SolicitudCardResponse[]>([]);
     solicitudes = signal<SolicitudCardResponse[]>([]);

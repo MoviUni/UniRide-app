@@ -257,6 +257,18 @@ import { AuthService } from '@core/services/auth.service';
     </div>
   </div>
 }
+  @if (mostrarExitoso) {
+    <div class="popup-ex-overlay">
+      <div class="popup-ex-box">
+        <div class="popup-ex-close" (click)="cerrarExito()">x</div>
+
+        <p class="popup-ex-message"> ¡La solicitud ha sido enviada de manera exitosa! </p>
+        <img class="trayectoria-ex-img" src="assets/check_mark.png" />
+
+      </div>
+    </div>
+  }
+
   `,
   styleUrls: ['./busqueda.component.css']
 })
@@ -268,8 +280,6 @@ export class BusquedaRutasComponent implements OnInit{
     private authService: AuthService,
   @Inject(LOCALE_ID) private locale: string) {}
 
-  
-  private conductorService = inject(ConductorService);
 
   private fb = inject(FormBuilder);
 
@@ -284,6 +294,8 @@ export class BusquedaRutasComponent implements OnInit{
   // Popup que muestra los detalles de las rutas
   mensajePopup: string = '';
   mostrarPopup: boolean = false;
+
+  mostrarExitoso: boolean = false;
   rutaDetails = signal<RutaCardResponse[]>([]);
 
 
@@ -338,7 +350,17 @@ export class BusquedaRutasComponent implements OnInit{
     this.rutaDetails.set([dt]);
   }
 
+  mostrarExito(){
 
+    this.mostrarExitoso = true;
+    this.cdr.detectChanges();
+  }
+
+  cerrarExito(){
+    window.location.reload();
+    this.mostrarExitoso = false;
+    this.cdr.detectChanges();
+  }
 
   diferenciaFechas(date1:string, hour1: string){
       const time1 = Date.now();
@@ -369,12 +391,9 @@ export class BusquedaRutasComponent implements OnInit{
     return Math.ceil(diffInMs / (1000 * 60 * 60 * 24));
   }
 
-
   clearFilters(){
     this.rutas.set(this.allRutas());
   }
-
-
 
   applyFilters() {
     const origen = this.filterForm.value.origen;
@@ -450,18 +469,6 @@ export class BusquedaRutasComponent implements OnInit{
 
   }
 
-  reloadPage(){
-    window.location.reload();
-  }
-
-  closeForm(){
-    this.showSolicitudForm = false;
-  }
-
-  openForm(){
-    this.showSolicitudForm = true;
-  }
-
   sendForm(dt:RutaCardResponse){
     const pasajeroId = this.authService.getPasajeroId();
     if (!pasajeroId) {
@@ -487,8 +494,8 @@ export class BusquedaRutasComponent implements OnInit{
 
      this.solicitudService.create(solicitudReq).subscribe({
         next: () => {
-          alert('Exito creando solicitud');
-          window.location.reload();
+          this.mostrarExito();
+          
         },
         error: (error) => {
           alert(error);
