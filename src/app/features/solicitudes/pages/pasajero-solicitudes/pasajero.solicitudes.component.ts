@@ -32,9 +32,9 @@ import { AuthService } from '@core/services/auth.service';
             <button class="ruta-box1" (click)="mostrarMensaje(tx)">
               <div class="rectangle1"></div>
 
-              <div class="hoy_01"><span class="hoy_01_span">{{'Empieza en '+ diferenciaFechas(tx.fechaSalida) + ' días'}} </span></div>
+              <div class="hoy_01"><span class="hoy_01_span">{{'Empieza en '+ diferenciaFechas(tx.fechaSalida, tx.horaSalida) }} </span></div>
               
-              <div class= "estado-btn" [ngStyle]="{'background-color': getColor($index)}"> {{tx.estadoSolicitud}}</div>
+              <div class= "estado-btn" [ngStyle]="{'background-color': getColor(tx.estadoSolicitud)}"> {{tx.estadoSolicitud}}</div>
               
               
               
@@ -56,8 +56,8 @@ import { AuthService } from '@core/services/auth.service';
             <button class="ruta-box1" (click)="mostrarMensaje(tx)">
               <div class="rectangle1"></div>
 
-              <div class="hoy_01"><span class="hoy_01_span">{{'Empieza en '+ diferenciaFechas(tx.fechaSalida) + ' días'}} </span></div>
-              <div class= "estado-btn" [ngStyle]="{'background-color': getColor($index)}"> {{tx.estadoSolicitud}}</div>
+              <div class="hoy_01"><span class="hoy_01_span">{{'Empieza en '+ diferenciaFechas(tx.fechaSalida, tx.horaSalida)}} </span></div>
+              <div class= "estado-btn" [ngStyle]="{'background-color': getColor(tx.estadoSolicitud)}"> {{tx.estadoSolicitud}}</div>
 
               <div class="origen-text-1">
                 <span>{{tx.origen}}</span>
@@ -96,6 +96,7 @@ import { AuthService } from '@core/services/auth.service';
       <div class="popup-close" (click)="mostrarPopup = false">x</div>
 
       <p class="popup-message">{{ mensajePopup }}</p>
+      <div class= "popup-estado" [ngStyle]="{'background-color': getColor(rutaDetails()[0].estadoSolicitud)}"> {{rutaDetails()[0].estadoSolicitud}}</div>
       <div class="rectangle-trayecto">
 
         <p class="popup-section"> Información del trayecto </p>
@@ -200,28 +201,41 @@ export class PasajeroSolicitudesComponent implements OnInit {
       });
     }
 
-    getColor(i:number):string{
+    getColor(i:string):string{
       if(!this.solicitudes())return 'gray';
 
-      if(this.solicitudes()[i].estadoSolicitud === 'PENDIENTE')
+      if(i === 'PENDIENTE')
         return 'gray';
-      if(this.solicitudes()[i].estadoSolicitud === 'ACEPTADO')
+      if(i === 'ACEPTADO')
         return 'green';
-      if(this.solicitudes()[i].estadoSolicitud === 'RECHAZADO')
+      if(i === 'RECHAZADO')
         return 'black';
-      if(this.solicitudes()[i].estadoSolicitud === 'CANCELADO')
+      if(i === 'CANCELADO')
         return 'red';
       return 'gray';
       
     }
 
     
-    diferenciaFechas(date1:string){
-        const _date1 = new Date(date1);
-        const time1 = _date1.getTime();
-        const time2 = Date.now();
-        const diffInMs = Math.abs(time2 - time1);
-        return Math.ceil(diffInMs / (1000 * 60 * 60 * 24));
+    diferenciaFechas(date1:string, hour1: string){
+      const time1 = Date.now();
+      const _date1 = new Date(date1 + "T" + hour1);
+      const time2 = _date1.getTime();
+      const diffInMs = time2 - time1;
+      
+      const daysToStart = Math.ceil(diffInMs / (1000 * 60 * 60 * 24));
+
+      if(daysToStart <= 1 && daysToStart > 0){
+        console.log("fecha: ", date1, diffInMs);
+        const horasToStart = Math.ceil(diffInMs  / (1000 * 60 * 60 ));
+        if(horasToStart <= 1){
+          return Math.ceil(diffInMs  / (1000 * 60 ));
+        }
+        return horasToStart + " horas";
+        
+      }
+      
+      return daysToStart + " días";
     }
 
     cancelarSolicitud(solicitud:SolicitudCardResponse){

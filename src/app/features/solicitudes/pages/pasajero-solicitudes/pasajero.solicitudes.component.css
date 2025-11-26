@@ -839,6 +839,23 @@ div {
   align-items: center;
 }
 
+.popup-estado{
+
+  padding-top: 0.5vh;
+  width: 171.99px;
+  height: 30px;
+  color: white;
+  background-color:#880D1E;
+
+  box-shadow: 0px 2.93999981880188px 2.93999981880188px rgba(0, 0, 0, 0.25);
+  overflow: hidden;
+  border-radius: 26.46px;
+  text-align: center;
+  top: -17px;
+  left: 410px;
+  position: relative;
+}
+
 /* X para cerrar */
 .popup-close {
   position: absolute;
@@ -868,6 +885,7 @@ div {
   max-width: 700px;
 
   line-height: 1.2;
+  margin-bottom: -20px;
 }
 
 /* Texto del mensaje */
@@ -904,13 +922,16 @@ div {
   height: 200px;
   left: 0px;
   top: 35px;
+  
   position: relative;
   background: #F3F3F3;
   border-radius: 10.40px;
+  margin: auto;
+  margin-top: -20px;
 }
 
 .rectangle-conductor{
-  margin-top: 20px;
+  
   width: 796.74px;
   height: 280px;
   left: 0px;
@@ -918,6 +939,8 @@ div {
   position: relative;
   background: #F3F3F3;
   border-radius: 10.40px;
+  margin: auto;
+  margin-top: 20px;
 }
 
 

@@ -39,7 +39,7 @@ import { AuthService } from '@core/services/auth.service';
         <button class="ruta-box1" (click)="mostrarMensaje(tx)">
           <div class="rectangle1"></div>
 
-          <div class="hoy_01"><span class="hoy_01_span">{{'Empieza en '+ diferenciaFechas(tx.fechaSalida) + ' días'}} </span></div>
+          <div class="hoy_01"><span class="hoy_01_span">{{'Empieza en '+ diferenciaFechas(tx.fechaSalida, tx.horaSalida)}} </span></div>
           <div class="btn_solicitar">
 
             
@@ -340,7 +340,28 @@ export class BusquedaRutasComponent implements OnInit{
 
 
 
-  diferenciaFechas(date1:string){
+  diferenciaFechas(date1:string, hour1: string){
+      const time1 = Date.now();
+      const _date1 = new Date(date1 + "T" + hour1);
+      const time2 = _date1.getTime();
+      const diffInMs = time2 - time1;
+      
+      const daysToStart = Math.ceil(diffInMs / (1000 * 60 * 60 * 24));
+
+      if(daysToStart <= 1 && daysToStart > 0){
+        console.log("fecha: ", date1, diffInMs);
+        const horasToStart = Math.ceil(diffInMs  / (1000 * 60 * 60 ));
+        if(horasToStart <= 1){
+          return Math.ceil(diffInMs  / (1000 * 60 ));
+        }
+        return horasToStart + " horas";
+        
+      }
+      
+      return daysToStart + " días";
+    }
+
+  diferenciaFechas2(date1:string){
     const _date1 = new Date(date1);
     const time1 = _date1.getTime();
     const time2 = Date.now();
@@ -378,7 +399,7 @@ export class BusquedaRutasComponent implements OnInit{
       }
       return true;
     }).filter(tx=>{
-      const txFecha = this.diferenciaFechas(tx.fechaSalida);
+      const txFecha = this.diferenciaFechas2(tx.fechaSalida);
       if(fecha === 'Hoy'){
         return txFecha <= 1;
       }
