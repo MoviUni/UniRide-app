@@ -6,16 +6,19 @@ import { Router } from '@angular/router';
 
 import { RutaService } from '@core/services/ruta.service';
 import { RutaResponseDTO, EstadoRuta } from '@core/models/ruta.model';
-import {
-  SolicitudService
-} from '@core/services/solicitud.service';
+import { SolicitudService } from '@core/services/solicitud.service';
 import {
   EstadoSolicitud,
   SolicitudViajeResponse
 } from '@core/models/solicitud.model';
 import { AuthService } from '@core/services/auth.service';
 
-type RutaConSolicitudes = RutaResponseDTO & { solicitudesPendientes: number };
+import { ToastService } from '@shared/services/toast.service';
+
+type RutaConSolicitudes = RutaResponseDTO & {
+  solicitudesPendientes: number;
+  pasajerosAceptados: number;
+};
 
 @Component({
   selector: 'app-rutas-conductor',
@@ -26,22 +29,18 @@ type RutaConSolicitudes = RutaResponseDTO & { solicitudesPendientes: number };
 })
 export class RutasConductorComponent implements OnInit {
 
-  
-
-  // Por ahora hardcodeado igual que en estadísticas
-  //private readonly conductorId = 1;
-
   loading = signal(true);
   error = signal<string | null>(null);
-  private _rutas = signal<RutaConSolicitudes[]>([]);
 
+  private _rutas = signal<RutaConSolicitudes[]>([]);
   rutas = this._rutas.asReadonly();
 
   constructor(
     private rutaService: RutaService,
     private solicitudService: SolicitudService,
     private router: Router,
-    private authService: AuthService
+    private authService: AuthService,
+    private toast: ToastService,           // inyectamos toast
   ) {}
 
   // Helper fecha+hora → Date
@@ -50,25 +49,56 @@ export class RutasConductorComponent implements OnInit {
     return new Date(`${fecha}T${hora}`);
   }
 
-  // VIAJE POR INICIAR:
-  // - estado CONFIRMADO
-  // - salida futura
-  // - faltan entre 0 y 30 minutos
-  viajePorIniciar = computed(() => {
+  // Diferencia en minutos (salida - ahora)
+  private diffMinutosHastaSalida(r: RutaConSolicitudes): number {
+    const salida = this.toDate(
+      r.fechaSalida as unknown as string,
+      r.horaSalida as unknown as string
+    );
     const ahora = new Date();
+    return (salida.getTime() - ahora.getTime()) / 60000;
+  }
 
-    const candidato = this.rutas().find((r) => {
-      if (r.estadoRuta !== EstadoRuta.CONFIRMADO) return false;
+  // ¿Se muestra en la tarjeta "Viaje por iniciar"?
+  // - EN_PROGRESO siempre
+  // - CONFIRMADO con ≥1 pasajero aceptado, ventana [-10, 30] minutos
+  private puedeMostrarseEnViajePorIniciar(r: RutaConSolicitudes): boolean {
+    if (r.estadoRuta === EstadoRuta.EN_PROGRESO) return true;
 
-      const salida = this.toDate(
-        r.fechaSalida as unknown as string,
-        r.horaSalida as unknown as string
-      );
-      const diffMin = (salida.getTime() - ahora.getTime()) / 60000;
+    if (r.estadoRuta !== EstadoRuta.CONFIRMADO) return false;
+    if (r.pasajerosAceptados < 1) return false;
 
-      return diffMin >= 0 && diffMin <= 30;
-    });
+    const diff = this.diffMinutosHastaSalida(r);
+    // desde 30 min antes hasta 10 min después de la hora de salida
+    return diff >= -10 && diff <= 30;
+  }
 
+  // Botón "Iniciar viaje":
+  // - CONFIRMADO
+  // - ≥1 pasajero aceptado
+  // - desde la hora de salida hasta 10 min después (diff [-10, 0])
+  public puedeIniciar(r: RutaConSolicitudes): boolean {
+    if (r.estadoRuta !== EstadoRuta.CONFIRMADO) return false;
+    if (r.pasajerosAceptados < 1) return false;
+
+    const diff = this.diffMinutosHastaSalida(r);
+    return diff >= -10 && diff <= 0;
+  }
+
+  // VIAJE POR INICIAR / EN CURSO
+  viajePorIniciar = computed(() => {
+    const rutas = this.rutas();
+
+    // 1) Si hay viaje en progreso, ese es el actual
+    const enProgreso = rutas.find(
+      (r) => r.estadoRuta === EstadoRuta.EN_PROGRESO
+    );
+    if (enProgreso) return enProgreso;
+
+    // 2) Si no, buscamos uno confirmado en la ventana [-10, 30] min
+    const candidato = rutas.find((r) =>
+      this.puedeMostrarseEnViajePorIniciar(r)
+    );
     return candidato ?? null;
   });
 
@@ -78,6 +108,7 @@ export class RutasConductorComponent implements OnInit {
   // - excluimos el viajePorIniciar
   proximosViajes = computed(() => {
     const ahora = new Date();
+    const viajeActual = this.viajePorIniciar();
 
     return this.rutas().filter((r) => {
       const salida = this.toDate(
@@ -86,7 +117,7 @@ export class RutasConductorComponent implements OnInit {
       );
       const diffMin = (salida.getTime() - ahora.getTime()) / 60000;
 
-      if (diffMin < 0) return false; // ya pasó
+      if (diffMin < 0) return false; // ya pasó completamente
 
       if (
         r.estadoRuta !== EstadoRuta.PROGRAMADO &&
@@ -95,8 +126,7 @@ export class RutasConductorComponent implements OnInit {
         return false;
       }
 
-      if (r.estadoRuta === EstadoRuta.CONFIRMADO && diffMin <= 30) {
-        // será viajePorIniciar
+      if (viajeActual && viajeActual.idRuta === r.idRuta) {
         return false;
       }
 
@@ -109,21 +139,23 @@ export class RutasConductorComponent implements OnInit {
   }
 
   // ----------------------------------------------------------------
-  // Carga rutas activas y, para cada ruta, consulta sus solicitudes
-  // y cuenta solo las PENDIENTE.
+  // Carga rutas activas y, para cada ruta, consulta sus solicitudes.
+  // Cuenta PENDIENTE y ACEPTADO.
   // ----------------------------------------------------------------
   private cargarRutas(): void {
     this.loading.set(true);
     this.error.set(null);
 
-    const conductorId = this.authService.getConductorId(); // obtenemos el id
+    const conductorId = this.authService.getConductorId();
     console.log('conductorId desde auth:', conductorId);
+
     if (!conductorId) {
-    console.error('Usuario no autenticado');
-    this.error.set('No se pudo determinar tu usuario');
-    this.loading.set(false);
-    return;
-  }
+      console.error('Usuario no autenticado');
+      this.error.set('No se pudo determinar tu usuario');
+      this.toast.show('No se pudo determinar el usuario autenticado.', 'error');
+      this.loading.set(false);
+      return;
+    }
 
     this.rutaService.getRutasActivasDelConductor(conductorId).subscribe({
       next: (rutas) => {
@@ -143,9 +175,14 @@ export class RutasConductorComponent implements OnInit {
                 (s) => s.estadoSolicitud === EstadoSolicitud.PENDIENTE
               ).length;
 
+              const aceptados = solicitudes.filter(
+                (s) => s.estadoSolicitud === EstadoSolicitud.ACEPTADO
+              ).length;
+
               rutasConSolicitudes[index] = {
                 ...ruta,
                 solicitudesPendientes: pendientes,
+                pasajerosAceptados: aceptados,
               };
 
               respuestasRecibidas++;
@@ -160,10 +197,10 @@ export class RutasConductorComponent implements OnInit {
                 err
               );
 
-              // aunque falle, rellenamos con 0 para no romper la UI
               rutasConSolicitudes[index] = {
                 ...ruta,
                 solicitudesPendientes: 0,
+                pasajerosAceptados: 0,
               };
 
               respuestasRecibidas++;
@@ -171,6 +208,11 @@ export class RutasConductorComponent implements OnInit {
                 this._rutas.set(rutasConSolicitudes);
                 this.loading.set(false);
               }
+
+              this.toast.show(
+                'No se pudieron cargar algunas solicitudes de viaje.',
+                'error'
+              );
             },
           });
         });
@@ -178,6 +220,10 @@ export class RutasConductorComponent implements OnInit {
       error: (err) => {
         console.error('Error cargando rutas activas del conductor', err);
         this.error.set('No se pudieron cargar tus rutas');
+        this.toast.show(
+          err?.error?.message ?? 'No se pudieron cargar tus rutas.',
+          'error'
+        );
         this.loading.set(false);
       },
     });
@@ -185,5 +231,53 @@ export class RutasConductorComponent implements OnInit {
 
   gestionarViaje(ruta: RutaConSolicitudes) {
     this.router.navigate(['/rutas', ruta.idRuta, 'solicitudes']);
+  }
+
+  // ----------------------------------------------------------------
+  // Acciones sobre el estado del viaje desde "Viaje por iniciar"
+  // ----------------------------------------------------------------
+
+  iniciarViaje(ruta: RutaConSolicitudes): void {
+    this.rutaService
+      .cambiarEstadoRuta(ruta.idRuta, EstadoRuta.EN_PROGRESO)
+      .subscribe({
+        next: (updated) => {
+          this._rutas.update((actual) =>
+            actual.map((r) =>
+              r.idRuta === updated.idRuta ? { ...r, ...updated } : r
+            )
+          );
+          this.toast.show('Viaje iniciado.', 'success');
+        },
+        error: (err) => {
+          console.error('Error al iniciar viaje', err);
+          this.toast.show(
+            err?.error?.message ?? 'No se pudo iniciar el viaje.',
+            'error'
+          );
+        },
+      });
+  }
+
+  finalizarViaje(ruta: RutaConSolicitudes): void {
+    this.rutaService
+      .cambiarEstadoRuta(ruta.idRuta, EstadoRuta.FINALIZADO)
+      .subscribe({
+        next: (updated) => {
+          this._rutas.update((actual) =>
+            actual.map((r) =>
+              r.idRuta === updated.idRuta ? { ...r, ...updated } : r
+            )
+          );
+          this.toast.show('Viaje finalizado.', 'success');
+        },
+        error: (err) => {
+          console.error('Error al finalizar viaje', err);
+          this.toast.show(
+            err?.error?.message ?? 'No se pudo finalizar el viaje.',
+            'error'
+          );
+        },
+      });
   }
 }

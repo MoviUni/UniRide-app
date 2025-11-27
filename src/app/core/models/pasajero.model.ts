@@ -3,10 +3,11 @@
 export interface PasajeroRequest {
   nombre: string;
   apellido: string;
+  email: string;
+  password: string;
   dni: string;
   edad?: number;
   codigoUni: string;
-  carrera: string;
 }
 
 export interface PasajeroResponse {
@@ -16,5 +17,4 @@ export interface PasajeroResponse {
   dni: string;
   edad?: number;
   codigoUni: string;
-  carrera: string;
 }

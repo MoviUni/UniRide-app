@@ -1,3 +1,4 @@
+// src/app/features/auth/page/register-passenger-account/register-passenger-account.ts
 import { Component } from '@angular/core';
 import { Router, RouterModule } from '@angular/router';
 import { CommonModule } from '@angular/common';
@@ -31,7 +32,6 @@ export class RegisterPassengerAccount {
     }, { validators: this.passwordMatchValidator });
   }
 
-  // Validador personalizado para comparar contraseña y confirmación
   passwordMatchValidator(form: FormGroup) {
     const pass = form.get('password')?.value;
     const pass2 = form.get('password2')?.value;
@@ -50,17 +50,16 @@ export class RegisterPassengerAccount {
     if (!passenger) {
       console.error('Faltan datos del paso anterior de pasajero');
       alert('Ocurrió un problema con los datos del registro. Vuelve a empezar.');
-      this.router.navigate(['/auth/register/pasajero']);
+      this.router.navigate(['/auth/register/passenger']); // 👈 corrige ruta
       return;
     }
 
-    // ⚠️ Ajusta estos nombres a lo que pida tu PasajeroRequestDTO
-    const payload: any = {
+    const payload = {
       nombre: passenger.nombres,
       apellido: passenger.apellidos,
-      telefono: passenger.telefono,
       dni: passenger.dni,
-      codigoUniversitario: account.codigo,
+      edad: Number(passenger.edad),  
+      codigoUni: account.codigo,     
       email: account.email,
       password: account.password
     };

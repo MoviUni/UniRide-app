@@ -2,6 +2,7 @@
 export enum EstadoRuta {
   PROGRAMADO = 'PROGRAMADO',
   EN_PROGRESO = 'EN_PROGRESO',
+  FINALIZADO = 'FINALIZADO',
   CONFIRMADO = 'CONFIRMADO',
   CANCELADO = 'CANCELADO'
 }
@@ -13,7 +14,7 @@ export interface RutaRequestDTO {
   fechaSalida: string; // ISO date string
   horaSalida: string;  // ISO time string
   tarifa: number;
-  asientosDisponibles: number;
+  asientosDisponibles: number | null;
   estadoRuta: EstadoRuta; // enum
   conductorId: number;
 }
