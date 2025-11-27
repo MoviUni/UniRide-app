@@ -3,7 +3,7 @@ import { Injectable, signal } from '@angular/core';
 export interface PassengerData {
   nombres: string;
   apellidos: string;
-  telefono: string;
+  edad: number;
   dni: string;
 }
 

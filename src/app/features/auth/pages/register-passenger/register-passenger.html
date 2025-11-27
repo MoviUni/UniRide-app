@@ -49,15 +49,15 @@
         * Ingresa al menos 3 caracteres.
       </p>
 
-      <!-- Teléfono -->
-      <label>Teléfono</label>
+      <!-- Edad -->
+      <label>Edad</label>
       <input
         type="text"
         placeholder="Empty label"
-        formControlName="telefono"
+        formControlName="edad"
       />
-      <p class="error" *ngIf="passengerForm.get('telefono')?.touched && passengerForm.get('telefono')?.invalid">
-        * Ingresa un teléfono válido de 9 dígitos.
+      <p class="error" *ngIf="passengerForm.get('edad')?.touched && passengerForm.get('edad')?.invalid">
+        * Ingresa una edad válida.
       </p>
 
       <!-- DNI -->

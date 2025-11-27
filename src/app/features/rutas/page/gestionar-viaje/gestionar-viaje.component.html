@@ -14,7 +14,7 @@
       </div>
 
       <div class="route-meta">
-        Fecha de salida: {{ ruta()?.fechaSalida | date:'dd/MM/yyyy' }}·
+        Fecha de salida: {{ ruta()?.fechaSalida | date:'dd/MM/yyyy' }} ·
         Hora de salida: {{ ruta()?.horaSalida }} ·
         Asientos disponibles:
         {{ ruta()?.asientosDisponibles }}/{{ ruta()?.capacidadVehiculo}}
@@ -24,7 +24,7 @@
         <button
           class="btn btn-primary"
           (click)="confirmarViaje()"
-          [disabled]="ruta()?.estadoRuta === 'CONFIRMADO'"
+          [disabled]="!puedeConfirmar()"
         >
           Confirmar viaje
         </button>
@@ -32,14 +32,36 @@
         <button
           class="btn btn-danger"
           (click)="cancelarViaje()"
-          [disabled]="ruta()?.estadoRuta === 'CANCELADO'"
+          [disabled]="!puedeCancelar()"
         >
           Cancelar viaje
         </button>
 
         <span class="route-hint">
-          <!-- texto informativo genérico, podrías calcular la hora límite desde backend -->
-          Estará habilitado hasta el {{ limiteHabilitacion() }}.
+          <!-- Mensajes según el estado -->
+          <ng-container [ngSwitch]="ruta()?.estadoRuta">
+            <span *ngSwitchCase="'PROGRAMADO'">
+              Puedes confirmar o cancelar el viaje hasta 1 hora antes de la salida.
+              Habilitado hasta el {{ limiteHabilitacion() }}.
+            </span>
+
+            <span *ngSwitchCase="'CONFIRMADO'">
+              El viaje ya está confirmado. Ya no puedes confirmarlo ni cancelarlo,
+              pero aún puedes gestionar las solicitudes de pasajeros.
+            </span>
+
+            <span *ngSwitchCase="'CANCELADO'">
+              El viaje fue cancelado. Solo puedes ver la información y los pasajeros.
+            </span>
+
+            <span *ngSwitchCase="'EN_PROGRESO'">
+              El viaje está en progreso. La gestión de solicitudes ya no está disponible.
+            </span>
+
+            <span *ngSwitchCase="'FINALIZADO'">
+              El viaje ha finalizado. Esta pantalla es solo informativa.
+            </span>
+          </ng-container>
         </span>
       </div>
     </div>
@@ -80,10 +102,18 @@
             </div>
 
             <div class="request-actions">
-              <button class="btn-accept" (click)="aceptarSolicitud(s)">
+              <button
+                class="btn-accept"
+                (click)="aceptarSolicitud(s)"
+                [disabled]="!puedeGestionarSolicitudes()"
+              >
                 Aceptar
               </button>
-              <button class="btn-reject" (click)="rechazarSolicitud(s)">
+              <button
+                class="btn-reject"
+                (click)="rechazarSolicitud(s)"
+                [disabled]="!puedeGestionarSolicitudes()"
+              >
                 Rechazar
               </button>
             </div>

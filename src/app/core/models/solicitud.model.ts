@@ -2,7 +2,8 @@ export enum EstadoSolicitud {
     PENDIENTE= "PENDIENTE",
     ACEPTADO= "ACEPTADO",
     RECHAZADO= "RECHAZADO",
-    CANCELADO = "CANCELADO"
+    CANCELADO = "CANCELADO",
+    CANCELADO_CONDUCTOR = "CANCELADO_CONDUCTOR"
 }
 
 export interface SolicitudViajeRequest{

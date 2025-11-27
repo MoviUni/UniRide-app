@@ -1,3 +1,4 @@
+// src/app/features/auth/page/register-passenger/register-passenger.ts
 import { Component } from '@angular/core';
 import { Router, RouterModule } from '@angular/router';
 import { CommonModule } from '@angular/common';
@@ -28,11 +29,11 @@ export class RegisterPassenger {
     this.passengerForm = this.fb.group({
       nombres: ['', [Validators.required, Validators.minLength(3)]],
       apellidos: ['', [Validators.required, Validators.minLength(3)]],
-      telefono: [
+      edad: [
         '',
         [
           Validators.required,
-          Validators.pattern(/^[0-9]{9}$/) // 9 dígitos
+          Validators.pattern(/^[0-9]{1,2}$/) // 1 o 2 dígitos
         ]
       ],
       dni: [
@@ -44,7 +45,6 @@ export class RegisterPassenger {
       ]
     });
 
-    // por si vuelve atrás
     const saved = this.passengerState.getPassengerData();
     if (saved) {
       this.passengerForm.patchValue(saved);
@@ -57,9 +57,7 @@ export class RegisterPassenger {
       return;
     }
 
-    // guardar en el estado
     this.passengerState.setPassengerData(this.passengerForm.value);
-
     this.router.navigate(['/auth/register/passenger/account']);
   }
 }
