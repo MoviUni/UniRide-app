@@ -13,6 +13,8 @@ import {
 } from '../../../../core/services/routes.service';
 import { EstadoRuta } from '../../../../core/models/ruta.model';
 import { AuthService } from '../../../../core/services/auth.service';
+import { VehiculoService } from '../../../../core/services/vehiculo.service';
+import { VehiculoResponse } from '../../../../core/models/vehiculo.model';
 
 @Component({
   selector: 'app-publish-route',
@@ -93,35 +95,44 @@ import { AuthService } from '../../../../core/services/auth.service';
 
           <div class="form-row">
             <div class="field">
-              <label for="vehicle">Vehículo</label>
-              <div class="input-shell">
-                <input
-                  id="vehicle"
-                  type="text"
-                  formControlName="vehicle"
-                  placeholder="Ej. Toyota Yaris 2024"
-                />
+              <label for="vehicleId">Vehículo</label>
+              <div class="input-shell" *ngIf="!loadingVehiculo && vehiculo">
+                <select id="vehicleId" formControlName="vehicleId">
+                  <option [value]="vehiculo.idVehiculo">
+                    {{ vehiculo.marca }} {{ vehiculo.modelo }} - {{ vehiculo.color }} ({{ vehiculo.placa }})
+                  </option>
+                </select>
               </div>
-              <div class="error" *ngIf="isInvalid('vehicle')">
-                Indica el vehículo que usarás.
+              <div class="input-shell" *ngIf="loadingVehiculo">
+                <span style="color: #9CA3AF;">Cargando vehículo...</span>
+              </div>
+              <div class="input-shell" *ngIf="!loadingVehiculo && !vehiculo">
+                <span style="color: #EF4444;">No tienes vehículos registrados</span>
+              </div>
+              <div class="hint" *ngIf="vehiculo">
+                Capacidad del vehículo: {{ vehiculo.capacidad }} pasajeros
+              </div>
+              <div class="error" *ngIf="isInvalid('vehicleId')">
+                Debes tener un vehículo registrado para publicar rutas.
               </div>
             </div>
 
             <div class="field field-small">
-              <label for="capacity">Capacidad de pasajeros</label>
+              <label for="capacity">Asientos disponibles</label>
               <div class="input-shell">
                 <input
                   id="capacity"
                   type="number"
                   formControlName="capacity"
-                  min="1"
+                  [min]="1"
+                  [max]="vehiculo?.capacidad || 8"
                 />
               </div>
               <div class="hint">
-                Mínimo 1 pasajero. La capacidad mínima real dependerá de tu vehículo.
+                Máximo {{ vehiculo?.capacidad || 8 }} pasajeros según tu vehículo.
               </div>
               <div class="error" *ngIf="isInvalid('capacity')">
-                Ingresa una capacidad válida (mayor o igual a 1).
+                Ingresa una capacidad válida (entre 1 y {{ vehiculo?.capacidad || 8 }}).
               </div>
             </div>
 
@@ -324,6 +335,16 @@ import { AuthService } from '../../../../core/services/auth.service';
       color: #9CA3AF;
     }
 
+    .input-shell select {
+      width: 100%;
+      border: none;
+      outline: none;
+      font-size: 0.9rem;
+      color: #111827;
+      background: transparent;
+      cursor: pointer;
+    }
+
     .input-shell:focus-within {
       border-color: var(--ur-primary);
       box-shadow: 0 0 0 1px rgba(36, 47, 155, 0.28);
@@ -458,11 +479,14 @@ export class PublishRouteComponent implements OnInit {
 
   successMessage: string | null = null;
   errorMessage: string | null = null;
+  vehiculo: VehiculoResponse | null = null;
+  loadingVehiculo = false;
 
   constructor(
     private fb: FormBuilder,
     private routesService: RoutesService,
-    private authService: AuthService
+    private authService: AuthService,
+    private vehiculoService: VehiculoService
   ) {}
 
   ngOnInit(): void {
@@ -471,7 +495,7 @@ export class PublishRouteComponent implements OnInit {
       destination: ['', Validators.required],
       date: ['', Validators.required],
       time: ['', Validators.required],
-      vehicle: ['', Validators.required],
+      vehicleId: ['', Validators.required],
       capacity: [1, [Validators.required, Validators.min(1)]],
       price: [null, [Validators.min(0)]],
     });
@@ -480,6 +504,24 @@ export class PublishRouteComponent implements OnInit {
     if (idConductor != null) {
       // Cargar rutas existentes del conductor para mostrar últimas y validar duplicados
       this.routesService.getMisRutas(idConductor).subscribe();
+      
+      // Cargar vehículo del conductor
+      this.loadingVehiculo = true;
+      this.vehiculoService.getVehiculoByConductor(idConductor).subscribe({
+        next: (vehiculo) => {
+          this.vehiculo = vehiculo;
+          this.loadingVehiculo = false;
+          // Pre-seleccionar el vehículo y su capacidad
+          this.form.patchValue({
+            vehicleId: vehiculo.idVehiculo,
+            capacity: vehiculo.capacidad
+          });
+        },
+        error: (err) => {
+          console.error('Error al cargar vehículo:', err);
+          this.loadingVehiculo = false;
+        }
+      });
     } else {
       console.warn('No se encontró ID de conductor en el usuario autenticado.');
     }
@@ -522,10 +564,16 @@ export class PublishRouteComponent implements OnInit {
       destination: string;
       date: string;
       time: string;
-      vehicle: string;
+      vehicleId: number;
       capacity: number;
       price: number | null;
     };
+
+    // Validar que haya un vehículo seleccionado
+    if (!this.vehiculo) {
+      this.errorMessage = 'Debes tener un vehículo registrado para publicar rutas.';
+      return;
+    }
 
     // RN5 - No horarios pasados
     const departure = new Date(`${value.date}T${value.time}`);
@@ -535,10 +583,16 @@ export class PublishRouteComponent implements OnInit {
       return;
     }
 
-    // RN5/RN6 - Capacidad mínima
+    // RN5/RN6 - Capacidad mínima y máxima
     if (value.capacity < 1) {
       this.errorMessage =
         'Cada ruta debe tener al menos 1 pasajero como capacidad mínima.';
+      return;
+    }
+
+    if (this.vehiculo && value.capacity > this.vehiculo.capacidad) {
+      this.errorMessage =
+        `La capacidad no puede exceder ${this.vehiculo.capacidad} pasajeros (capacidad de tu vehículo).`;
       return;
     }
 
@@ -575,8 +629,8 @@ export class PublishRouteComponent implements OnInit {
           destination: '',
           date: '',
           time: '',
-          vehicle: '',
-          capacity: 1,
+          vehicleId: this.vehiculo?.idVehiculo || '',
+          capacity: this.vehiculo?.capacidad || 1,
           price: null,
         });
       },
