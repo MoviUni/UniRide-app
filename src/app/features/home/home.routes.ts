@@ -1,7 +1,5 @@
 import { Routes } from '@angular/router';
-import { MyRoutesComponent } from './pages/my-routes.component';
 import { PublishRouteComponent } from '../rutas/page/publicar-ruta/publish-route.component';
-import { ManageTripComponent } from './pages/manage-trip.component';
 import { HomeLayoutComponent } from '../../shared/layouts/home-layout';
 
 export const HOME_ROUTES: Routes = [
@@ -31,14 +29,5 @@ export const HOME_ROUTES: Routes = [
       ),
   },
 
-  // 🔐 Zona “app” CON sidebar (mis rutas, publicar, gestionar)
-  {
-    path: '',
-    component: HomeLayoutComponent,
-    children: [
-      { path: 'mis-rutas', component: MyRoutesComponent },
-      { path: 'publicar-ruta', component: PublishRouteComponent },
-      { path: 'gestionar-viaje/:id', component: ManageTripComponent },
-    ],
-  },
+  
 ];
