@@ -28,15 +28,15 @@ import { AuthService } from '@core/services/auth.service';
         }
       @else{
         @for (tx of solicitudes()!; track $index) {
-          @if (tx.estadoSolicitud === "CANCELADO"){
-            <div class="ruta-box1">
+          @if (tx.estadoSolicitud != "PENDIENTE"){
+            <button class="ruta-box1" (click)="mostrarMensaje(tx)">
               <div class="rectangle1"></div>
 
-              <div class="hoy_01"><span class="hoy_01_span">{{'Empieza en '+ diferenciaFechas(tx.fechaSalida) + ' días'}} </span></div>
+              <div class="hoy_01"><span class="hoy_01_span">{{'Empieza en '+ diferenciaFechas(tx.fechaSalida, tx.horaSalida) }} </span></div>
               
-              <div class= "estado-btn" [ngStyle]="{'background-color': getColor($index)}"> {{tx.estadoSolicitud}}</div>
+              <div class= "estado-btn" [ngStyle]="{'background-color': getColor(tx.estadoSolicitud)}"> {{tx.estadoSolicitud}}</div>
               
-              <div class="cancelar-btn"></div>
+              
               
               <div class="origen-text-1">
               <span>{{tx.origen}}</span>
@@ -49,18 +49,15 @@ import { AuthService } from '@core/services/auth.service';
               <div class="precio-text-1"><span>{{ 's/.' + tx.tarifa}}</span></div>
               <div class="conductor-text1"><span>{{tx.nombreConductor + ' ' + tx.apellidoConductor}}</span></div>
               <img class="image-conductor" src="assets/ConductorLogo.png" />
-              </div>
+            </button>
+            <div class="cancelar-btn"></div>
           }
           @else{
-            <div class="ruta-box1">
+            <button class="ruta-box1" (click)="mostrarMensaje(tx)">
               <div class="rectangle1"></div>
 
-              <div class="hoy_01"><span class="hoy_01_span">{{'Empieza en '+ diferenciaFechas(tx.fechaSalida) + ' días'}} </span></div>
-              <div class= "estado-btn" [ngStyle]="{'background-color': getColor($index)}"> {{tx.estadoSolicitud}}</div>
-
-              <div class="cancelar-btn">
-                <button type="button" class="cancelar" (click)="cancelarSolicitud(tx)">Cancelar Solicitud</button>
-              </div>
+              <div class="hoy_01"><span class="hoy_01_span">{{'Empieza en '+ diferenciaFechas(tx.fechaSalida, tx.horaSalida)}} </span></div>
+              <div class= "estado-btn" [ngStyle]="{'background-color': getColor(tx.estadoSolicitud)}"> {{tx.estadoSolicitud}}</div>
 
               <div class="origen-text-1">
                 <span>{{tx.origen}}</span>
@@ -73,7 +70,8 @@ import { AuthService } from '@core/services/auth.service';
               <div class="precio-text-1"><span>{{ 's/.' + tx.tarifa}}</span></div>
               <div class="conductor-text1"><span>{{tx.nombreConductor + ' ' + tx.apellidoConductor}}</span></div>
               <img class="image-conductor" src="assets/ConductorLogo.png" />
-            </div>
+            </button>
+            <button type="button" class="cancelar" (click)="cancelarSolicitud(tx)">Cancelar Solicitud</button>
           }
             
         }
@@ -92,7 +90,43 @@ import { AuthService } from '@core/services/auth.service';
   </div>
   
 </div>
-  
+  @if (mostrarPopup) {
+  <div class="popup-overlay">
+    <div class="popup-box">
+      <div class="popup-close" (click)="mostrarPopup = false">x</div>
+
+      <p class="popup-message">{{ mensajePopup }}</p>
+      <div class= "popup-estado" [ngStyle]="{'background-color': getColor(rutaDetails()[0].estadoSolicitud)}"> {{rutaDetails()[0].estadoSolicitud}}</div>
+      <div class="rectangle-trayecto">
+
+        <p class="popup-section"> Información del trayecto </p>
+        
+        <p class="popup-info">{{ "Origen y destino: " + rutaDetails()[0].origen + " -> " + rutaDetails()[0].destino}}</p>
+        
+        <p class="popup-info">{{"Hora y fecha de salida: " + rutaDetails()[0].horaSalida + " " + rutaDetails()[0].fechaSalida}}</p>
+        
+        <p class="popup-info">{{ "Precio: s/." + rutaDetails()[0].tarifa}}</p>
+
+        <p class="popup-info">{{ "Capacidad de pasajeros: " + rutaDetails()[0].asientosDisponibles}}</p>
+        <img class="trayectoria-img" src="assets/calendar.png" />
+      </div>
+      <div class="rectangle-conductor">
+        <p class="popup-section"> Información sobre el conductor </p>
+
+        <p class="popup-info">{{ "Nombre y apellido: " + rutaDetails()[0].nombreConductor + " " + rutaDetails()[0].apellidoConductor}}</p>
+
+        <p class="popup-section"> Información sobre el vehículo </p>
+
+        <p class="popup-info">{{ "Modelo: " +rutaDetails()[0].vehiculoModelo}}</p>
+        <p class="popup-info">{{ "Color: " + rutaDetails()[0].vehiculoColor}}</p>
+        <p class="popup-info">{{ "Placa: "+ rutaDetails()[0].vehiculoPlaca}}</p>
+        <p class="popup-info">{{ "Descripción: "+ rutaDetails()[0].vehiculoDesc}}</p>
+        <img class="veh-img" src="assets/search.png" />
+      </div>
+
+    </div>
+  </div>
+}
   `,
   styleUrls: ['./pasajero.solicitudes.component.css']
 })
@@ -103,15 +137,22 @@ export class PasajeroSolicitudesComponent implements OnInit {
     private cdr: ChangeDetectorRef,
     private authService: AuthService) {}
     
-
-
     errorMessage = signal('');
     allSolicitudes = signal<SolicitudCardResponse[]>([]);
     solicitudes = signal<SolicitudCardResponse[]>([]);
     rutas = signal<RutaResponse[]>([]);
+
+    filtro = signal<SolicitudCardResponse[]>([]);
+
+    resto = signal<SolicitudCardResponse[]>([]);
+
     loading = signal(true);
     loadingRutas = signal(true);
 
+    // Popup que muestra los detalles de las rutas
+      mensajePopup: string = '';
+      mostrarPopup: boolean = false;
+      rutaDetails = signal<SolicitudCardResponse[]>([]);
 
     ngOnInit() {
       const pasajeroId = this.authService.getPasajeroId();
@@ -124,13 +165,31 @@ export class PasajeroSolicitudesComponent implements OnInit {
 
     
     loadSolicitudes(pasajeroId:number) {
-      console.log("cantidad de solicitudes: ",this.solicitudes.length);
+
       this.solicitudService.getInfo(pasajeroId).subscribe({
       next: (solicitudes) => {
-          this.loading.set(false);
-          this.solicitudes.set(solicitudes);
-          this.allSolicitudes.set(solicitudes);
-          console.log("Cargando solicitudes de pasajero ",pasajeroId, " tiene solicitudes: ", this.solicitudes().length);
+        // ordenar solicitudes para mostrar primero las aceptadas
+        this.filtro.set([]);
+        this.resto.set([]);
+        for (let i: number = 0; i < solicitudes.length; i++){
+          if(solicitudes[i].estadoSolicitud == "ACEPTADO"){
+
+            this.filtro.update(currentArray => [...currentArray,  solicitudes[i]]);
+            
+          }else{
+            this.resto.update(currentArray => [...currentArray, solicitudes[i]]);
+          }
+        }
+        for (let i: number = 0; i < this.resto().length; i++){
+          this.filtro.update(currentArray => [...currentArray, this.resto()[i]]);
+
+        }
+        
+
+        this.loading.set(false);
+        this.solicitudes.set(this.filtro());
+        this.allSolicitudes.set(this.filtro());
+        console.log("Cargando solicitudes de pasajero ",pasajeroId, " tiene solicitudes: ", solicitudes.length);
       },
       error: (error) => {
           console.error('Error cargando solicitudes:', error);
@@ -140,28 +199,41 @@ export class PasajeroSolicitudesComponent implements OnInit {
       });
     }
 
-    getColor(i:number):string{
+    getColor(i:string):string{
       if(!this.solicitudes())return 'gray';
 
-      if(this.solicitudes()[i].estadoSolicitud === 'PENDIENTE')
+      if(i === 'PENDIENTE')
         return 'gray';
-      if(this.solicitudes()[i].estadoSolicitud === 'ACEPTADO')
+      if(i === 'ACEPTADO')
         return 'green';
-      if(this.solicitudes()[i].estadoSolicitud === 'RECHAZADO')
+      if(i === 'RECHAZADO')
         return 'black';
-      if(this.solicitudes()[i].estadoSolicitud === 'CANCELADO')
+      if(i === 'CANCELADO')
         return 'red';
       return 'gray';
       
     }
 
     
-    diferenciaFechas(date1:string){
-        const _date1 = new Date(date1);
-        const time1 = _date1.getTime();
-        const time2 = Date.now();
-        const diffInMs = Math.abs(time2 - time1);
-        return Math.ceil(diffInMs / (1000 * 60 * 60 * 24));
+    diferenciaFechas(date1:string, hour1: string){
+      const time1 = Date.now();
+      const _date1 = new Date(date1 + "T" + hour1);
+      const time2 = _date1.getTime();
+      const diffInMs = time2 - time1;
+      
+      const daysToStart = Math.ceil(diffInMs / (1000 * 60 * 60 * 24));
+
+      if(daysToStart <= 1 && daysToStart > 0){
+        console.log("fecha: ", date1, diffInMs);
+        const horasToStart = Math.ceil(diffInMs  / (1000 * 60 * 60 ));
+        if(horasToStart <= 1){
+          return Math.ceil(diffInMs  / (1000 * 60 ));
+        }
+        return horasToStart + " horas";
+        
+      }
+      
+      return daysToStart + " días";
     }
 
     cancelarSolicitud(solicitud:SolicitudCardResponse){
@@ -177,6 +249,12 @@ export class PasajeroSolicitudesComponent implements OnInit {
             this.errorMessage.set('No se ha podido cancelar la solicitud');
         }
         });
+    }
+
+    mostrarMensaje(dt:SolicitudCardResponse){
+      this.mensajePopup = 'Detalles de la solicitud';
+      this.mostrarPopup = true;
+      this.rutaDetails.set([dt]);
     }
 
 }

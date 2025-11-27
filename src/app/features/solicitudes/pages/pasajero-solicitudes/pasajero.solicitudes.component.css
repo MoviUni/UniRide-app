@@ -235,8 +235,9 @@ div {
 .origen-text-1 {
   width: 497.60px;
   height: 22.05px;
+  text-align: left;
   left: 20px;
-  top: -190px;
+  top: -150px;
   font-weight: 600;
   position: relative;
   font-size: large;
@@ -244,16 +245,18 @@ div {
 .hora-salida1 {
   width: 497.60px;
   height: 22.05px;
+  text-align: left;
   left: 20px;
-  top: -170px;
+  top: -130px;
   position: relative;
 }
 
 .capacidad-text1 {
   width: 213.88px;
   height: 22.05px;
+  text-align: left;
   left: 400px;
-  top: -140px;
+  top: -110px;
   position: relative;
 }
 
@@ -270,7 +273,7 @@ div {
   width: 30px;
   height: 29px;
   left: 25px;
-  top: -230px;
+  top: -190px;
   position:relative;
 
 }
@@ -278,7 +281,8 @@ div {
   width: 497.60px;
   height: 22.05px;
   left: 70px;
-  top: -205px;
+  top: -165px;
+  text-align: left;
   position: relative;
 }
 
@@ -287,7 +291,7 @@ div {
   height: 33.08px;
   font-size: 26.46px;
   left: 650px;
-  top: -260px;
+  top: -220px;
   position: relative;
 }
 
@@ -319,6 +323,9 @@ div {
   overflow: hidden;
 }
 
+.ruta-box1:hover{
+  cursor: pointer;
+}
 
 
 
@@ -754,9 +761,10 @@ div {
 }
 
 .cancelar{
-
-  top: -5vh;
-  width: 171.99px;
+  left: 600px;
+  top: -68px;
+  position: relative;
+  width: 170px;
   height: 36.75px;
   color: red;
   overflow: hidden;
@@ -800,4 +808,153 @@ div {
   color: white;
 
   margin: 1vh;
+}
+
+
+/* Fondo oscuro (antes .poppup) */
+.popup-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(108, 108, 108, 0.4);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 99999;
+}
+
+/* Caja blanca (antes .rectangle-188) */
+.popup-box {
+  width: 90%;
+  max-width: 900px;
+  height: 639px;
+  padding: 50px 40px;
+  background: white;
+  border-radius: 10px;
+  position: relative;
+
+
+   /* Forzar centrado vertical y horizontal */
+
+  flex-direction: column;
+  align-items: center;
+}
+
+.popup-estado{
+
+  padding-top: 0.5vh;
+  width: 171.99px;
+  height: 30px;
+  color: white;
+  background-color:#880D1E;
+
+  box-shadow: 0px 2.93999981880188px 2.93999981880188px rgba(0, 0, 0, 0.25);
+  overflow: hidden;
+  border-radius: 26.46px;
+  text-align: center;
+  top: -17px;
+  left: 410px;
+  position: relative;
+}
+
+/* X para cerrar */
+.popup-close {
+  position: absolute;
+  right: 45px;
+  top: 20px;
+  font-size: 48px;
+  font-family: Poppins;
+  font-weight: 500;
+  cursor: pointer;
+  user-select: none;
+}
+
+/* Ícono de error */
+.popup-icon {
+  width: 100px;
+  height: 100px;
+  margin-bottom: 90px;
+  margin-top: 70px;
+}
+
+/* Texto del mensaje */
+.popup-message {
+  font-size: 32px;
+  font-family: Poppins, sans-serif;
+  font-weight: 600;
+  color:#620713;
+  max-width: 700px;
+
+  line-height: 1.2;
+  margin-bottom: -20px;
+}
+
+/* Texto del mensaje */
+.popup-section {
+  left:15px;
+  position: relative;
+  padding-top: 22px;
+  font-size: 18px;
+  font-family: Poppins, sans-serif;
+  font-weight: 600;
+  color: black;
+  max-width: 700px;
+
+  line-height: 1.2;
+}
+
+/* Texto del mensaje */
+.popup-info {
+  left:15px;
+  position: relative;
+  padding-top: 15px;
+  font-size: 16px;
+  font-family: Poppins, sans-serif;
+  font-weight: 500;
+  color: black;
+  max-width: 700px;
+
+  line-height: 1.2;
+}
+
+
+.rectangle-trayecto{
+  width: 796.74px;
+  height: 200px;
+  left: 0px;
+  top: 35px;
+  
+  position: relative;
+  background: #F3F3F3;
+  border-radius: 10.40px;
+  margin: auto;
+  margin-top: -20px;
+}
+
+.rectangle-conductor{
+  
+  width: 796.74px;
+  height: 280px;
+  left: 0px;
+  top: 35px;
+  position: relative;
+  background: #F3F3F3;
+  border-radius: 10.40px;
+  margin: auto;
+  margin-top: 20px;
+}
+
+
+.trayectoria-img{
+  left: 600px;
+  top: -105px;
+  width: 70px;
+  height: auto;
+  position: relative;
+}
+.veh-img{
+  left: 600px;
+  top: -135px;
+  width: 70px;
+  height: auto;
+  position: relative;
 }

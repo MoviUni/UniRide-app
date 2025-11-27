@@ -26,13 +26,20 @@ import { AuthService } from '@core/services/auth.service';
     @if (loading()) {
       <p>Cargando rutas...</p>
     } @else if (rutas()) {
-      
-      @for (tx of rutas()!; track $index) {
+      @if(rutas().length == 0){
+          <div class="rectangle2">
+            <span class="sin-texto"> No se pudieron encontraron rutas... Prueba con otros filtros</span>
+            <img class="sin-imagen" src="assets/auto_icon.png" />
+          </div>
+          
+        }
+      @else{
+          @for (tx of rutas()!; track $index) {
 
         <button class="ruta-box1" (click)="mostrarMensaje(tx)">
           <div class="rectangle1"></div>
 
-          <div class="hoy_01"><span class="hoy_01_span">{{'Empieza en '+ diferenciaFechas(tx.fechaSalida) + ' días'}} </span></div>
+          <div class="hoy_01"><span class="hoy_01_span">{{'Empieza en '+ diferenciaFechas(tx.fechaSalida, tx.horaSalida)}} </span></div>
           <div class="btn_solicitar">
 
             
@@ -56,7 +63,7 @@ import { AuthService } from '@core/services/auth.service';
         <button type="button" class="solicitarunirse_01" (click)="sendForm(tx)">Solicitar Unirse</button>
         
       }
-        
+        }
     }
       
     </div>
@@ -250,6 +257,18 @@ import { AuthService } from '@core/services/auth.service';
     </div>
   </div>
 }
+  @if (mostrarExitoso) {
+    <div class="popup-ex-overlay">
+      <div class="popup-ex-box">
+        <div class="popup-ex-close" (click)="cerrarExito()">x</div>
+
+        <p class="popup-ex-message"> ¡La solicitud ha sido enviada de manera exitosa! </p>
+        <img class="trayectoria-ex-img" src="assets/check_mark.png" />
+
+      </div>
+    </div>
+  }
+
   `,
   styleUrls: ['./busqueda.component.css']
 })
@@ -261,8 +280,6 @@ export class BusquedaRutasComponent implements OnInit{
     private authService: AuthService,
   @Inject(LOCALE_ID) private locale: string) {}
 
-  
-  private conductorService = inject(ConductorService);
 
   private fb = inject(FormBuilder);
 
@@ -277,6 +294,8 @@ export class BusquedaRutasComponent implements OnInit{
   // Popup que muestra los detalles de las rutas
   mensajePopup: string = '';
   mostrarPopup: boolean = false;
+
+  mostrarExitoso: boolean = false;
   rutaDetails = signal<RutaCardResponse[]>([]);
 
 
@@ -331,9 +350,40 @@ export class BusquedaRutasComponent implements OnInit{
     this.rutaDetails.set([dt]);
   }
 
+  mostrarExito(){
 
+    this.mostrarExitoso = true;
+    this.cdr.detectChanges();
+  }
 
-  diferenciaFechas(date1:string){
+  cerrarExito(){
+    window.location.reload();
+    this.mostrarExitoso = false;
+    this.cdr.detectChanges();
+  }
+
+  diferenciaFechas(date1:string, hour1: string){
+      const time1 = Date.now();
+      const _date1 = new Date(date1 + "T" + hour1);
+      const time2 = _date1.getTime();
+      const diffInMs = time2 - time1;
+      
+      const daysToStart = Math.ceil(diffInMs / (1000 * 60 * 60 * 24));
+
+      if(daysToStart <= 1 && daysToStart > 0){
+        console.log("fecha: ", date1, diffInMs);
+        const horasToStart = Math.ceil(diffInMs  / (1000 * 60 * 60 ));
+        if(horasToStart <= 1){
+          return Math.ceil(diffInMs  / (1000 * 60 ));
+        }
+        return horasToStart + " horas";
+        
+      }
+      
+      return daysToStart + " días";
+    }
+
+  diferenciaFechas2(date1:string){
     const _date1 = new Date(date1);
     const time1 = _date1.getTime();
     const time2 = Date.now();
@@ -341,12 +391,9 @@ export class BusquedaRutasComponent implements OnInit{
     return Math.ceil(diffInMs / (1000 * 60 * 60 * 24));
   }
 
-
   clearFilters(){
     this.rutas.set(this.allRutas());
   }
-
-
 
   applyFilters() {
     const origen = this.filterForm.value.origen;
@@ -371,7 +418,7 @@ export class BusquedaRutasComponent implements OnInit{
       }
       return true;
     }).filter(tx=>{
-      const txFecha = this.diferenciaFechas(tx.fechaSalida);
+      const txFecha = this.diferenciaFechas2(tx.fechaSalida);
       if(fecha === 'Hoy'){
         return txFecha <= 1;
       }
@@ -422,18 +469,6 @@ export class BusquedaRutasComponent implements OnInit{
 
   }
 
-  reloadPage(){
-    window.location.reload();
-  }
-
-  closeForm(){
-    this.showSolicitudForm = false;
-  }
-
-  openForm(){
-    this.showSolicitudForm = true;
-  }
-
   sendForm(dt:RutaCardResponse){
     const pasajeroId = this.authService.getPasajeroId();
     if (!pasajeroId) {
@@ -459,8 +494,8 @@ export class BusquedaRutasComponent implements OnInit{
 
      this.solicitudService.create(solicitudReq).subscribe({
         next: () => {
-          alert('Exito creando solicitud');
-          window.location.reload();
+          this.mostrarExito();
+          
         },
         error: (error) => {
           alert(error);
