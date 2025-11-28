@@ -24,7 +24,7 @@
 }
 
 .hero-text p {
-  font-family: 'Nunito Sans', sans-serif;
+  font-family: 'Poppins', sans-serif;
   font-size: clamp(16px, 2.5vw, 24px); /* Escala con la pantalla */
   font-weight: 700;
   line-height: 1.6;
