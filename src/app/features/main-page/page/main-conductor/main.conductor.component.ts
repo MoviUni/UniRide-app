@@ -17,26 +17,34 @@ import { RouterModule } from '@angular/router';
               <p class="btn-text">  Mis solicitudes</p>
               <img class="image" src="assets/Ruta.png" />
             </button>
-            
+
           </div>
           <div>
+<<<<<<< Updated upstream
             <button type="button" class="btn" routerLink="/historial">
+=======
+            <button type="button" class="btn" routerLink="/historial/conductor"> <!--routerLink="/historial" -->
+>>>>>>> Stashed changes
               <p class="btn-text">  Historial de viajes</p>
               <img class="image" src="assets/Book.png" />
             </button>
-            
+
           </div>
-            
+
           <div>
             <button type="button" class="btn" routerLink="/rutas">
               <p class="btn-text">  Estadísticas de viajes</p>
               <img class="image" src="assets/Estadisticas.png" />
             </button>
-            
+
           </div>
-            
+
           <div>
+<<<<<<< Updated upstream
             <button type="button" class="btn" routerLink="/perfil" >
+=======
+            <button type="button" class="btn" routerLink="/perfil-conductor"> <!--routerLink="/perfil" -->
+>>>>>>> Stashed changes
               <p class="btn-text">  Mi perfil</p>
               <img class="image" src="assets/User.png" />
             </button>

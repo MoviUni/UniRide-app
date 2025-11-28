@@ -38,7 +38,7 @@ export interface SolicitudCardResponse{
     tarifa:number,
     asientosDisponibles:number,
     nombreConductor:string,
-    apellidoConductor:number,
+    apellidoConductor:string,
 }
 
 export interface SolicitudEstadoRequest{

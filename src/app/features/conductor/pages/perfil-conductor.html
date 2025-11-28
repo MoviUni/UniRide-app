@@ -1,0 +1,38 @@
+<div class="perfil-container">
+
+  <div class="perfil-card">
+    <div class="info">
+
+      <h1>{{ conductor?.nombre }} {{ conductor?.apellido }}</h1>
+
+      <p>
+        <b>DNI:</b>
+        {{ conductor?.dni || 'No disponible' }}
+      </p>
+
+      <p>
+        <b>Carrera:</b>
+        {{ conductor?.carrera || 'No disponible' }}
+      </p>
+
+      <p>
+        <b>Código Universitario:</b>
+        {{ conductor?.codigoUni || 'Sin código' }}
+      </p>
+
+      <p>
+        <b>Edad:</b>
+        {{ conductor?.edad || 'No disponible' }}
+      </p>
+
+    </div>
+
+    <div class="foto">
+      <img
+        [src]="conductor?.foto || 'assets/ConductorLogo.png'"
+        alt="Foto del conductor"
+      />
+    </div>
+  </div>
+
+</div>

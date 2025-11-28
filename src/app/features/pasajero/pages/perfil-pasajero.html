@@ -1,0 +1,33 @@
+<div class="perfil-container">
+
+  <div class="perfil-card">
+    <div class="info">
+
+      <h1>{{ pasajero?.nombre }} {{ pasajero?.apellido }}</h1>
+
+      <p>
+        <b>Carrera:</b>
+        {{ pasajero?.carrera || 'No disponible' }}
+      </p>
+
+      <p>
+        <b>Código Universitario:</b>
+        {{ pasajero?.codigoUni || 'Sin código' }}
+      </p>
+
+      <p>
+        <b>Edad:</b>
+        {{ pasajero?.edad || 'Sin código' }}
+      </p>
+
+    </div>
+
+    <div class="foto">
+      <img
+        [src]="pasajero?.foto || 'assets/ConductorLogo.png'"
+        alt="Foto"
+      >
+    </div>
+  </div>
+
+</div>

@@ -18,15 +18,27 @@ import { RouterModule } from '@angular/router';
               <p class="btn-text">  Mis solicitudes</p>
               <img class="image" src="assets/Ruta.png" />
             </button>
-            
+
           </div>
           <div>
+<<<<<<< Updated upstream
             <button type="button" class="btn" routerLink="/historial">
+=======
+            <button type="button" class="btn" routerLink="/solicitudes/pasajero/estados">
+              <p class="btn-text">  Mis solicitudes</p>
+              <img class="image" src="assets/calendar.png" />
+            </button>
+
+          </div>
+          <div>
+            <button type="button" class="btn" routerLink="/historial/pasajero">
+>>>>>>> Stashed changes
               <p class="btn-text">  Historial de viajes</p>
               <img class="image" src="assets/Book.png" />
             </button>
-            
+
           </div>
+<<<<<<< Updated upstream
             
           <div>
             <button type="button" class="btn" routerLink="/rutas">
@@ -38,13 +50,19 @@ import { RouterModule } from '@angular/router';
             
           <div>
             <button type="button" class="btn" routerLink="/perfil" >
+=======
+
+
+          <div>
+            <button type="button" class="btn" routerLink="/perfil-pasajero">
+>>>>>>> Stashed changes
               <p class="btn-text">  Mi perfil</p>
               <img class="image" src="assets/User.png" />
             </button>
           </div>
         </div>
     </div>
-  
+
   `,
   styleUrl: './main.pasajero.component.css'
 })
