@@ -1,13 +1,13 @@
 import { Injectable, inject, signal } from '@angular/core';
-import { HttpClient, HttpParams, HttpParamsOptions} from '@angular/common/http';
-import { Observable, tap } from 'rxjs';
-import { environment } from '../../../environments/environment';
-import { RutaCardResponse, RutaRequest, RutaResponse } from '../models/ruta.model';
 
+import { RutaCardResponse, RutaRequestDTO, RutaResponse } from '../models/ruta.model';
+import { tap } from 'rxjs/operators';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { environment } from '../../../environments/environment';
+
 import { RutaFrecuenteResponseDTO, RutaResponseDTO, EstadoRuta } from '../models/ruta.model';
+import { AuthService } from './auth.service';
 
 @Injectable({
   providedIn: 'root'
@@ -15,17 +15,20 @@ import { RutaFrecuenteResponseDTO, RutaResponseDTO, EstadoRuta } from '../models
 export class RutaService {
   private http = inject(HttpClient);
   private apiUrl = `${environment.apiUrl}/rutas`;
+  private auth = inject (AuthService);
 
   //token hardcodeado para pruebas
-  private token = 'eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJtYXJpYW5hLmc1bWV6QGV4YW1wbGUuY29tIiwicm9sZSI6IlJPTEVfQ09ORFVDVE9SIiwiZXhwIjoxNzY1NTYwNzc5fQ.u23huAEkcj49xEAgPhtArJtlDxbB_vxRB-77Ba5mx9vsfc5DogP5JOvxu7PtOdtiZeFm8ZirwVpmXZqmDxZWJw';
+  //private token = 'eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJtYXJpYW5hLmc1bWV6QGV4YW1wbGUuY29tIiwicm9sZSI6IlJPTEVfQ09ORFVDVE9SIiwiZXhwIjoxNzY1NTYwNzc5fQ.u23huAEkcj49xEAgPhtArJtlDxbB_vxRB-77Ba5mx9vsfc5DogP5JOvxu7PtOdtiZeFm8ZirwVpmXZqmDxZWJw';
 
   private getHeaders() {
+    const token = this.auth.getToken(); // toma el token actual
     return {
       headers: {
-        Authorization: `Bearer ${this.token}`
+        Authorization: `Bearer ${token}`
       }
     };
   }
+
 
   // Signals para ESTADO COMPARTIDO
   private _rutas = signal<RutaResponse[]>([]);
@@ -42,8 +45,8 @@ export class RutaService {
     private _info = signal<RutaCardResponse[]>([]);
 
   // GET - Obtener todos
-  getInfo(): Observable<RutaCardResponse[]> {
-    return this.http.get<RutaCardResponse[]>(`${this.apiUrl}/info`, this.getHeaders()).pipe(
+  getInfo(pasajeroId:number): Observable<RutaCardResponse[]> {
+    return this.http.get<RutaCardResponse[]>(`${this.apiUrl}/info/${pasajeroId}`, this.getHeaders()).pipe(
       tap(data => this._info.set(data))
     );
   }
@@ -62,7 +65,7 @@ export class RutaService {
   }
 
   // POST - Crear
-  create(data: RutaRequest): Observable<RutaResponse> {
+  create(data: RutaRequestDTO): Observable<RutaResponse> {
     return this.http.post<RutaResponse>(this.apiUrl, data, this.getHeaders()).pipe(
       tap(newItem => {
         this._rutas.update(current => [...current, newItem]);
@@ -71,7 +74,7 @@ export class RutaService {
   }
 
   // id hardcodeado para pruebas
-  private conductorId = 1;
+  //private conductorId = 1;
 
   // Signals para ESTADO COMPARTIDO (si los usan en otros componentes)
   private _items = signal<any[]>([]);
@@ -107,10 +110,9 @@ export class RutaService {
   descargarHistorialPDF(conductorId: number): Observable<Blob> {
     return this.http.get(`${this.apiUrl}/conductor/${conductorId}/historial/pdf`, {
       ...this.getHeaders(),
-      responseType: 'blob'  
+      responseType: 'blob'
     });
   }
-
 
   // ======== MIS RUTAS (LISTAR RUTAS VÁLIDAS) =========
 
@@ -142,4 +144,3 @@ export class RutaService {
     );
   }
 }
-
