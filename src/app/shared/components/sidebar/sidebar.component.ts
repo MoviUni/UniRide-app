@@ -65,6 +65,20 @@ import { RoleType } from '../../../core/models/usuario.model';
 
       <div class="ur-divider"></div>
 
+      <!-- ESTADÍSTICAS DE VIAJES -->
+      <button
+        class="ur-icon-btn"
+        type="button"
+        aria-label="Estadísticas de viajes"
+        (click)="goEstadisticas()"
+      >
+        <span class="ur-icon">
+          <img src="assets/Estadisticas.png" alt="Estadísticas" />
+        </span>
+      </button>
+
+      <div class="ur-divider"></div>
+
       <!-- PERFIL -->
       <button
         class="ur-icon-btn"
@@ -238,6 +252,18 @@ export class SidebarComponent {
 
   /** Libro → historial de viajes (por ahora estadísticas de rutas) */
   goHistorial(): void {
+    const role = this.currentRole();
+
+    if (role === RoleType.ROLE_CONDUCTOR || role === RoleType.ROLE_PASAJERO) {
+      // TODO: Implementar página de historial
+      this.router.navigate(['/rutas/estadisticas']);
+    } else {
+      this.router.navigate(['/auth/login']);
+    }
+  }
+
+  /** Estadísticas → página de estadísticas */
+  goEstadisticas(): void {
     const role = this.currentRole();
 
     if (role === RoleType.ROLE_CONDUCTOR || role === RoleType.ROLE_PASAJERO) {

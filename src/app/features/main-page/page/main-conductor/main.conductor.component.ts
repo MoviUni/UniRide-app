@@ -13,23 +13,29 @@ import { RouterModule } from '@angular/router';
         <p class="inicio"> Inicio </p>
         <div class="main-buttons">
           <div>
+            <button type="button" class="btn" routerLink="/rutas/publicar">
+              <p class="btn-text">Crear nueva ruta</p>
+              <img class="image" src="assets/sidebar/Journey.png" />
+            </button>
+          </div>
+          <div>
             <button type="button" class="btn" routerLink="/rutas/mis-rutas">
-              <p class="btn-text">  Mis rutas</p>
+              <p class="btn-text">Mis rutas</p>
               <img class="image" src="assets/Ruta.png" />
             </button>
             
           </div>
           <div>
             <button type="button" class="btn" > <!--routerLink="/historial" -->
-              <p class="btn-text">  Historial de viajes</p>
+              <p class="btn-text">Historial de viajes</p>
               <img class="image" src="assets/Book.png" />
             </button>
             
           </div>
             
           <div>
-            <button type="button" class="btn" routerLink="/rutas"> 
-              <p class="btn-text">  Estadísticas de viajes</p>
+            <button type="button" class="btn" routerLink="/rutas/estadisticas"> 
+              <p class="btn-text">Estadísticas de viajes</p>
               <img class="image" src="assets/Estadisticas.png" />
             </button>
             
@@ -37,7 +43,7 @@ import { RouterModule } from '@angular/router';
             
           <div>
             <button type="button" class="btn"  > <!--routerLink="/perfil" -->
-              <p class="btn-text">  Mi perfil</p>
+              <p class="btn-text">Mi perfil</p>
               <img class="image" src="assets/user.png" />
             </button>
           </div>
