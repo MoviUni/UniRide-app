@@ -35,9 +35,8 @@ export class EstadisticasComponent implements OnInit {
 
   ngOnInit(): void {
     console.log('ngOnInit ejecutado');
-    //const conductorId = 2; // ID hardcodeado para ejemplo
-    const conductorId = this.authService.getUserIdRol();
-    
+    const conductorId = this.authService.getConductorId();
+    console.log('conductorId:'+conductorId);
     if (!conductorId) {
     console.error('Usuario no autenticado');
     return;}
@@ -188,7 +187,7 @@ obtenerRutasFrecuentes(conductorId: number): void {
   
 descargarHistorialPDF() {
 
-  const conductorId = this.authService.getUserIdRol(); // obtenemos el id aquí
+  const conductorId = this.authService.getConductorId(); // obtenemos el id aquí
   if (!conductorId) {
     console.error('Usuario no autenticado');
     this.mostrarMensaje('warning');
