@@ -1,0 +1,50 @@
+<div class="historial-root">
+
+  <h2 class="title">Historial de viajes publicados</h2>
+
+  <div *ngIf="loading" class="loading-block">
+    <div class="loader"></div>
+    <div class="loading-text">Cargando historial...</div>
+  </div>
+
+  <div *ngIf="error" class="error">{{ error }}</div>
+
+  <div *ngIf="!loading && historial.length == 0" class="empty">
+    Aún no tienes viajes registrados.
+  </div>
+
+  <div class="list" *ngIf="!loading && historial.length > 0">
+    <article *ngFor="let item of historial" class="history-card">
+
+      <div class="card-left">
+        <div class="route">
+          <span class="origen">{{ item.origen ?? '--' }}</span>
+          <span class="arrow">→</span>
+          <span class="destino">{{ item.destino ?? '--' }}</span>
+        </div>
+
+        <div class="departure">
+          Fecha: <span>{{ item.fechaSalida ? (item.fechaSalida | date:'dd/MM/yyyy') : '--' }}</span>
+        </div>
+
+        <div class="departure">
+          Hora de salida: <span>{{ formatHora(item) }}</span>
+        </div>
+
+        <div class="card-meta">
+          <img [src]="avatarUrl(item)" alt="avatar" class="avatar" />
+          <div class="meta-info">
+            <div class="driver">Pasajero: {{ displayPassenger(item) }}</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="card-right">
+        <div class="price">s/. {{ formatPrice(item) }}</div>
+        <button class="btn-detalle" (click)="verDetalles(item)">Ver detalles</button>
+      </div>
+
+    </article>
+  </div>
+
+</div>

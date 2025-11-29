@@ -28,16 +28,14 @@ import { RouterModule } from '@angular/router';
             
           </div>
           <div>
-            <button type="button" class="btn" > <!--routerLink="/historial" -->
+            <button type="button" class="btn" routerLink="/historial/pasajero">
               <p class="btn-text">  Historial de viajes</p>
               <img class="image" src="assets/Book.png" />
             </button>
-            
           </div>
-
-            
+     
           <div>
-            <button type="button" class="btn"  > <!--routerLink="/perfil" -->
+            <button type="button" class="btn"  routerLink="/perfil-pasajero">
               <p class="btn-text">  Mi perfil</p>
               <img class="image" src="assets/user.png" />
             </button>
