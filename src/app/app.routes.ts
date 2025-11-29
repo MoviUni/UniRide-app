@@ -45,6 +45,22 @@ export const routes: Routes = [
         path: 'main',
         loadChildren: () =>
           import('./features/main-page/main.routes').then(m => m.MAIN_ROUTES),
+      },
+      {
+        path: 'historial',
+        loadChildren: () =>
+          import('./features/historial/historial.routes').then(m => m.HISTORIAL_ROUTES)
+      },
+      {
+        path: 'perfil-pasajero',
+        loadChildren: () =>
+            import('./features/pasajero/perfil-pasajero.routes').then(m => m.PERFIL_PASAJERO_ROUTES)
+      },
+      {
+        path: 'perfil-conductor',
+        loadChildren: () =>
+          import('./features/conductor/perfil-conductor.routes')
+            .then(m => m.PERFIL_CONDUCTOR_ROUTES)
       }
     ],
   },

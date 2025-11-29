@@ -125,6 +125,15 @@ export class SolicitudService {
     );
   }
 
+  // -----------------------------
+  //  HISTORIAL CONDUCTOR
+  // -----------------------------
+  getInfoConductor(conductorId: number): Observable<SolicitudCardResponse[]> {
+    return this.http
+      .get<SolicitudCardResponse[]>(`${this.apiUrl}/info/1?id=${conductorId}`, this.getHeaders())
+      .pipe(tap(data => this._info.set(data)));
+  }
+
   // (Opcional) Obtener una solicitud por id
   getSolicitudById(
     idSolicitud: number
