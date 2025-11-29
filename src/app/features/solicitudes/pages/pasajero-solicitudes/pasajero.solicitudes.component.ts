@@ -120,7 +120,6 @@ import { AuthService } from '@core/services/auth.service';
         <p class="popup-info">{{ "Modelo: " +rutaDetails()[0].vehiculoModelo}}</p>
         <p class="popup-info">{{ "Color: " + rutaDetails()[0].vehiculoColor}}</p>
         <p class="popup-info">{{ "Placa: "+ rutaDetails()[0].vehiculoPlaca}}</p>
-        <p class="popup-info">{{ "Descripción: "+ rutaDetails()[0].vehiculoDesc}}</p>
         <img class="veh-img" src="assets/search.png" />
       </div>
 
