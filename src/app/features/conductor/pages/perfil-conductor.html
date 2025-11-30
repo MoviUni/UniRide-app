@@ -5,10 +5,6 @@
 
       <h1>{{ conductor?.nombre }} {{ conductor?.apellido }}</h1>
 
-      <p>
-        <b>Carrera:</b>
-        {{ conductor?.carrera || 'No disponible' }}
-      </p>
 
       <p>
         <b>Código Universitario:</b>
@@ -19,20 +15,52 @@
         <b>Edad:</b>
         {{ conductor?.edad || 'No disponible' }}
       </p>
-
       <p>
         <b>Rol: </b>
         Conductor
       </p>
-
     </div>
-
-    <div class="foto">
-      <img
-        [src]="conductor?.foto || 'assets/ConductorLogo.png'"
-        alt="Foto del conductor"
-      />
-    </div>
+    
   </div>
+
+  <div class="auto-card">
+    <div class="info">
+      <h1>Vehículo</h1>
+
+      <p>
+        <b>Marca</b>
+        {{ vehiculo?.marca || 'No disponible' }}
+      </p>
+
+      <p>
+        <b>Modelo</b>
+        {{ vehiculo?.modelo || 'No disponible' }}
+      </p>
+
+      <p>
+        <b>Color</b>
+        {{ vehiculo?.color || 'No disponible' }}
+      </p>
+
+      <p>
+        <b>Asientos: </b>
+        {{ vehiculo?.capacidad || 'No disponible' }}
+      </p>
+
+
+      <p>
+        <b>Placa: </b>
+        {{ vehiculo?.placa || 'No disponible' }}
+      </p>
+
+      <p>
+        <b>SOAT: </b>
+        {{ vehiculo?.soat ? 'SI' : 'NO' }}
+      </p>
+    </div>
+      
+      
+
+    </div>
 
 </div>

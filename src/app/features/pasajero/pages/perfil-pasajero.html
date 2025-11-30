@@ -5,20 +5,26 @@
 
       <h1>{{ pasajero?.nombre }} {{ pasajero?.apellido }}</h1>
 
-      <p>
+      <!--<p>
         <b>Carrera:</b>
         {{ pasajero?.carrera || 'No disponible' }}
-      </p>
+      </p>-->
 
       <p>
         <b>Código Universitario:</b>
-        {{ pasajero?.codigoUni || 'Sin código' }}
+        {{ pasajero?.codigoUni || 'No disponible' }}
       </p>
 
       <p>
         <b>Edad:</b>
-        {{ pasajero?.edad || 'Sin código' }}
+        {{ pasajero?.edad || 'No disponible' }}
       </p>
+
+      <p>
+        <b>DNI:</b>
+        {{ pasajero?.dni || 'No disponible' }}
+      </p>
+
 
       <p>
         <b>Rol: </b>
@@ -27,12 +33,12 @@
 
     </div>
 
-    <div class="foto">
+    <!--<div class="foto">
       <img
         [src]="pasajero?.foto || 'assets/ConductorLogo.png'"
         alt="Foto"
       >
-    </div>
+    </div>-->
   </div>
 
 </div>

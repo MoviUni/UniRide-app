@@ -52,7 +52,7 @@ export class AuthService {
   }
 
   // ======================
-  //      REGISTRO SIMPLE (si lo siguen usando)
+  //      REGISTRO SIMPLE 
   // ======================
   registerWithData(data: RegisterRequest): Observable<AuthResponse> {
     return this.http.post<AuthResponse>(`${this.apiUrl}/register`, data).pipe(
@@ -171,6 +171,8 @@ export class AuthService {
   getUserIdRol(): number | null {
     return this._currentUser()?.idRol ?? null;
   }
+
+ 
 
   // ======================
   //     REGISTRO CONDUCTOR

@@ -1,5 +1,5 @@
 // src/app/features/historial/pages/historial-pasajero/historial-pasajero.ts
-import { Component, OnInit, inject } from '@angular/core';
+import { Component, OnInit, inject, ChangeDetectorRef } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { RouterModule } from '@angular/router';
 import { SolicitudService } from '../../../../core/services/solicitud.service';
@@ -16,6 +16,7 @@ import { SolicitudCardResponse } from '../../../../core/models/solicitud.model';
 export class HistorialPasajero implements OnInit {
   private solicitudService = inject(SolicitudService);
   private auth = inject(AuthService);
+  private cdr = inject(ChangeDetectorRef);
 
   historial: SolicitudCardResponse[] = [];
   loading = false;
@@ -38,11 +39,13 @@ export class HistorialPasajero implements OnInit {
       next: (data: SolicitudCardResponse[]) => {
         this.historial = data || [];
         this.loading = false;
+        this.cdr.detectChanges();
       },
       error: (err) => {
         console.error(err);
         this.error = 'Error cargando historial. Intenta más tarde.';
         this.loading = false;
+        this.cdr.detectChanges();
       }
     });
   }

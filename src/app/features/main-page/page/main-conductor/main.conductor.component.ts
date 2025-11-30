@@ -13,7 +13,7 @@ import { RouterModule } from '@angular/router';
         <p class="inicio"> Inicio </p>
         <div class="main-buttons">
           <div>
-            <button type="button" class="btn" routerLink="/rutas/publicar">
+            <button type="button" class="btn" routerLink="/rutas/publicar-ruta"> 
               <p class="btn-text">Crear nueva ruta</p>
               <img class="image" src="assets/sidebar/Journey.png" />
             </button>

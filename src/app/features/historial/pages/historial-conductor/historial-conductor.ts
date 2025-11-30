@@ -1,4 +1,4 @@
-import { Component, OnInit, inject } from '@angular/core';
+import { Component, OnInit, inject, ChangeDetectorRef } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { RouterModule } from '@angular/router';
 import { SolicitudService } from '../../../../core/services/solicitud.service';
@@ -16,6 +16,7 @@ export class HistorialConductor implements OnInit {
 
   private solicitudService = inject(SolicitudService);
   private auth = inject(AuthService);
+  private cdr = inject(ChangeDetectorRef);
 
   historial: SolicitudCardResponse[] = [];
   loading = false;
@@ -38,10 +39,12 @@ export class HistorialConductor implements OnInit {
       next: (data: SolicitudCardResponse[]) => {
         this.historial = data || [];
         this.loading = false;
+        this.cdr.detectChanges(); 
       },
       error: () => {
         this.error = 'Error cargando historial. Intenta más tarde.';
         this.loading = false;
+        this.cdr.detectChanges(); 
       }
     });
   }

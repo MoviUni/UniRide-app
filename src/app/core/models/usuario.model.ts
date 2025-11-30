@@ -50,7 +50,7 @@ export interface CurrentUser {
   idRol: number;
   nombre: string;
   apellido: string;
-  rol: 'ADMIN' | 'CONDUCTOR' | 'PASAJERO';            
+  rol: 'ADMIN' | 'CONDUCTOR' | 'PASAJERO';        
   idConductor?: number | null;
   idPasajero?: number | null;
 }

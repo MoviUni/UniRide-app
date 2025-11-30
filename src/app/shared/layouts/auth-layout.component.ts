@@ -17,18 +17,6 @@ import { NavbarComponent } from '../components/navbar/navbar-user.component';
   ],
   template: `
     <div class="layout-container">
-      
-      <!-- 🔵 MENÚ SUPERIOR -->
-      <nav class="top-links">
-        <a routerLink="/rutas" routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }">
-          Estadísticas
-        </a>
-
-        <a routerLink="/rutas/mis-rutas" routerLinkActive="active">
-          Mis rutas
-        </a>
-      </nav>
-
       <app-navbar></app-navbar>
 
       <main>

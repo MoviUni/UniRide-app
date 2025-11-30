@@ -254,10 +254,13 @@ export class SidebarComponent {
   goHistorial(): void {
     const role = this.currentRole();
 
-    if (role === RoleType.ROLE_CONDUCTOR || role === RoleType.ROLE_PASAJERO) {
+    if (role === RoleType.ROLE_CONDUCTOR) {
       // TODO: Implementar página de historial
-      this.router.navigate(['/rutas/estadisticas']);
-    } else {
+      this.router.navigate(['/historial/conductor']);
+    } else if(role === RoleType.ROLE_PASAJERO){
+      this.router.navigate(['/historial/pasajero']);
+    } 
+    else {
       this.router.navigate(['/auth/login']);
     }
   }
@@ -278,7 +281,7 @@ export class SidebarComponent {
     const role = this.currentRole();
 
     if (role === RoleType.ROLE_CONDUCTOR) {
-      this.router.navigate(['/main/conductor']);
+      this.router.navigate(['/perfil-conductor']);
     } else if (role === RoleType.ROLE_PASAJERO) {
       this.router.navigate(['/main/pasajero']);
     } else {

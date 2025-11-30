@@ -229,13 +229,13 @@ export class SidebarPasajeroComponent {
 
   /** Libro → historial de viajes (por ahora estadísticas de rutas) */
   goHistorial(): void {
-    this.router.navigate(['/auth/login']);
+    this.router.navigate(['/historial/pasajero']);
     
   }
 
   /** Engranaje → perfil (por ahora main según rol) */
   goPerfil(): void {
-    this.router.navigate(['/auth/login']);
+    this.router.navigate(['/perfil-pasajero']);
 
   }
 

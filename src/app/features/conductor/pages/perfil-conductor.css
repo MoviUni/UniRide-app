@@ -4,7 +4,7 @@
 
 .perfil-card {
   background: #f8dcd7;
-  padding: 40px;
+  padding: 60px;
   border-radius: 18px;
   display: flex;
   justify-content: space-between;
@@ -28,3 +28,14 @@
   border-radius: 50%;
   object-fit: cover;
 }
+
+.auto-card {
+  margin-top: 30px;
+  background: #f8dcd7;
+  padding: 40px;
+  border-radius: 18px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+

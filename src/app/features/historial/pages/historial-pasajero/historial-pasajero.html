@@ -33,16 +33,15 @@
         </div>
 
         <div class="card-meta">
-          <img [src]="avatarUrl(item)" alt="avatar" class="avatar" />
           <div class="meta-info">
-            <div class="driver">{{ displayDriverName(item) }}</div>
+            <div class="driver">Conductor: {{ displayDriverName(item) }}</div>
           </div>
         </div>
       </div>
 
       <div class="card-right">
         <div class="price">s/. {{ formatPrice(item) }}</div>
-        <button class="btn-detalle" (click)="verDetalles(item)">Ver detalles</button>
+        
       </div>
 
     </article>
