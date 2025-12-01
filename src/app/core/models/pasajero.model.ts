@@ -8,6 +8,9 @@ export interface PasajeroRequest {
   dni: string;
   edad?: number;
   codigoUni: string;
+  distrito?: string;
+  carrera?: string;
+  fotoPerfil?: string;
 }
 
 export interface PasajeroResponse {
@@ -17,4 +20,17 @@ export interface PasajeroResponse {
   dni: string;
   edad?: number;
   codigoUni: string;
+  distrito?: string;
+  carrera?: string;
+  fotoPerfil?: string;
+  calificacionPromedio?: number;
+  totalCalificaciones?: number;
+}
+
+export interface ComentarioResponse {
+  idComentario: number;
+  nombreUsuario: string;
+  calificacion: number;
+  comentario: string;
+  fecha: string;
 }

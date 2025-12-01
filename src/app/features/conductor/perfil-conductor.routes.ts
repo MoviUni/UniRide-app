@@ -9,7 +9,7 @@ export const PERFIL_CONDUCTOR_ROUTES: Routes = [
       {
         path: '',
         loadComponent: () =>
-          import('./pages/perfil-conductor').then(
+          import('./pages/perfil-conductor.component').then(
             (m) => m.PerfilConductor
           ),
       },

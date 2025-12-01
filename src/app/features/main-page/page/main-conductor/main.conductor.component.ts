@@ -18,19 +18,19 @@ import { RouterModule } from '@angular/router';
               <img class="image" src="assets/sidebar/Journey.png" />
             </button>
           </div>
+
           <div>
             <button type="button" class="btn" routerLink="/rutas/mis-rutas">
               <p class="btn-text">Mis rutas</p>
-              <img class="image" src="assets/Ruta.png" />
+              <img class="image" src="assets/sidebar/Ubicacion.png" />
             </button>
-          
           </div>
+
           <div>
             <button type="button" class="btn" routerLink="/historial/conductor">
               <p class="btn-text">Historial de viajes</p>
-              <img class="image" src="assets/Book.png" />
+              <img class="image" src="assets/sidebar/Libro.png" />
             </button>
-            
           </div>
             
           <div>
@@ -38,13 +38,26 @@ import { RouterModule } from '@angular/router';
               <p class="btn-text">Estadísticas de viajes</p>
               <img class="image" src="assets/Estadisticas.png" />
             </button>
-            
           </div>
             
           <div>
-            <button type="button" class="btn" routerLink="/perfil-conductor">
+            <button type="button" class="btn" routerLink="/rutas/perfil-conductor">
               <p class="btn-text">Mi perfil</p>
-              <img class="image" src="assets/user.png" />
+              <img class="image" src="assets/sidebar/user.png" />
+            </button>
+          </div>
+
+          <div>
+            <button type="button" class="btn" routerLink="/rutas/configuracion-vehiculo">
+              <p class="btn-text">Mi vehículo</p>
+              <img class="image" src="assets/sidebar/auto_icon.png" />
+            </button>
+          </div>
+
+          <div>
+            <button type="button" class="btn" routerLink="/rutas/configuracion-conductor">
+              <p class="btn-text">Configuración</p>
+              <img class="image" src="assets/sidebar/Engranaje.png" />
             </button>
           </div>
         </div>

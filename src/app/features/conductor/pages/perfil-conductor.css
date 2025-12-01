@@ -1,41 +1,451 @@
-.perfil-container {
-  padding: 30px;
+/* src/app/features/conductor/pages/perfil-conductor.css */
+
+.perfil-root {
+  padding: 40px;
+  max-width: 1200px;
+  margin: 0 auto;
+  font-family: 'Poppins', sans-serif;
 }
 
-.perfil-card {
-  background: #f8dcd7;
-  padding: 60px;
-  border-radius: 18px;
+/* Breadcrumb */
+.breadcrumb {
   display: flex;
-  justify-content: space-between;
   align-items: center;
+  gap: 8px;
+  margin-bottom: 20px;
+  font-size: 14px;
 }
 
-.info h1 {
-  margin: 0 0 20px 0;
-  font-size: 32px;
-  font-weight: bold;
+.breadcrumb-link {
+  color: #2563EB;
+  text-decoration: none;
+  transition: color 0.2s;
 }
 
-.info p {
-  font-size: 18px;
-  margin: 8px 0;
+.breadcrumb-link:hover {
+  color: #1D4ED8;
+  text-decoration: underline;
 }
 
-.foto img {
-  width: 180px;
-  height: 180px;
+.breadcrumb-separator {
+  color: #666;
+}
+
+.breadcrumb-current {
+  color: #333;
+  font-weight: 500;
+}
+
+/* Loading & Error */
+.loading-block {
+  display: flex;
+  align-items: center;
+  gap: 15px;
+  padding: 30px 0;
+}
+
+.loader {
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  border: 4px solid rgba(221, 45, 74, 0.1);
+  border-top-color: #DD2D4A;
+  animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+.loading-text {
+  color: #666;
+  font-size: 16px;
+}
+
+.error {
+  color: #DC2626;
+  padding: 16px;
+  background: #FEE2E2;
+  border-radius: 8px;
+  margin: 20px 0;
+}
+
+/* Tarjeta de perfil */
+.perfil-card {
+  background: linear-gradient(135deg, #FFE5E0 0%, #FDD5CE 100%);
+  border-radius: 16px;
+  padding: 48px;
+  display: flex;
+  align-items: center;
+  gap: 48px;
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.08);
+  margin-bottom: 40px;
+}
+
+.perfil-foto {
+  position: relative;
+}
+
+.foto-container {
+  position: relative;
+  width: 200px;
+  height: 200px;
+}
+
+.foto-perfil {
+  width: 200px;
+  height: 200px;
   border-radius: 50%;
   object-fit: cover;
+  border: 4px solid #FFFFFF;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.12);
 }
 
-.auto-card {
-  margin-top: 30px;
-  background: #f8dcd7;
-  padding: 40px;
-  border-radius: 18px;
+.upload-btn {
+  position: absolute;
+  bottom: 8px;
+  right: 8px;
+  background: #DD2D4A;
+  width: 48px;
+  height: 48px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  box-shadow: 0 4px 12px rgba(221, 45, 74, 0.3);
+  transition: all 0.2s;
+}
+
+.upload-btn:hover {
+  background: #C02340;
+  transform: scale(1.05);
+}
+
+.upload-icon {
+  font-size: 24px;
+}
+
+.perfil-info {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.nombre-completo {
+  font-size: 36px;
+  font-weight: 700;
+  color: #111;
+  margin: 0 0 8px 0;
+}
+
+.info-item {
+  display: flex;
+  gap: 8px;
+  font-size: 18px;
+  color: #333;
+}
+
+.label {
+  font-weight: 600;
+  color: #111;
+}
+
+.value {
+  color: #333;
+}
+
+.calificacion-container {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  font-size: 18px;
+}
+
+.rating {
+  display: flex;
+  gap: 4px;
+}
+
+.estrella {
+  color: #D1D5DB;
+  font-size: 20px;
+}
+
+.estrella.filled {
+  color: #FBBF24;
+}
+
+/* Contenedor de dos columnas */
+.columnas-container {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 32px;
+  margin-bottom: 40px;
+}
+
+/* Sección de vehículo */
+.vehiculo-section {
+  background: #FFF7F5;
+  border-radius: 16px;
+  padding: 32px;
+}
+
+.seccion-titulo {
+  font-size: 24px;
+  font-weight: 700;
+  color: #2C3E92;
+  margin: 0 0 24px 0;
+}
+
+.vehiculo-card {
+  background: #FFFFFF;
+  border-radius: 12px;
+  padding: 24px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.06);
+}
+
+.vehiculo-imagen {
+  text-align: center;
+  margin-bottom: 24px;
+}
+
+.car-img {
+  max-width: 100%;
+  height: auto;
+  max-height: 180px;
+  object-fit: contain;
+}
+
+.vehiculo-info {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.info-item-vehiculo {
+  display: flex;
+  justify-content: space-between;
+  padding: 8px 0;
+  border-bottom: 1px solid #F3F4F6;
+}
+
+.info-item-vehiculo:last-child {
+  border-bottom: none;
+}
+
+.label-vehiculo {
+  font-weight: 600;
+  color: #111;
+  font-size: 14px;
+}
+
+.value-vehiculo {
+  color: #666;
+  font-size: 14px;
+}
+
+.sin-vehiculo {
+  color: #666;
+  text-align: center;
+  padding: 24px;
+  font-size: 16px;
+}
+
+/* Sección de solicitudes */
+.solicitudes-section {
+  background: #FFF7F5;
+  border-radius: 16px;
+  padding: 32px;
+}
+
+.sin-solicitudes {
+  color: #666;
+  text-align: center;
+  padding: 24px;
+  font-size: 16px;
+}
+
+.solicitud-card {
+  background: #FFFFFF;
+  border-radius: 12px;
+  padding: 20px;
+  margin-bottom: 16px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.06);
+}
+
+.solicitud-fecha {
+  font-size: 14px;
+  font-weight: 600;
+  color: #2C3E92;
+  margin-bottom: 12px;
+}
+
+.solicitud-header {
   display: flex;
   justify-content: space-between;
   align-items: center;
+  margin-bottom: 12px;
+}
+
+.ruta {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 16px;
+  font-weight: 600;
+  color: #111;
+}
+
+.origen,
+.destino {
+  color: #111;
+}
+
+.arrow {
+  color: #999;
+  font-size: 18px;
+}
+
+.precio {
+  font-size: 20px;
+  font-weight: 800;
+  color: #111;
+}
+
+.solicitud-info {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  margin-bottom: 16px;
+}
+
+.hora-salida,
+.capacidad {
+  font-size: 14px;
+  color: #666;
+}
+
+.btn-ver-detalles {
+  width: 100%;
+  background: #8B1538;
+  color: #FFFFFF;
+  border: none;
+  padding: 10px;
+  border-radius: 8px;
+  font-size: 14px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background 0.2s;
+}
+
+.btn-ver-detalles:hover {
+  background: #6B1028;
+}
+
+/* Sección de comentarios */
+.comentarios-section {
+  background: #FFF7F5;
+  border-radius: 16px;
+  padding: 32px;
+}
+
+.comentarios-titulo {
+  font-size: 24px;
+  font-weight: 700;
+  color: #2C3E92;
+  margin: 0 0 24px 0;
+}
+
+.sin-comentarios {
+  color: #666;
+  text-align: center;
+  padding: 24px;
+  font-size: 16px;
+}
+
+.comentario-card {
+  background: #FFFFFF;
+  border-radius: 12px;
+  padding: 20px;
+  margin-bottom: 16px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.06);
+}
+
+.comentario-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 12px;
+}
+
+.comentario-nombre {
+  font-size: 16px;
+  font-weight: 600;
+  color: #111;
+}
+
+.comentario-rating {
+  display: flex;
+  gap: 2px;
+}
+
+.estrella-comentario {
+  color: #D1D5DB;
+  font-size: 16px;
+}
+
+.estrella-comentario.filled {
+  color: #FBBF24;
+}
+
+.comentario-texto {
+  font-size: 14px;
+  color: #666;
+  margin: 0;
+  line-height: 1.6;
+}
+
+/* Responsive */
+@media (max-width: 1024px) {
+  .columnas-container {
+    grid-template-columns: 1fr;
+  }
+}
+
+@media (max-width: 768px) {
+  .perfil-root {
+    padding: 20px;
+  }
+
+  .perfil-card {
+    flex-direction: column;
+    padding: 32px 24px;
+    gap: 24px;
+  }
+
+  .nombre-completo {
+    font-size: 28px;
+    text-align: center;
+  }
+
+  .foto-perfil {
+    width: 160px;
+    height: 160px;
+  }
+
+  .foto-container {
+    width: 160px;
+    height: 160px;
+  }
+
+  .vehiculo-section,
+  .solicitudes-section,
+  .comentarios-section {
+    padding: 24px 16px;
+  }
 }
 

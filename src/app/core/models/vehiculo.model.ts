@@ -7,6 +7,7 @@ export interface VehiculoRequest {
   marca: string;
   color: string;
   capacidad: number;
+  aireAcondicionado?: boolean;
 }
 
 export interface VehiculoResponse {
@@ -18,5 +19,6 @@ export interface VehiculoResponse {
   capacidad: number;
   idVehiculo: number;
   idConductor: number;
+  aireAcondicionado?: boolean;
 }
 

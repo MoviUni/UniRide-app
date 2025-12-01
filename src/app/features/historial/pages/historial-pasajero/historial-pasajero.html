@@ -1,50 +1,85 @@
 <!-- src/app/features/historial/pages/historial-pasajero/historial-pasajero.html -->
 <div class="historial-root">
+  <div class="breadcrumb">
+    <a routerLink="/main/pasajero" class="breadcrumb-link">Inicio</a>
+    <span class="breadcrumb-separator">›</span>
+    <a routerLink="/accounts/pasajero" class="breadcrumb-link">Mi cuenta</a>
+    <span class="breadcrumb-separator">›</span>
+    <span class="breadcrumb-current">Historial de viajes</span>
+  </div>
 
   <h2 class="title">Historial de viajes</h2>
 
-  <div *ngIf="loading" class="loading-block">
-    <div class="loader"></div>
-    <div class="loading-text">Cargando historial...</div>
-  </div>
+  @if (loading()) {
+    <div class="loading-block">
+      <div class="loader"></div>
+      <div class="loading-text">Cargando historial...</div>
+    </div>
+  }
 
-  <div *ngIf="error" class="error">{{ error }}</div>
+  @if (errorMessage()) {
+    <div class="error">{{ errorMessage() }}</div>
+  }
 
-  <div *ngIf="!loading && historial.length == 0" class="empty">
-    Aún no tienes viajes registrados.
-  </div>
+  @if (!loading() && historialAgrupado().length === 0) {
+    <div class="empty">
+      <p>Aún no tienes viajes realizados en tu historial.</p>
+    </div>
+  }
 
-  <div class="list" *ngIf="!loading && historial.length > 0">
-    <article *ngFor="let item of historial" class="history-card">
+  @if (!loading() && historialAgrupado().length > 0) {
+    <div class="historial-list">
+      @for (grupo of historialAgrupado(); track grupo.fecha) {
+        <div class="fecha-grupo">
+          <h3 class="fecha-titulo">{{ grupo.fechaCompleta }}</h3>
 
-      <div class="card-left">
-        <div class="route">
-          <span class="origen">{{ item.origen ?? '--' }}</span>
-          <span class="arrow">→</span>
-          <span class="destino">{{ item.destino ?? '--' }}</span>
+          @for (viaje of grupo.viajes; track viaje.idSolicitudViaje) {
+            <div class="viaje-card">
+              <div class="viaje-header">
+                <div class="ruta">
+                  <span class="origen">{{ viaje.origen }}</span>
+                  <span class="arrow">→</span>
+                  <span class="destino">{{ viaje.destino }}</span>
+                </div>
+                <div class="precio">s/. {{ viaje.tarifa.toFixed(2) }}</div>
+              </div>
+
+              <div class="viaje-info">
+                <span class="hora-salida">Hora de salida: {{ viaje.horaSalida }}</span>
+              </div>
+
+              <div class="viaje-footer">
+                <div class="conductor-info">
+                  <img 
+                    src="assets/ConductorLogo.png" 
+                    alt="Conductor" 
+                    class="conductor-avatar"
+                  />
+                  <div class="conductor-details">
+                    <span class="conductor-nombre">{{ viaje.nombreConductor }}</span>
+                    <div class="rating">
+                      @for (estrella of getEstrellas(4); track $index) {
+                        <span class="estrella" [class.filled]="estrella === '★'">{{ estrella }}</span>
+                      }
+                    </div>
+                  </div>
+                </div>
+
+                <div class="viaje-meta">
+                  <span class="pasajeros">Pasajeros: {{ viaje.asientosDisponibles }}</span>
+                  <button 
+                    type="button" 
+                    class="btn-ver-detalles"
+                    (click)="verDetalles(viaje)"
+                  >
+                    Ver detalles
+                  </button>
+                </div>
+              </div>
+            </div>
+          }
         </div>
-
-        <div class="departure">
-          Fecha: <span>{{ item.fechaSalida ? (item.fechaSalida | date:'dd/MM/yyyy') : '--' }}</span>
-        </div>
-
-        <div class="departure">
-          Hora de salida: <span>{{ formatHora(item) }}</span>
-        </div>
-
-        <div class="card-meta">
-          <div class="meta-info">
-            <div class="driver">Conductor: {{ displayDriverName(item) }}</div>
-          </div>
-        </div>
-      </div>
-
-      <div class="card-right">
-        <div class="price">s/. {{ formatPrice(item) }}</div>
-        
-      </div>
-
-    </article>
-  </div>
-
+      }
+    </div>
+  }
 </div>

@@ -1,14 +1,12 @@
-import { ChangeDetectorRef, Component, ElementRef, Inject, inject, OnInit, signal, ViewChild } from '@angular/core';
-import { FormBuilder, FormsModule, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
+import { ChangeDetectorRef, Component, Inject, inject, OnInit, signal } from '@angular/core';
+import { FormBuilder, FormGroup, ReactiveFormsModule } from '@angular/forms';
 import { LOCALE_ID } from '@angular/core';
 import { CommonModule, formatDate } from '@angular/common';
 import { RouterModule } from '@angular/router';
 import { RutaService } from '../../../../core/services/ruta.service';
-import { RutaResponse, RutaCardResponse } from '@core/models/ruta.model';
-import { ConductorService } from '@core/services/conductor.service';
+import { RutaCardResponse } from '@core/models/ruta.model';
 import { SolicitudService } from '@core/services/solicitud.service';
-import { EstadoSolicitud, SolicitudViajeRequest, SolicitudViajeResponse, SolicitudCardResponse } from '@core/models/solicitud.model';
-import { ConductorResponse } from '@core/models/conductor.model';
+import { EstadoSolicitud, SolicitudViajeRequest } from '@core/models/solicitud.model';
 import { AuthService } from '@core/services/auth.service';
 
 
@@ -272,70 +270,66 @@ import { AuthService } from '@core/services/auth.service';
   styleUrls: ['./busqueda.component.css']
 })
 export class BusquedaRutasComponent implements OnInit{
-  constructor(
-    private rutaService: RutaService,
-    private solicitudService: SolicitudService, 
-    private cdr: ChangeDetectorRef,
-    private authService: AuthService,
-  @Inject(LOCALE_ID) private locale: string) {}
-
-
+  private rutaService = inject(RutaService);
+  private solicitudService = inject(SolicitudService);
+  private cdr = inject(ChangeDetectorRef);
+  private authService = inject(AuthService);
   private fb = inject(FormBuilder);
-
-  showSolicitudForm = false;
-  showErrorForm = false;
+  
+  constructor(@Inject(LOCALE_ID) private locale: string) {}
 
   allRutas = signal<RutaCardResponse[]>([]);
   rutas = signal<RutaCardResponse[]>([]);
-  conductores = signal<ConductorResponse[]>([]);
   loading = signal(true);
+  errorMessage = signal('');
 
-  // Popup que muestra los detalles de las rutas
+  // Popup de detalles
   mensajePopup: string = '';
   mostrarPopup: boolean = false;
-
-  mostrarExitoso: boolean = false;
   rutaDetails = signal<RutaCardResponse[]>([]);
 
+  // Popup de éxito
+  mostrarExitoso: boolean = false;
 
   filterForm: FormGroup = this.fb.group({
     origen: [''],
     destino: [''],
-    hora:[''],
-    fecha:[''],
-    
-    
+    hora: [''],
+    fecha: [''],
   });
-  
-
-  
-  errorMessage = signal('');
 
   ngOnInit() {
     const pasajeroId = this.authService.getPasajeroId();
 
     if (!pasajeroId) {
-    console.error('Usuario no autenticado');
-    return;}
-    this.loadRutas(pasajeroId);
+      console.error('Usuario no autenticado');
+      this.errorMessage.set('Usuario no autenticado');
+      this.loading.set(false);
+      return;
+    }
     
+    this.loadRutas(pasajeroId);
   }
 
-  loadRutas(pasajeroId:number) {
+  loadRutas(pasajeroId: number) {
+    this.loading.set(true);
+    this.errorMessage.set('');
+    
     this.rutaService.getInfo(pasajeroId).subscribe({
       next: (rutas) => {
-        this.loading.set(false);
-        this.rutas.set(rutas);
+        console.log('Rutas cargadas desde backend:', rutas);
         this.allRutas.set(rutas);
-
+        this.rutas.set(rutas);
+        this.loading.set(false);
       },
       error: (error) => {
         console.error('Error cargando rutas:', error);
-        // Mostrar mensaje informativo en lugar de error
-        this.errorMessage.set('No existen rutas bajo los filtros aplicados');
+        this.errorMessage.set('Error al cargar las rutas disponibles');
+        this.loading.set(false);
+        this.rutas.set([]);
+        this.allRutas.set([]);
       }
     });
-
   }
 
   cerrarPopup() {
@@ -349,139 +343,149 @@ export class BusquedaRutasComponent implements OnInit{
     this.rutaDetails.set([dt]);
   }
 
-  mostrarExito(){
-
+  mostrarExito() {
+    this.mostrarPopup = false;
     this.mostrarExitoso = true;
     this.cdr.detectChanges();
   }
 
-  cerrarExito(){
-    window.location.reload();
+  cerrarExito() {
     this.mostrarExitoso = false;
     this.cdr.detectChanges();
-  }
-
-  diferenciaFechas(date1:string, hour1: string){
-      const time1 = Date.now();
-      const _date1 = new Date(date1 + "T" + hour1);
-      const time2 = _date1.getTime();
-      const diffInMs = time2 - time1;
-      
-      const daysToStart = Math.ceil(diffInMs / (1000 * 60 * 60 * 24));
-
-      if(daysToStart <= 1 && daysToStart > 0){
-        console.log("fecha: ", date1, diffInMs);
-        const horasToStart = Math.ceil(diffInMs  / (1000 * 60 * 60 ));
-        if(horasToStart <= 1){
-          return Math.ceil(diffInMs  / (1000 * 60 ));
-        }
-        return horasToStart + " horas";
-        
-      }
-      
-      return daysToStart + " días";
+    
+    // Recargar rutas en lugar de toda la página
+    const pasajeroId = this.authService.getPasajeroId();
+    if (pasajeroId) {
+      this.loadRutas(pasajeroId);
     }
-
-  diferenciaFechas2(date1:string){
-    const _date1 = new Date(date1);
-    const time1 = _date1.getTime();
-    const time2 = Date.now();
-    const diffInMs = Math.abs(time2 - time1);
-    return Math.ceil(diffInMs / (1000 * 60 * 60 * 24));
   }
 
-  clearFilters(){
+  diferenciaFechas(date1: string, hour1: string): string {
+    const ahora = Date.now();
+    const fechaSalida = new Date(date1 + 'T' + hour1);
+    const diffInMs = fechaSalida.getTime() - ahora;
+    
+    if (diffInMs < 0) {
+      return 'ya pasó';
+    }
+    
+    const minutos = Math.floor(diffInMs / (1000 * 60));
+    const horas = Math.floor(diffInMs / (1000 * 60 * 60));
+    const dias = Math.floor(diffInMs / (1000 * 60 * 60 * 24));
+    
+    if (dias > 0) {
+      return dias === 1 ? '1 día' : `${dias} días`;
+    }
+    if (horas > 0) {
+      return horas === 1 ? '1 hora' : `${horas} horas`;
+    }
+    if (minutos > 0) {
+      return minutos === 1 ? '1 minuto' : `${minutos} minutos`;
+    }
+    
+    return 'pronto';
+  }
+
+  diferenciaFechas2(date1: string): number {
+    const fecha = new Date(date1);
+    const ahora = new Date();
+    
+    // Resetear las horas para comparar solo fechas
+    fecha.setHours(0, 0, 0, 0);
+    ahora.setHours(0, 0, 0, 0);
+    
+    const diffInMs = fecha.getTime() - ahora.getTime();
+    const dias = Math.ceil(diffInMs / (1000 * 60 * 60 * 24));
+    
+    return dias;
+  }
+
+  clearFilters() {
+    this.filterForm.reset({
+      origen: '',
+      destino: '',
+      hora: '',
+      fecha: ''
+    });
     this.rutas.set(this.allRutas());
   }
 
   applyFilters() {
-    const origen = this.filterForm.value.origen;
-    const destino = this.filterForm.value.destino;
+    const origen = this.filterForm.value.origen?.trim().toLowerCase();
+    const destino = this.filterForm.value.destino?.trim().toLowerCase();
     const fecha = this.filterForm.value.fecha;
     const hora = this.filterForm.value.hora;
 
+    let filtered = this.allRutas();
 
-    const filtered = this.allRutas().filter(tx => {
-      const txOrigen = tx.origen;
-      const txDestino = tx.destino;
+    // Filtro por origen y destino
+    if (origen || destino) {
+      filtered = filtered.filter(tx => {
+        const matchOrigen = !origen || tx.origen.toLowerCase().includes(origen);
+        const matchDestino = !destino || tx.destino.toLowerCase().includes(destino);
+        return matchOrigen && matchDestino;
+      });
+    }
 
-      if (origen && destino) {
-        return txOrigen == origen && txDestino == destino;
-      }
-      if (origen) {
+    // Filtro por fecha
+    if (fecha) {
+      filtered = filtered.filter(tx => {
+        const diasDiferencia = this.diferenciaFechas2(tx.fechaSalida);
+        
+        if (fecha === 'Hoy') {
+          return diasDiferencia <= 1;
+        }
+        if (fecha === 'Mañana') {
+          return diasDiferencia >= 1 && diasDiferencia <= 2;
+        }
+        if (fecha === 'En 1 semana') {
+          return diasDiferencia <= 7;
+        }
+        return true;
+      });
+    }
 
-        return txOrigen == origen;
-      }
-      if (destino) {
-        return txDestino == destino;
-      }
-      return true;
-    }).filter(tx=>{
-      const txFecha = this.diferenciaFechas2(tx.fechaSalida);
-      if(fecha === 'Hoy'){
-        return txFecha <= 1;
-      }
-      if(fecha === 'Mañana'){
-        return txFecha == 2;
-      }
-      if(fecha === 'En 1 semana'){
-        return txFecha > 4;
-      }
-      return true;
-    }).filter(tx=>{
-
-      if(hora === "Cualquier"){
+    // Filtro por hora
+    if (hora && hora !== 'Cualquier') {
+      filtered = filtered.filter(tx => {
+        const horaSalida = tx.horaSalida; // Formato "HH:mm:ss"
+        const [hours] = horaSalida.split(':').map(Number);
+        
+        if (hora === '06:00 - 09:00') return hours >= 6 && hours < 9;
+        if (hora === '09:00 - 12:00') return hours >= 9 && hours < 12;
+        if (hora === '12:00 - 15:00') return hours >= 12 && hours < 15;
+        if (hora === '15:00 - 18:00') return hours >= 15 && hours < 18;
+        if (hora === '18:00 - 21:00') return hours >= 18 && hours < 21;
+        if (hora === '21:00<') return hours >= 21;
         
         return true;
-      }
-      const txHora = new Date(tx.fechaSalida +"T"+tx.horaSalida);
-      const txIn = new Date(tx.fechaSalida +"T00:00:00");
-
-      const hourMs = txHora.getTime() - txIn.getTime();
-      const hour = hourMs / (1000 * 60 * 60)
-      
-
-      if(hora === "06:00 - 09:00"){
-        
-        return hour >= 6 && hour < 9;
-      }
-      if(hora === "09:00 - 12:00"){
-        return hour >= 9 && hour < 12;
-      }
-      if(hora === "12:00 - 15:00"){
-        return hour >= 12 && hour < 15;
-      }
-      if(hora === "15:00 - 18:00"){
-        return hour >= 15 && hour < 18;
-      }
-      if(hora === "18:00 - 21:00"){
-        return hour >= 18 && hour < 21;
-      }
-      if(hora === "21:00<"){
-        return hour >= 21;
-      }
-
-      return true;
-    });
+      });
+    }
 
     this.rutas.set(filtered);
-
+    console.log('Filtros aplicados. Resultados:', filtered.length);
   }
 
-  sendForm(dt:RutaCardResponse){
+  sendForm(dt: RutaCardResponse) {
     const pasajeroId = this.authService.getPasajeroId();
-    if (!pasajeroId) {
-      console.error('Usuario no autenticado');
-      return;}
-    this.registerForm(dt, pasajeroId);
     
+    if (!pasajeroId) {
+      alert('Debes iniciar sesión como pasajero para solicitar unirse a un viaje');
+      return;
+    }
+
+    // Confirmar antes de enviar
+    if (!confirm(`¿Deseas solicitar unirse al viaje de ${dt.origen} → ${dt.destino}?`)) {
+      return;
+    }
+
+    this.registerForm(dt, pasajeroId);
   }
 
-
-  registerForm(dt:RutaCardResponse, pasajeroId:number){
+  registerForm(dt: RutaCardResponse, pasajeroId: number) {
     const currentDate = formatDate(new Date(), 'yyyy-MM-dd', this.locale);
-    const currentTime= new Date().toLocaleTimeString();
-    console.log("Registrando pasajero de id: ", pasajeroId);
+    const currentTime = new Date().toLocaleTimeString('es-PE', { hour12: false });
+    
     const solicitudReq: SolicitudViajeRequest = {
       estadoSolicitud: EstadoSolicitud.PENDIENTE,
       fecha: currentDate,
@@ -491,21 +495,29 @@ export class BusquedaRutasComponent implements OnInit{
       updatedAt: currentDate
     };
 
-     this.solicitudService.create(solicitudReq).subscribe({
-        next: () => {
-          this.mostrarExito();
-          
-        },
-        error: (error) => {
-          alert(error);
-          console.error('Error creando solicitud de viaje:');
-          this.errorMessage.set('Ha ocurrido un error solicitando unirse a este viaje.');
+    console.log('Enviando solicitud:', solicitudReq);
 
+    this.solicitudService.create(solicitudReq).subscribe({
+      next: (response) => {
+        console.log('Solicitud creada exitosamente:', response);
+        this.mostrarExito();
+      },
+      error: (error) => {
+        console.error('Error creando solicitud:', error);
+        
+        let mensajeError = 'Ha ocurrido un error al solicitar unirse a este viaje.';
+        
+        if (error.status === 400) {
+          mensajeError = 'Ya tienes una solicitud pendiente para este viaje.';
+        } else if (error.status === 404) {
+          mensajeError = 'La ruta no está disponible.';
+        } else if (error.error?.message) {
+          mensajeError = error.error.message;
         }
-      }); 
-
-
-    
+        
+        alert(mensajeError);
+      }
+    });
   }
 
 }

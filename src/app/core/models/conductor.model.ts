@@ -7,6 +7,8 @@ export interface ConductorRequest {
   edad?: number;
   codigoUni: string;
   carrera: string;
+  distrito?: string;
+  fotoPerfil?: string;
 }
 
 export interface ConductorResponse {
@@ -16,5 +18,27 @@ export interface ConductorResponse {
   edad?: number;
   codigoUni: string;
   carrera: string;
+  distrito?: string;
+  fotoPerfil?: string;
+  calificacionPromedio?: number;
+  totalCalificaciones?: number;
+}
+
+export interface ComentarioConductorResponse {
+  idComentario: number;
+  nombreUsuario: string;
+  calificacion: number;
+  comentario: string;
+  fecha: string;
+}
+
+export interface SolicitudViajeCardResponse {
+  idRuta: number;
+  origen: string;
+  destino: string;
+  fechaSalida: string;
+  horaSalida: string;
+  capacidad: number;
+  tarifa: number;
 }
 

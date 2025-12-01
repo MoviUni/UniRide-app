@@ -1,0 +1,183 @@
+<!-- src/app/features/configuracion/pages/configuracion-vehiculo/configuracion-vehiculo.component.html -->
+
+<div class="configuracion-root">
+  <!-- Breadcrumb -->
+  <nav class="breadcrumb">
+    <a routerLink="/rutas" class="breadcrumb-link">Inicio</a>
+    <span class="breadcrumb-separator">›</span>
+    <a routerLink="/rutas/perfil-conductor" class="breadcrumb-link">Mi cuenta</a>
+    <span class="breadcrumb-separator">›</span>
+    <span class="breadcrumb-current">Configuración de la cuenta</span>
+  </nav>
+
+  <!-- Título principal -->
+  <h1 class="titulo-principal">Mi cuenta</h1>
+
+  <!-- Contenedor principal -->
+  <div class="contenedor-principal">
+    <!-- Sidebar izquierdo -->
+    <aside class="sidebar">
+      <div class="menu-item" (click)="navegarConfiguracionCuenta()">
+        <span class="menu-texto">Configuración de la cuenta</span>
+      </div>
+      <div class="menu-divider"></div>
+      <div class="menu-item active">
+        <span class="menu-texto menu-link">Configuración del vehículo</span>
+      </div>
+      <div class="menu-divider"></div>
+      <div class="menu-item" (click)="navegarHistorial()">
+        <span class="menu-texto">Historial de viajes</span>
+      </div>
+
+      <!-- Foto de perfil en el sidebar -->
+      <div class="sidebar-foto-container">
+        <div class="foto-container">
+          <img [src]="fotoPerfil()" alt="Foto de perfil" class="foto-perfil" />
+        </div>
+        <label class="btn-cambiar-foto">
+          Cambiar foto de perfil
+          <input
+            type="file"
+            accept="image/*"
+            (change)="onFileSelected($event)"
+            style="display: none;"
+          />
+        </label>
+      </div>
+    </aside>
+
+    <!-- Contenido principal -->
+    <main class="contenido-principal">
+      <h2 class="titulo-seccion">Configuración del vehículo</h2>
+
+      <!-- Loading -->
+      @if (loading()) {
+        <div class="loading-block">
+          <div class="loader"></div>
+          <span class="loading-text">Cargando datos...</span>
+        </div>
+      }
+
+      <!-- Error -->
+      @if (errorMessage()) {
+        <div class="error">{{ errorMessage() }}</div>
+      }
+
+      <!-- Success -->
+      @if (successMessage()) {
+        <div class="success">{{ successMessage() }}</div>
+      }
+
+      <!-- Formulario -->
+      <form [formGroup]="vehiculoForm" class="formulario-vehiculo">
+        <!-- Matrícula -->
+        <div class="form-group">
+          <label for="matricula" class="form-label">Matrícula:</label>
+          <input
+            type="text"
+            id="matricula"
+            formControlName="matricula"
+            class="form-input"
+            placeholder="Empty label"
+          />
+        </div>
+
+        <!-- Marca -->
+        <div class="form-group">
+          <label for="marca" class="form-label">Marca:</label>
+          <input
+            type="text"
+            id="marca"
+            formControlName="marca"
+            class="form-input"
+            placeholder="Empty label"
+          />
+        </div>
+
+        <!-- Modelo -->
+        <div class="form-group">
+          <label for="modelo" class="form-label">Modelo:</label>
+          <input
+            type="text"
+            id="modelo"
+            formControlName="modelo"
+            class="form-input"
+            placeholder="Empty label"
+          />
+        </div>
+
+        <!-- Capacidad -->
+        <div class="form-group">
+          <label for="capacidad" class="form-label">Capacidad:</label>
+          <input
+            type="number"
+            id="capacidad"
+            formControlName="capacidad"
+            class="form-input"
+            placeholder="Empty label"
+            min="1"
+          />
+        </div>
+
+        <!-- Color -->
+        <div class="form-group">
+          <label for="color" class="form-label">Color:</label>
+          <input
+            type="text"
+            id="color"
+            formControlName="color"
+            class="form-input"
+            placeholder="Empty label"
+          />
+        </div>
+
+        <!-- Aire Acondicionado -->
+        <div class="form-group">
+          <label class="form-label">Aire Acondicionado:</label>
+          <div class="radio-group">
+            <label class="radio-option">
+              <input
+                type="radio"
+                name="aireAcondicionado"
+                [value]="true"
+                formControlName="aireAcondicionado"
+                class="radio-input"
+              />
+              <span class="radio-label">Sí</span>
+            </label>
+            <label class="radio-option">
+              <input
+                type="radio"
+                name="aireAcondicionado"
+                [value]="false"
+                formControlName="aireAcondicionado"
+                class="radio-input"
+              />
+              <span class="radio-label">No</span>
+            </label>
+          </div>
+        </div>
+      </form>
+
+      <!-- Botones -->
+      <div class="botones-container">
+        <button
+          type="button"
+          class="btn btn-guardar"
+          (click)="guardarCambios()"
+          [disabled]="loading()"
+        >
+          Guardar cambios
+        </button>
+        <button
+          type="button"
+          class="btn btn-cancelar"
+          (click)="cancelar()"
+          [disabled]="loading()"
+        >
+          Cancelar
+        </button>
+      </div>
+    </main>
+  </div>
+</div>

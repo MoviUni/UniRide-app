@@ -1,0 +1,156 @@
+<!-- src/app/features/configuracion/pages/configuracion-pasajero/configuracion-pasajero.component.html -->
+
+<div class="configuracion-root">
+  <!-- Breadcrumb -->
+  <nav class="breadcrumb">
+    <a routerLink="/rutas" class="breadcrumb-link">Inicio</a>
+    <span class="breadcrumb-separator">›</span>
+    <a routerLink="/rutas/perfil-pasajero" class="breadcrumb-link">Mi cuenta</a>
+    <span class="breadcrumb-separator">›</span>
+    <span class="breadcrumb-current">Configuración de la cuenta</span>
+  </nav>
+
+  <!-- Título principal -->
+  <h1 class="titulo-principal">Mi cuenta</h1>
+
+  <!-- Contenedor principal -->
+  <div class="contenedor-principal">
+    <!-- Sidebar izquierdo -->
+    <aside class="sidebar">
+      <div class="menu-item active">
+        <span class="menu-texto">Configuración de la cuenta</span>
+      </div>
+      <div class="menu-divider"></div>
+      <div class="menu-item" (click)="navegarHistorial()">
+        <span class="menu-texto">Historial de viajes</span>
+      </div>
+    </aside>
+
+    <!-- Contenido principal -->
+    <main class="contenido-principal">
+      <h2 class="titulo-seccion">Configuración de la cuenta</h2>
+
+      <!-- Loading -->
+      @if (loading()) {
+        <div class="loading-block">
+          <div class="loader"></div>
+          <span class="loading-text">Cargando datos...</span>
+        </div>
+      }
+
+      <!-- Error -->
+      @if (errorMessage()) {
+        <div class="error">{{ errorMessage() }}</div>
+      }
+
+      <!-- Success -->
+      @if (successMessage()) {
+        <div class="success">{{ successMessage() }}</div>
+      }
+
+      <!-- Contenedor con foto y formulario -->
+      <div class="contenedor-flex">
+        <!-- Columna izquierda: Foto de perfil -->
+        <div class="columna-foto">
+          <div class="foto-container">
+            <img [src]="fotoPerfil()" alt="Foto de perfil" class="foto-perfil" />
+          </div>
+          <label class="btn-cambiar-foto">
+            Cambiar foto de perfil
+            <input
+              type="file"
+              accept="image/*"
+              (change)="onFileSelected($event)"
+              style="display: none;"
+            />
+          </label>
+        </div>
+
+        <!-- Columna derecha: Formulario -->
+        <div class="columna-formulario">
+          <form [formGroup]="configuracionForm">
+            <!-- Nombres -->
+            <div class="form-group">
+              <label for="nombres" class="form-label">Nombres:</label>
+              <input
+                type="text"
+                id="nombres"
+                formControlName="nombres"
+                class="form-input"
+                placeholder="Empty label"
+              />
+            </div>
+
+            <!-- Apellidos -->
+            <div class="form-group">
+              <label for="apellidos" class="form-label">Apellidos:</label>
+              <input
+                type="text"
+                id="apellidos"
+                formControlName="apellidos"
+                class="form-input"
+                placeholder="Empty label"
+              />
+            </div>
+
+            <!-- Correo electrónico -->
+            <div class="form-group">
+              <label for="email" class="form-label">Correo electrónico:</label>
+              <input
+                type="email"
+                id="email"
+                formControlName="email"
+                class="form-input"
+                placeholder="Empty label"
+              />
+            </div>
+
+            <!-- Teléfono -->
+            <div class="form-group">
+              <label for="telefono" class="form-label">Teléfono:</label>
+              <input
+                type="tel"
+                id="telefono"
+                formControlName="telefono"
+                class="form-input"
+                placeholder="Empty label"
+              />
+            </div>
+
+            <!-- Distrito -->
+            <div class="form-group">
+              <label for="distrito" class="form-label">Distrito:</label>
+              <input
+                type="text"
+                id="distrito"
+                formControlName="distrito"
+                class="form-input"
+                placeholder="Empty label"
+              />
+            </div>
+          </form>
+        </div>
+      </div>
+
+      <!-- Botones -->
+      <div class="botones-container">
+        <button
+          type="button"
+          class="btn btn-guardar"
+          (click)="guardarCambios()"
+          [disabled]="loading()"
+        >
+          Guardar cambios
+        </button>
+        <button
+          type="button"
+          class="btn btn-cancelar"
+          (click)="cancelar()"
+          [disabled]="loading()"
+        >
+          Cancelar
+        </button>
+      </div>
+    </main>
+  </div>
+</div>

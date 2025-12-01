@@ -1,48 +1,79 @@
+<!-- src/app/features/historial/pages/historial-conductor/historial-conductor.html -->
 <div class="historial-root">
-
-  <h2 class="title">Historial de viajes publicados</h2>
-
-  <div *ngIf="loading" class="loading-block">
-    <div class="loader"></div>
-    <div class="loading-text">Cargando historial...</div>
+  <div class="breadcrumb">
+    <a routerLink="/main/conductor" class="breadcrumb-link">Inicio</a>
+    <span class="breadcrumb-separator">›</span>
+    <a routerLink="/accounts/conductor" class="breadcrumb-link">Mi cuenta</a>
+    <span class="breadcrumb-separator">›</span>
+    <span class="breadcrumb-current">Historial de viajes</span>
   </div>
 
-  <div *ngIf="error" class="error">{{ error }}</div>
-
-  <div *ngIf="!loading && historial.length == 0" class="empty">
-    Aún no tienes viajes registrados.
+  <div class="header-container">
+    <h2 class="title">Historial de viajes</h2>
+    <button type="button" class="btn-estadisticas" routerLink="/rutas/estadisticas">
+      Ver estadísticas
+    </button>
   </div>
 
-  <div class="list" *ngIf="!loading && historial.length > 0">
-    <article *ngFor="let item of historial" class="history-card">
+  @if (loading()) {
+    <div class="loading-block">
+      <div class="loader"></div>
+      <div class="loading-text">Cargando historial...</div>
+    </div>
+  }
 
-      <div class="card-left">
-        <div class="route">
-          <span class="origen">{{ item.origen ?? '--' }}</span>
-          <span class="arrow">→</span>
-          <span class="destino">{{ item.destino ?? '--' }}</span>
+  @if (errorMessage()) {
+    <div class="error">{{ errorMessage() }}</div>
+  }
+
+  @if (!loading() && historialAgrupado().length === 0) {
+    <div class="empty">
+      <p>Aún no tienes viajes realizados en tu historial.</p>
+    </div>
+  }
+
+  @if (!loading() && historialAgrupado().length > 0) {
+    <div class="historial-list">
+      @for (grupo of historialAgrupado(); track grupo.fecha) {
+        <div class="fecha-grupo">
+          <h3 class="fecha-titulo">{{ grupo.fechaCompleta }}</h3>
+
+          @for (viaje of grupo.viajes; track viaje.idSolicitudViaje) {
+            <div class="viaje-card">
+              <div class="viaje-header">
+                <div class="ruta">
+                  <span class="origen">{{ viaje.origen }}</span>
+                  <span class="arrow">→</span>
+                  <span class="destino">{{ viaje.destino }}</span>
+                </div>
+                <div class="precio">s/. {{ viaje.tarifa.toFixed(2) }}</div>
+              </div>
+
+              <div class="viaje-info">
+                <span class="hora-salida">Hora de salida: {{ viaje.horaSalida }}</span>
+              </div>
+
+              <div class="viaje-footer">
+                <div class="pasajero-info">
+                  <div class="pasajero-details">
+                    <span class="pasajero-label">Pasajeros: {{ viaje.asientosDisponibles }}</span>
+                  </div>
+                </div>
+
+                <div class="viaje-meta">
+                  <button 
+                    type="button" 
+                    class="btn-ver-detalles"
+                    (click)="verDetalles(viaje)"
+                  >
+                    Ver detalles
+                  </button>
+                </div>
+              </div>
+            </div>
+          }
         </div>
-
-        <div class="departure">
-          Fecha: <span>{{ item.fechaSalida ? (item.fechaSalida | date:'dd/MM/yyyy') : '--' }}</span>
-        </div>
-
-        <div class="departure">
-          Hora de salida: <span>{{ formatHora(item) }}</span>
-        </div>
-
-        <div class="card-meta">
-          <div class="meta-info">
-            <div class="driver">Pasajero: {{ displayPassenger(item) }}</div>
-          </div>
-        </div>
-      </div>
-
-      <div class="card-right">
-        <div class="price">s/. {{ formatPrice(item) }}</div>
-      </div>
-
-    </article>
-  </div>
-
+      }
+    </div>
+  }
 </div>

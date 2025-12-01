@@ -1,66 +1,178 @@
-<div class="perfil-container">
-
-  <div class="perfil-card">
-    <div class="info">
-
-      <h1>{{ conductor?.nombre }} {{ conductor?.apellido }}</h1>
-
-
-      <p>
-        <b>Código Universitario:</b>
-        {{ conductor?.codigoUni || 'Sin código' }}
-      </p>
-
-      <p>
-        <b>Edad:</b>
-        {{ conductor?.edad || 'No disponible' }}
-      </p>
-      <p>
-        <b>Rol: </b>
-        Conductor
-      </p>
-    </div>
-    
+<!-- src/app/features/conductor/pages/perfil-conductor.html -->
+<div class="perfil-root">
+  <div class="breadcrumb">
+    <a routerLink="/main/conductor" class="breadcrumb-link">Inicio</a>
+    <span class="breadcrumb-separator">›</span>
+    <span class="breadcrumb-current">Mi cuenta</span>
   </div>
 
-  <div class="auto-card">
-    <div class="info">
-      <h1>Vehículo</h1>
-
-      <p>
-        <b>Marca</b>
-        {{ vehiculo?.marca || 'No disponible' }}
-      </p>
-
-      <p>
-        <b>Modelo</b>
-        {{ vehiculo?.modelo || 'No disponible' }}
-      </p>
-
-      <p>
-        <b>Color</b>
-        {{ vehiculo?.color || 'No disponible' }}
-      </p>
-
-      <p>
-        <b>Asientos: </b>
-        {{ vehiculo?.capacidad || 'No disponible' }}
-      </p>
-
-
-      <p>
-        <b>Placa: </b>
-        {{ vehiculo?.placa || 'No disponible' }}
-      </p>
-
-      <p>
-        <b>SOAT: </b>
-        {{ vehiculo?.soat ? 'SI' : 'NO' }}
-      </p>
+  @if (loading()) {
+    <div class="loading-block">
+      <div class="loader"></div>
+      <div class="loading-text">Cargando perfil...</div>
     </div>
-      
-      
+  }
 
+  @if (errorMessage()) {
+    <div class="error">{{ errorMessage() }}</div>
+  }
+
+  @if (!loading() && conductor()) {
+    <!-- Tarjeta de perfil del conductor -->
+    <div class="perfil-card">
+      <div class="perfil-foto">
+        <div class="foto-container">
+          <img [src]="fotoPerfil()" alt="Foto de perfil" class="foto-perfil" />
+          <label for="file-upload" class="upload-btn">
+            <input 
+              id="file-upload" 
+              type="file" 
+              accept="image/*" 
+              (change)="onFileSelected($event)"
+              style="display: none;"
+            />
+            <span class="upload-icon">📷</span>
+          </label>
+        </div>
+      </div>
+
+      <div class="perfil-info">
+        <h1 class="nombre-completo">{{ conductor()!.nombre }} {{ conductor()!.apellido }}</h1>
+        
+        <div class="info-item">
+          <span class="label">Distrito:</span>
+          <span class="value">{{ conductor()!.distrito || 'No especificado' }}</span>
+        </div>
+
+        <div class="info-item">
+          <span class="label">Carrera:</span>
+          <span class="value">{{ conductor()!.carrera || 'No especificada' }}</span>
+        </div>
+
+        <div class="info-item">
+          <span class="label">Código Universitario:</span>
+          <span class="value">{{ conductor()!.codigoUni }}</span>
+        </div>
+
+        <div class="calificacion-container">
+          <span class="label">Calificación ({{ getTotalCalificaciones() }}):</span>
+          <div class="rating">
+            @for (estrella of getEstrellas(getCalificacionPromedio()); track $index) {
+              <span class="estrella" [class.filled]="estrella === '★'">{{ estrella }}</span>
+            }
+          </div>
+        </div>
+      </div>
     </div>
 
+    <!-- Sección de dos columnas -->
+    <div class="columnas-container">
+      <!-- Columna izquierda: Vehículo -->
+      <div class="vehiculo-section">
+        <h2 class="seccion-titulo">Vehículo</h2>
+        
+        @if (vehiculo()) {
+          <div class="vehiculo-card">
+            <div class="vehiculo-imagen">
+              <img src="assets/car-placeholder.png" alt="Vehículo" class="car-img" />
+            </div>
+            
+            <div class="vehiculo-info">
+              <div class="info-item-vehiculo">
+                <span class="label-vehiculo">Matrícula:</span>
+                <span class="value-vehiculo">{{ vehiculo()!.placa }}</span>
+              </div>
+              
+              <div class="info-item-vehiculo">
+                <span class="label-vehiculo">Marca:</span>
+                <span class="value-vehiculo">{{ vehiculo()!.marca }}</span>
+              </div>
+              
+              <div class="info-item-vehiculo">
+                <span class="label-vehiculo">Modelo:</span>
+                <span class="value-vehiculo">{{ vehiculo()!.modelo }}</span>
+              </div>
+              
+              <div class="info-item-vehiculo">
+                <span class="label-vehiculo">Capacidad:</span>
+                <span class="value-vehiculo">{{ vehiculo()!.capacidad }} pasajeros</span>
+              </div>
+              
+              <div class="info-item-vehiculo">
+                <span class="label-vehiculo">Color:</span>
+                <span class="value-vehiculo">{{ vehiculo()!.color }}</span>
+              </div>
+              
+              <div class="info-item-vehiculo">
+                <span class="label-vehiculo">Aire Acondicionado:</span>
+                <span class="value-vehiculo">{{ vehiculo()!.aireAcondicionado ? 'Sí' : 'No' }}</span>
+              </div>
+            </div>
+          </div>
+        } @else {
+          <p class="sin-vehiculo">No tienes un vehículo registrado.</p>
+        }
+      </div>
+
+      <!-- Columna derecha: Solicita un viaje -->
+      <div class="solicitudes-section">
+        <h2 class="seccion-titulo">Solicita un viaje</h2>
+        
+        @if (solicitudes().length === 0) {
+          <p class="sin-solicitudes">No tienes próximos viajes programados.</p>
+        } @else {
+          @for (solicitud of solicitudes(); track solicitud.idRuta) {
+            <div class="solicitud-card">
+              <div class="solicitud-fecha">{{ formatFecha(solicitud.fechaSalida) }}</div>
+              
+              <div class="solicitud-header">
+                <div class="ruta">
+                  <span class="origen">{{ solicitud.origen }}</span>
+                  <span class="arrow">→</span>
+                  <span class="destino">{{ solicitud.destino }}</span>
+                </div>
+                <div class="precio">s/. {{ solicitud.tarifa.toFixed(2) }}</div>
+              </div>
+              
+              <div class="solicitud-info">
+                <span class="hora-salida">Hora de salida: {{ solicitud.horaSalida }}</span>
+                <span class="capacidad">Capacidad: {{ solicitud.capacidad }} personas</span>
+              </div>
+              
+              <button 
+                type="button" 
+                class="btn-ver-detalles"
+                (click)="verDetalles(solicitud)"
+              >
+                Ver detalles
+              </button>
+            </div>
+          }
+        }
+      </div>
+    </div>
+
+    <!-- Sección de comentarios -->
+    <div class="comentarios-section">
+      <h2 class="comentarios-titulo">Comentarios</h2>
+
+      @if (comentarios().length === 0) {
+        <p class="sin-comentarios">Aún no tienes comentarios.</p>
+      }
+
+      @for (comentario of comentarios(); track comentario.idComentario) {
+        <div class="comentario-card">
+          <div class="comentario-header">
+            <span class="comentario-nombre">{{ comentario.nombreUsuario }}</span>
+            <div class="comentario-rating">
+              @for (estrella of getEstrellas(comentario.calificacion); track $index) {
+                <span class="estrella-comentario" [class.filled]="estrella === '★'">{{ estrella }}</span>
+              }
+            </div>
+          </div>
+          <p class="comentario-texto">{{ comentario.comentario }}</p>
+        </div>
+      }
+    </div>
+  }
 </div>

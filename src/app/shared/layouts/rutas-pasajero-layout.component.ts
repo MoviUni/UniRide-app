@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 import { RouterOutlet } from '@angular/router';
 
-import { SidebarPasajeroComponent } from '@shared/components/sidebar/sidebar.pasajero.component';
+import { SidebarPasajeroComponent } from '@shared/components/sidebar/sidebar-pasajero.component';
 
 @Component({
   selector: 'app-rutas-pasajero-layout',

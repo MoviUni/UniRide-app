@@ -9,7 +9,7 @@ export const PERFIL_PASAJERO_ROUTES: Routes = [
       {
         path: '',
         loadComponent: () =>
-          import('./pages/perfil-pasajero').then(
+          import('./pages/perfil-pasajero.component').then(
             (m) => m.PerfilPasajero
           ),
       },

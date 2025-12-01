@@ -4,7 +4,7 @@ import { AuthService } from '../../../core/services/auth.service';
 import { RoleType } from '../../../core/models/usuario.model';
 
 @Component({
-  selector: 'app-sidebar-pasajero',
+  selector: 'app-sidebar',
   standalone: true,
   imports: [RouterModule],
   template: `
@@ -65,6 +65,20 @@ import { RoleType } from '../../../core/models/usuario.model';
 
       <div class="ur-divider"></div>
 
+      <!-- ESTADÍSTICAS DE VIAJES -->
+      <button
+        class="ur-icon-btn"
+        type="button"
+        aria-label="Estadísticas de viajes"
+        (click)="goEstadisticas()"
+      >
+        <span class="ur-icon">
+          <img src="assets/Estadisticas.png" alt="Estadísticas" />
+        </span>
+      </button>
+
+      <div class="ur-divider"></div>
+
       <!-- PERFIL -->
       <button
         class="ur-icon-btn"
@@ -73,7 +87,35 @@ import { RoleType } from '../../../core/models/usuario.model';
         (click)="goPerfil()"
       >
         <span class="ur-icon">
-          <img src="assets/sidebar/Engranaje.png" alt="Perfil" />
+          <img src="assets/sidebar/user.png" alt="Perfil" />
+        </span>
+      </button>
+
+      <div class="ur-divider"></div>
+
+      <!-- VEHÍCULO -->
+      <button
+        class="ur-icon-btn"
+        type="button"
+        aria-label="Mi vehículo"
+        (click)="goVehiculo()"
+      >
+        <span class="ur-icon">
+          <img src="assets/sidebar/auto_icon.png" alt="Vehículo" />
+        </span>
+      </button>
+
+      <div class="ur-divider"></div>
+
+      <!-- CONFIGURACIÓN -->
+      <button
+        class="ur-icon-btn"
+        type="button"
+        aria-label="Configuración"
+        (click)="goConfiguracion()"
+      >
+        <span class="ur-icon">
+          <img src="assets/sidebar/Engranaje.png" alt="Configuración" />
         </span>
       </button>
 
@@ -194,7 +236,7 @@ import { RoleType } from '../../../core/models/usuario.model';
     }
   `],
 })
-export class SidebarPasajeroComponent {
+export class SidebarComponent {
   private router = inject(Router);
   private authService = inject(AuthService);
 
@@ -218,25 +260,63 @@ export class SidebarPasajeroComponent {
 
   /** Journey → publicar ruta */
   goPublicarRuta(): void {
-    this.router.navigate(['/rutas/pasajero/buscar']);
+    this.router.navigate(['/rutas/publicar-ruta']);
   }
 
   /** Ubicación → solicitudes (depende de rol) */
   goSolicitudes(): void {
+    const role = this.currentRole();
 
-    this.router.navigate(['/solicitudes/pasajero/estados']);
+    if (role === RoleType.ROLE_PASAJERO) {
+      this.router.navigate(['/solicitudes/pasajero/estados']);
+    } else if (role === RoleType.ROLE_CONDUCTOR) {
+      this.router.navigate(['/rutas/mis-rutas']);
+      // Cuando tengas /solicitudes/conductor:
+      // this.router.navigate(['/solicitudes/conductor']);
+    } else {
+      this.router.navigate(['/auth/login']);
+    }
   }
 
   /** Libro → historial de viajes (por ahora estadísticas de rutas) */
   goHistorial(): void {
-    this.router.navigate(['/historial/pasajero']);
-    
+    const role = this.currentRole();
+
+    if (role === RoleType.ROLE_CONDUCTOR) {
+      // TODO: Implementar página de historial
+      this.router.navigate(['/historial/conductor']);
+    } else if(role === RoleType.ROLE_PASAJERO){
+      this.router.navigate(['/historial/pasajero']);
+    } 
+    else {
+      this.router.navigate(['/auth/login']);
+    }
   }
 
-  /** Engranaje → perfil (por ahora main según rol) */
-  goPerfil(): void {
-    this.router.navigate(['/perfil-pasajero']);
+  /** Estadísticas → página de estadísticas */
+  goEstadisticas(): void {
+    const role = this.currentRole();
 
+    if (role === RoleType.ROLE_CONDUCTOR || role === RoleType.ROLE_PASAJERO) {
+      this.router.navigate(['/rutas/estadisticas']);
+    } else {
+      this.router.navigate(['/auth/login']);
+    }
+  }
+
+  /** User → perfil conductor */
+  goPerfil(): void {
+    this.router.navigate(['/rutas/perfil-conductor']);
+  }
+
+  /** Auto → configuración del vehículo */
+  goVehiculo(): void {
+    this.router.navigate(['/rutas/configuracion-vehiculo']);
+  }
+
+  /** Engranaje → configuración conductor */
+  goConfiguracion(): void {
+    this.router.navigate(['/rutas/configuracion-conductor']);
   }
 
   /** Botón ON → logout */

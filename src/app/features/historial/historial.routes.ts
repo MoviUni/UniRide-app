@@ -1,20 +1,27 @@
 // src/app/features/historial/historial.routes.ts
 import { Routes } from '@angular/router';
 import { RutasPasajeroLayoutComponent } from '@shared/layouts/rutas-pasajero-layout.component';
-import { HistorialPasajero } from './pages/historial-pasajero/historial-pasajero';
-import { HistorialConductor } from './pages/historial-conductor/historial-conductor';
+import { RutasLayoutComponent } from '@shared/layouts/rutas-layout.component';
+import { HistorialPasajero } from './pages/historial-pasajero/historial-pasajero.component';
+import { HistorialConductor } from './pages/historial-conductor/historial-conductor.component';
 
 export const HISTORIAL_ROUTES: Routes = [
   {
-    path: '',
+    path: 'pasajero',
     component: RutasPasajeroLayoutComponent,
     children: [
       {
-        path: 'pasajero',
+        path: '',
         component: HistorialPasajero,
-      },
+      }
+    ]
+  },
+  {
+    path: 'conductor',
+    component: RutasLayoutComponent,
+    children: [
       {
-        path: 'conductor',
+        path: '',
         component: HistorialConductor,
       }
     ]

@@ -2,6 +2,43 @@
 div {
   font-family: "Poppins", sans-serif;
 }
+
+/* Estilos para los filtros */
+.filtros-container {
+  display: flex;
+  gap: 15px;
+  margin: 20px auto;
+  max-width: 800px;
+  justify-content: center;
+  flex-wrap: wrap;
+  padding: 0 20px;
+}
+
+.filtro-btn {
+  padding: 10px 20px;
+  border: 2px solid #DD2D4A;
+  background: white;
+  color: #DD2D4A;
+  border-radius: 25px;
+  font-family: 'Poppins', sans-serif;
+  font-weight: 500;
+  font-size: 14px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.filtro-btn:hover {
+  background: #FDE5DF;
+  transform: translateY(-2px);
+  box-shadow: 0 4px 8px rgba(221, 45, 74, 0.2);
+}
+
+.filtro-btn.active {
+  background: #DD2D4A;
+  color: white;
+  box-shadow: 0 4px 12px rgba(221, 45, 74, 0.4);
+}
+
 .solicitarunirse_span {
   color: white;
   font-size: 16.17px;

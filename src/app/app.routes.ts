@@ -61,6 +61,22 @@ export const routes: Routes = [
         loadChildren: () =>
           import('./features/conductor/perfil-conductor.routes')
             .then(m => m.PERFIL_CONDUCTOR_ROUTES)
+      },
+      // Redirecciones para mantener compatibilidad
+      {
+        path: 'configuracion/pasajero',
+        redirectTo: 'rutas/configuracion-pasajero',
+        pathMatch: 'full'
+      },
+      {
+        path: 'configuracion/conductor',
+        redirectTo: 'rutas/configuracion-conductor',
+        pathMatch: 'full'
+      },
+      {
+        path: 'configuracion/vehiculo',
+        redirectTo: 'rutas/configuracion-vehiculo',
+        pathMatch: 'full'
       }
     ],
   },

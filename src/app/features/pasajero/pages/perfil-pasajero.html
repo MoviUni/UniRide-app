@@ -1,44 +1,89 @@
-<div class="perfil-container">
-
-  <div class="perfil-card">
-    <div class="info">
-
-      <h1>{{ pasajero?.nombre }} {{ pasajero?.apellido }}</h1>
-
-      <!--<p>
-        <b>Carrera:</b>
-        {{ pasajero?.carrera || 'No disponible' }}
-      </p>-->
-
-      <p>
-        <b>Código Universitario:</b>
-        {{ pasajero?.codigoUni || 'No disponible' }}
-      </p>
-
-      <p>
-        <b>Edad:</b>
-        {{ pasajero?.edad || 'No disponible' }}
-      </p>
-
-      <p>
-        <b>DNI:</b>
-        {{ pasajero?.dni || 'No disponible' }}
-      </p>
-
-
-      <p>
-        <b>Rol: </b>
-        Pasajero
-      </p>
-
-    </div>
-
-    <!--<div class="foto">
-      <img
-        [src]="pasajero?.foto || 'assets/ConductorLogo.png'"
-        alt="Foto"
-      >
-    </div>-->
+<!-- src/app/features/pasajero/pages/perfil-pasajero.html -->
+<div class="perfil-root">
+  <div class="breadcrumb">
+    <a routerLink="/main/pasajero" class="breadcrumb-link">Inicio</a>
+    <span class="breadcrumb-separator">›</span>
+    <span class="breadcrumb-current">Mi cuenta</span>
   </div>
 
+  @if (loading()) {
+    <div class="loading-block">
+      <div class="loader"></div>
+      <div class="loading-text">Cargando perfil...</div>
+    </div>
+  }
+
+  @if (errorMessage()) {
+    <div class="error">{{ errorMessage() }}</div>
+  }
+
+  @if (!loading() && pasajero()) {
+    <div class="perfil-card">
+      <div class="perfil-info">
+        <h1 class="nombre-completo">{{ pasajero()!.nombre }} {{ pasajero()!.apellido }}</h1>
+        
+        <div class="info-item">
+          <span class="label">Distrito:</span>
+          <span class="value">{{ pasajero()!.distrito || 'No especificado' }}</span>
+        </div>
+
+        <div class="info-item">
+          <span class="label">Carrera:</span>
+          <span class="value">{{ pasajero()!.carrera || 'No especificada' }}</span>
+        </div>
+
+        <div class="info-item">
+          <span class="label">Código Universitario:</span>
+          <span class="value">{{ pasajero()!.codigoUni }}</span>
+        </div>
+
+        <div class="calificacion-container">
+          <span class="label">Calificación ({{ getTotalCalificaciones() }}):</span>
+          <div class="rating">
+            @for (estrella of getEstrellas(getCalificacionPromedio()); track $index) {
+              <span class="estrella" [class.filled]="estrella === '★'">{{ estrella }}</span>
+            }
+          </div>
+        </div>
+      </div>
+
+      <div class="perfil-foto">
+        <div class="foto-container">
+          <img [src]="fotoPerfil()" alt="Foto de perfil" class="foto-perfil" />
+          <label for="file-upload" class="upload-btn">
+            <input 
+              id="file-upload" 
+              type="file" 
+              accept="image/*" 
+              (change)="onFileSelected($event)"
+              style="display: none;"
+            />
+            <span class="upload-icon">📷</span>
+          </label>
+        </div>
+      </div>
+    </div>
+
+    <div class="comentarios-section">
+      <h2 class="comentarios-titulo">Comentarios</h2>
+
+      @if (comentarios().length === 0) {
+        <p class="sin-comentarios">Aún no tienes comentarios.</p>
+      }
+
+      @for (comentario of comentarios(); track comentario.idComentario) {
+        <div class="comentario-card">
+          <div class="comentario-header">
+            <span class="comentario-nombre">{{ comentario.nombreUsuario }}</span>
+            <div class="comentario-rating">
+              @for (estrella of getEstrellas(comentario.calificacion); track $index) {
+                <span class="estrella-comentario" [class.filled]="estrella === '★'">{{ estrella }}</span>
+              }
+            </div>
+          </div>
+          <p class="comentario-texto">{{ comentario.comentario }}</p>
+        </div>
+      }
+    </div>
+  }
 </div>

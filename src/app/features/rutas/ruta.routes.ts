@@ -16,6 +16,24 @@ export const RUTA_ROUTES: Routes = [
   },
   {
     path: '',
+    component: RutasPasajeroLayoutComponent,
+    children: [
+      {
+        path: 'configuracion-pasajero',
+        loadComponent: () =>
+          import('../configuracion/pages/configuracion-pasajero/configuracion-pasajero.component')
+            .then(m => m.ConfiguracionPasajeroComponent),
+      },
+      {
+        path: 'perfil-pasajero',
+        loadComponent: () =>
+          import('../pasajero/pages/perfil-pasajero.component')
+            .then(m => m.PerfilPasajero),
+      },
+    ]
+  },
+  {
+    path: '',
     component: RutasLayoutComponent,   // 👈 aquí va el layout con sidebar
     children: [
       // /rutas -> /rutas/estadisticas
@@ -56,6 +74,30 @@ export const RUTA_ROUTES: Routes = [
         loadComponent: () =>
           import('./page/gestionar-viaje/gestionar-viaje.component')
             .then(m => m.GestionarViajeComponent),
+      },
+
+      // Perfil conductor
+      {
+        path: 'perfil-conductor',
+        loadComponent: () =>
+          import('../conductor/pages/perfil-conductor.component')
+            .then(m => m.PerfilConductor),
+      },
+
+      // Configuración conductor
+      {
+        path: 'configuracion-conductor',
+        loadComponent: () =>
+          import('../configuracion/pages/configuracion-conductor/configuracion-conductor.component')
+            .then(m => m.ConfiguracionConductorComponent),
+      },
+
+      // Configuración vehículo
+      {
+        path: 'configuracion-vehiculo',
+        loadComponent: () =>
+          import('../configuracion/pages/configuracion-vehiculo/configuracion-vehiculo.component')
+            .then(m => m.ConfiguracionVehiculoComponent),
       },
 
       // Fallback opcional dentro de /rutas
