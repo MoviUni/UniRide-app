@@ -66,17 +66,18 @@ export class ModalCalificacionComponent {
     this.errorMessage.set('');
 
     const request: CalificacionRequest = {
-      calificacion: this.calificacionSeleccionada(),
-      comentario: this.calificacionForm.value.comentario,
-      idSolicitudViaje: this.idSolicitudViaje
+      puntaje: this.calificacionSeleccionada(),
+      comentario: this.calificacionForm.value.comentario
     };
 
-    // Asignar el ID según el tipo de usuario
-    if (this.tipoUsuario === 'conductor') {
-      request.idConductor = this.idUsuarioCalificado;
-    } else {
-      request.idPasajero = this.idUsuarioCalificado;
+    // Solo asignar el ID si está disponible
+    if (this.tipoUsuario === 'conductor' && this.idUsuarioCalificado) {
+      request.conductor = this.idUsuarioCalificado;
+    } else if (this.tipoUsuario === 'pasajero' && this.idUsuarioCalificado) {
+      request.pasajero = this.idUsuarioCalificado;
     }
+
+    console.log('📤 Enviando calificación:', request);
 
     this.calificacionService.createCalificacion(request).subscribe({
       next: () => {
@@ -90,7 +91,8 @@ export class ModalCalificacionComponent {
       },
       error: (err) => {
         this.loading.set(false);
-        console.error('Error al guardar calificación:', err);
+        console.error('❌ Error al guardar calificación:', err);
+        console.error('Detalles del error:', err.error);
         this.errorMessage.set('Error al guardar la calificación. Intenta nuevamente.');
       }
     });

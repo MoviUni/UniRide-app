@@ -134,20 +134,33 @@ export class ConfiguracionPasajeroComponent implements OnInit {
 
     const formData = this.configuracionForm.value;
 
-    // Aquí deberías llamar al servicio de actualización
-    // Por ahora solo mostramos un mensaje de éxito
-    console.log('Datos a guardar:', formData);
-    console.log('Foto de perfil:', this.fotoPerfil());
+    // Preparar datos para actualización
+    const updateData = {
+      nombre: formData.nombres,
+      apellido: formData.apellidos,
+      distrito: formData.distrito,
+      fotoPerfil: this.fotoPerfil() !== 'assets/default-avatar.png' ? this.fotoPerfil() : undefined
+    };
 
-    setTimeout(() => {
-      this.loading.set(false);
-      this.successMessage.set('Cambios guardados exitosamente');
-      
-      // Limpiar mensaje después de 3 segundos
-      setTimeout(() => {
-        this.successMessage.set('');
-      }, 3000);
-    }, 1000);
+    console.log('📤 Actualizando pasajero:', updateData);
+
+    this.pasajeroService.update(pasajeroId, updateData).subscribe({
+      next: (response) => {
+        console.log('✅ Pasajero actualizado:', response);
+        this.pasajero.set(response);
+        this.loading.set(false);
+        this.successMessage.set('Cambios guardados exitosamente');
+        
+        setTimeout(() => {
+          this.successMessage.set('');
+        }, 3000);
+      },
+      error: (error) => {
+        console.error('❌ Error al actualizar pasajero:', error);
+        this.loading.set(false);
+        this.errorMessage.set('Error al guardar los cambios. Intenta nuevamente.');
+      }
+    });
   }
 
   cancelar(): void {

@@ -41,4 +41,18 @@ export class VehiculoService {
       body
     );
   }
+
+  /**
+   * PUT /vehiculos/{idVehiculo}
+   * Actualiza los datos de un vehículo.
+   */
+  update(
+    idVehiculo: number,
+    body: Partial<VehiculoRequest>
+  ): Observable<VehiculoResponse> {
+    return this.http.put<VehiculoResponse>(
+      `${this.apiUrl}/${idVehiculo}`,
+      body
+    );
+  }
 }

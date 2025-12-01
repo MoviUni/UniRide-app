@@ -12,6 +12,8 @@ div {
   justify-content: center;
   flex-wrap: wrap;
   padding: 0 20px;
+  position: relative;
+  z-index: 10;
 }
 
 .filtro-btn {
@@ -25,6 +27,9 @@ div {
   font-size: 14px;
   cursor: pointer;
   transition: all 0.3s ease;
+  position: relative;
+  z-index: 11;
+  outline: none;
 }
 
 .filtro-btn:hover {

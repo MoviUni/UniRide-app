@@ -47,4 +47,15 @@ export class ConductorService {
     );
   }
 
+  // PUT - Actualizar
+  update(id: number, data: Partial<ConductorRequest>): Observable<ConductorResponse> {
+    return this.http.put<ConductorResponse>(`${this.apiUrl}/${id}`, data, this.getHeaders()).pipe(
+      tap(updatedItem => {
+        this._items.update(current => 
+          current.map(item => item.idConductor === id ? updatedItem : item)
+        );
+      })
+    );
+  }
+
 }

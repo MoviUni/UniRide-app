@@ -119,9 +119,9 @@ export class ConfiguracionVehiculoComponent implements OnInit {
       return;
     }
 
-    const conductorId = this.authService.getConductorId();
-    if (!conductorId) {
-      this.errorMessage.set('No se encontró ID de conductor');
+    const vehiculoActual = this.vehiculo();
+    if (!vehiculoActual) {
+      this.errorMessage.set('No se encontró vehículo para actualizar');
       return;
     }
 
@@ -131,17 +131,35 @@ export class ConfiguracionVehiculoComponent implements OnInit {
 
     const formData = this.vehiculoForm.value;
 
-    // Aquí deberías llamar al servicio de actualización del vehículo
-    console.log('Datos del vehículo a guardar:', formData);
+    // Preparar datos para actualización
+    const updateData = {
+      placa: formData.matricula,
+      marca: formData.marca,
+      modelo: formData.modelo,
+      capacidad: Number(formData.capacidad),
+      color: formData.color,
+      aireAcondicionado: formData.aireAcondicionado
+    };
 
-    setTimeout(() => {
-      this.loading.set(false);
-      this.successMessage.set('Cambios guardados exitosamente');
-      
-      setTimeout(() => {
-        this.successMessage.set('');
-      }, 3000);
-    }, 1000);
+    console.log('📤 Actualizando vehículo:', updateData);
+
+    this.vehiculoService.update(vehiculoActual.idVehiculo, updateData).subscribe({
+      next: (response) => {
+        console.log('✅ Vehículo actualizado:', response);
+        this.vehiculo.set(response);
+        this.loading.set(false);
+        this.successMessage.set('Cambios guardados exitosamente');
+        
+        setTimeout(() => {
+          this.successMessage.set('');
+        }, 3000);
+      },
+      error: (error) => {
+        console.error('❌ Error al actualizar vehículo:', error);
+        this.loading.set(false);
+        this.errorMessage.set('Error al guardar los cambios. Intenta nuevamente.');
+      }
+    });
   }
 
   cancelar(): void {

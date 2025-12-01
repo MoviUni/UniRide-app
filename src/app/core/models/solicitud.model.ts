@@ -42,7 +42,9 @@ export interface SolicitudCardResponse{
     apellidoConductor:number,
     vehiculoColor:string,
     vehiculoPlaca:string,
-    vehiculoModelo:string
+    vehiculoModelo:string,
+    idConductor?: number,
+    idPasajero?: number
 }
 
 export interface SolicitudEstadoRequest{

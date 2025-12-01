@@ -1,11 +1,10 @@
 // src/app/core/models/calificacion.model.ts
 
 export interface CalificacionRequest {
-  calificacion: number; // 1-5
+  puntaje: number; // 1-5 (nombre que espera el backend)
   comentario: string;
-  idPasajero?: number; // ID del pasajero calificado (si aplica)
-  idConductor?: number; // ID del conductor calificado (si aplica)
-  idSolicitudViaje?: number; // ID del viaje asociado
+  pasajero?: number; // ID del pasajero calificado (si aplica)
+  conductor?: number; // ID del conductor calificado (si aplica)
 }
 
 export interface CalificacionResponse {

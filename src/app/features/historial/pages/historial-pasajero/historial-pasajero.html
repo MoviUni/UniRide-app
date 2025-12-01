@@ -97,7 +97,7 @@
 <app-modal-calificacion
   [isOpen]="isModalOpen()"
   [idSolicitudViaje]="viajeSeleccionado()?.idSolicitudViaje"
-  [idUsuarioCalificado]="viajeSeleccionado()?.idSolicitudViaje"
+  [idUsuarioCalificado]="viajeSeleccionado()?.idConductor"
   [tipoUsuario]="'conductor'"
   [nombreUsuario]="viajeSeleccionado()?.nombreConductor || ''"
   (closeModal)="cerrarModal()"

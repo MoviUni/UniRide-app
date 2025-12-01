@@ -134,18 +134,33 @@ export class ConfiguracionConductorComponent implements OnInit {
 
     const formData = this.configuracionForm.value;
 
-    // Aquí deberías llamar al servicio de actualización
-    console.log('Datos a guardar:', formData);
-    console.log('Foto de perfil:', this.fotoPerfil());
+    // Preparar datos para actualización
+    const updateData = {
+      nombre: formData.nombres,
+      apellido: formData.apellidos,
+      distrito: formData.distrito,
+      fotoPerfil: this.fotoPerfil() !== 'assets/default-avatar.png' ? this.fotoPerfil() : undefined
+    };
 
-    setTimeout(() => {
-      this.loading.set(false);
-      this.successMessage.set('Cambios guardados exitosamente');
-      
-      setTimeout(() => {
-        this.successMessage.set('');
-      }, 3000);
-    }, 1000);
+    console.log('📤 Actualizando conductor:', updateData);
+
+    this.conductorService.update(conductorId, updateData).subscribe({
+      next: (response) => {
+        console.log('✅ Conductor actualizado:', response);
+        this.conductor.set(response);
+        this.loading.set(false);
+        this.successMessage.set('Cambios guardados exitosamente');
+        
+        setTimeout(() => {
+          this.successMessage.set('');
+        }, 3000);
+      },
+      error: (error) => {
+        console.error('❌ Error al actualizar conductor:', error);
+        this.loading.set(false);
+        this.errorMessage.set('Error al guardar los cambios. Intenta nuevamente.');
+      }
+    });
   }
 
   cancelar(): void {
