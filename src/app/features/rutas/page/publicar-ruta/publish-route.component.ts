@@ -576,14 +576,19 @@ export class PublishRouteComponent implements OnInit {
       this.errorMessage = 'Debes tener un vehículo registrado para publicar rutas.';
       return;
     }
-
-    // RN5 - No horarios pasados
+    // RN4 - No permitir horarios pasados (al menos 1.5 horas de anticipación)
     const departure = new Date(`${value.date}T${value.time}`);
     const now = new Date();
-    if (departure <= now) {
-      this.errorMessage = 'No se pueden publicar rutas con horarios pasados.';
+
+    // diferencia en minutos
+    const diffMin = (departure.getTime() - now.getTime()) / 60000;
+
+    if (diffMin < 90) {
+      this.errorMessage =
+        'Debes publicar la ruta con al menos 1 hora y 30 minutos de anticipación.';
       return;
     }
+
 
     // RN5/RN6 - Capacidad mínima y máxima
     if (value.capacity < 1) {
