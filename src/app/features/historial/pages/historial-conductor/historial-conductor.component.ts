@@ -5,6 +5,7 @@ import { RouterModule } from '@angular/router';
 import { SolicitudService } from '../../../../core/services/solicitud.service';
 import { AuthService } from '../../../../core/services/auth.service';
 import { SolicitudCardResponse, EstadoSolicitud } from '../../../../core/models/solicitud.model';
+import { ModalCalificacionComponent } from '../../../../shared/components/modal-calificacion/modal-calificacion.component';
 
 interface ViajeAgrupado {
   fecha: string;
@@ -15,7 +16,7 @@ interface ViajeAgrupado {
 @Component({
   selector: 'app-historial-conductor',
   standalone: true,
-  imports: [CommonModule, RouterModule],
+  imports: [CommonModule, RouterModule, ModalCalificacionComponent],
   templateUrl: './historial-conductor.html',
   styleUrls: ['./historial-conductor.css']
 })
@@ -26,6 +27,10 @@ export class HistorialConductor implements OnInit {
   historialAgrupado = signal<ViajeAgrupado[]>([]);
   loading = signal(false);
   errorMessage = signal('');
+
+  // Modal de calificación
+  isModalOpen = signal(false);
+  viajeSeleccionado = signal<SolicitudCardResponse | null>(null);
 
   ngOnInit(): void {
     this.loadHistory();
@@ -114,5 +119,20 @@ export class HistorialConductor implements OnInit {
     console.log('Ver detalles del viaje:', viaje);
     // Aquí puedes navegar a una página de detalles si existe
     // this.router.navigate(['/historial/detalle', viaje.idSolicitudViaje]);
+  }
+
+  abrirModalCalificacion(viaje: SolicitudCardResponse): void {
+    this.viajeSeleccionado.set(viaje);
+    this.isModalOpen.set(true);
+  }
+
+  cerrarModal(): void {
+    this.isModalOpen.set(false);
+    this.viajeSeleccionado.set(null);
+  }
+
+  onCalificacionGuardada(): void {
+    // Recargar el historial después de calificar
+    this.loadHistory();
   }
 }

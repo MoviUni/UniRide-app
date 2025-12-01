@@ -67,13 +67,22 @@
 
                 <div class="viaje-meta">
                   <span class="pasajeros">Pasajeros: {{ viaje.asientosDisponibles }}</span>
-                  <button 
-                    type="button" 
-                    class="btn-ver-detalles"
-                    (click)="verDetalles(viaje)"
-                  >
-                    Ver detalles
-                  </button>
+                  <div class="botones-grupo">
+                    <button 
+                      type="button" 
+                      class="btn-calificar"
+                      (click)="abrirModalCalificacion(viaje)"
+                    >
+                      ⭐ Calificar
+                    </button>
+                    <button 
+                      type="button" 
+                      class="btn-ver-detalles"
+                      (click)="verDetalles(viaje)"
+                    >
+                      Ver detalles
+                    </button>
+                  </div>
                 </div>
               </div>
             </div>
@@ -83,3 +92,14 @@
     </div>
   }
 </div>
+
+<!-- Modal de calificación -->
+<app-modal-calificacion
+  [isOpen]="isModalOpen()"
+  [idSolicitudViaje]="viajeSeleccionado()?.idSolicitudViaje"
+  [idUsuarioCalificado]="viajeSeleccionado()?.idSolicitudViaje"
+  [tipoUsuario]="'conductor'"
+  [nombreUsuario]="viajeSeleccionado()?.nombreConductor || ''"
+  (closeModal)="cerrarModal()"
+  (calificacionGuardada)="onCalificacionGuardada()"
+></app-modal-calificacion>

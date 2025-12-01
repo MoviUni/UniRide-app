@@ -225,7 +225,31 @@
 .viaje-meta {
   display: flex;
   align-items: center;
-  gap: 20px;
+  gap: 12px;
+}
+
+.botones-grupo {
+  display: flex;
+  gap: 8px;
+}
+
+.btn-calificar {
+  background: #FBBF24;
+  color: #FFFFFF;
+  border: none;
+  padding: 10px 20px;
+  border-radius: 24px;
+  font-size: 14px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s;
+  white-space: nowrap;
+}
+
+.btn-calificar:hover {
+  background: #F59E0B;
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(251, 191, 36, 0.4);
 }
 
 .btn-ver-detalles {

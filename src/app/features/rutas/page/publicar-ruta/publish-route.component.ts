@@ -6,6 +6,7 @@ import {
   ReactiveFormsModule,
   Validators
 } from '@angular/forms';
+import { Router } from '@angular/router';
 import {
   RoutesService,
   RutaRequestDto,
@@ -486,7 +487,8 @@ export class PublishRouteComponent implements OnInit {
     private fb: FormBuilder,
     private routesService: RoutesService,
     private authService: AuthService,
-    private vehiculoService: VehiculoService
+    private vehiculoService: VehiculoService,
+    private router: Router
   ) {}
 
   ngOnInit(): void {
@@ -624,15 +626,16 @@ export class PublishRouteComponent implements OnInit {
     this.routesService.publicar(dto).subscribe({
       next: () => {
         this.successMessage = 'Ruta publicada correctamente.';
-        this.form.reset({
-          origin: '',
-          destination: '',
-          date: '',
-          time: '',
-          vehicleId: this.vehiculo?.idVehiculo || '',
-          capacity: this.vehiculo?.capacidad || 1,
-          price: null,
-        });
+        
+        // Recargar las rutas del conductor para que se actualice la lista
+        if (idConductor != null) {
+          this.routesService.getMisRutas(idConductor).subscribe();
+        }
+        
+        // Navegar a Mis rutas después de 1.5 segundos para que vean el mensaje
+        setTimeout(() => {
+          this.router.navigate(['/rutas/mis-rutas']);
+        }, 1500);
       },
       error: (err: unknown) => {
         console.error(err);

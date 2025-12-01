@@ -58,10 +58,10 @@
 
 .total_viajes_span {
   color: #DE2D4A;
-  font-size: 128px;
+  font-size: 72px;
   font-family: Poppins;
   font-weight: 600;
-  line-height: 230.40px;
+  line-height: 1.2;
   word-wrap: break-word;
 }
 
@@ -69,10 +69,10 @@
   text-align: center;
   width: 100%;
   max-width: 574px;
-  margin: 60px auto; /* esto centra horizontalmente */
+  margin: 30px auto;
   background: rgba(255, 255, 255, 0.5);
   border-radius: 30px;
-  padding: 20px;
+  padding: 30px 20px;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -80,7 +80,7 @@
 
 .total_viajes_titulo_span {
   color: #2A324B;
-  font-size: 44px;
+  font-size: 28px;
   font-family: Poppins;
   font-weight: 600;
   line-height: 1.4;
@@ -89,16 +89,16 @@
 
 .total_viajes_titulo {
   text-align: center;
-  margin-top: 40px; /* Espaciado superior */
-  margin-bottom: 30px;
+  margin-top: 20px;
+  margin-bottom: 20px;
 }
 
 .frecuencia_viajes_titulo_span {
   color: #2A324B;
-  font-size: 44px;
+  font-size: 28px;
   font-family: Poppins;
   font-weight: 600;
-  line-height: 79.20px;
+  line-height: 1.4;
   word-wrap: break-word;
 }
 
@@ -106,38 +106,38 @@
   text-align: center;
   width: 100%;
   max-width: 574px;
-  margin: 40px auto 20px auto;
+  margin: 30px auto 20px auto;
 }
 
 .exportar_historial_titulo_span {
   color: #2A324B;
-  font-size: 44px;
+  font-size: 28px;
   font-family: Poppins;
   font-weight: 600;
-  line-height: 79.20px;
+  line-height: 1.4;
   word-wrap: break-word;
 }
 
 .exportar_historial_titulo {
   width: 100%;
   max-width: 574px;
-  margin: 40px auto 100px; /* centra horizontalmente y separa del contenido de arriba */
+  margin: 30px auto 50px;
   text-align: center;
 }
 
 .viajes_frecuentes_titulo_span {
   color: #2A324B;
-  font-size: 44px;
+  font-size: 28px;
   font-family: Poppins;
   font-weight: 600;
-  line-height: 79.2px;
+  line-height: 1.4;
   word-wrap: break-word;
 }
 
 .viajes_frecuentes_titulo {
   width: 100%;
   max-width: 574px;
-  margin: 60px auto 20px auto; /* centra + separa de lo anterior */
+  margin: 40px auto 20px auto;
   text-align: center;
 }
 

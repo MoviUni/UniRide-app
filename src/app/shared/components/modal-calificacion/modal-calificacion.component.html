@@ -1,0 +1,89 @@
+<!-- src/app/shared/components/modal-calificacion/modal-calificacion.component.html -->
+@if (isOpen) {
+  <div class="modal-overlay" (click)="close()">
+    <div class="modal-content" (click)="$event.stopPropagation()">
+      <div class="modal-header">
+        <h2 class="modal-title">Calificar {{ tipoUsuario === 'conductor' ? 'conductor' : 'pasajero' }}</h2>
+        <button class="btn-close" (click)="close()">✕</button>
+      </div>
+
+      <div class="modal-body">
+        <p class="usuario-nombre">{{ nombreUsuario }}</p>
+
+        <!-- Estrellas de calificación -->
+        <div class="rating-section">
+          <p class="rating-label">¿Cómo fue tu experiencia?</p>
+          <div class="estrellas-container">
+            @for (estrella of estrellas; track estrella) {
+              <button 
+                type="button"
+                class="estrella-btn"
+                [class.selected]="estrella <= calificacionSeleccionada()"
+                (click)="seleccionarCalificacion(estrella)"
+              >
+                {{ getIconoEstrella(estrella) }}
+              </button>
+            }
+          </div>
+          @if (calificacionSeleccionada() > 0) {
+            <p class="rating-texto">
+              {{ calificacionSeleccionada() === 1 ? 'Muy malo' : 
+                 calificacionSeleccionada() === 2 ? 'Malo' : 
+                 calificacionSeleccionada() === 3 ? 'Regular' : 
+                 calificacionSeleccionada() === 4 ? 'Bueno' : 'Excelente' }}
+            </p>
+          }
+        </div>
+
+        <!-- Comentario -->
+        <form [formGroup]="calificacionForm">
+          <div class="form-group">
+            <label for="comentario" class="form-label">Comentario</label>
+            <textarea 
+              id="comentario"
+              formControlName="comentario"
+              class="form-textarea"
+              rows="4"
+              placeholder="Comparte tu experiencia (mínimo 10 caracteres)..."
+            ></textarea>
+            @if (calificacionForm.get('comentario')?.touched && calificacionForm.get('comentario')?.invalid) {
+              <span class="error-text">El comentario debe tener al menos 10 caracteres</span>
+            }
+          </div>
+        </form>
+
+        <!-- Mensajes -->
+        @if (errorMessage()) {
+          <div class="alert alert-error">{{ errorMessage() }}</div>
+        }
+
+        @if (successMessage()) {
+          <div class="alert alert-success">{{ successMessage() }}</div>
+        }
+      </div>
+
+      <div class="modal-footer">
+        <button 
+          type="button" 
+          class="btn btn-secondary" 
+          (click)="close()"
+          [disabled]="loading()"
+        >
+          Cancelar
+        </button>
+        <button 
+          type="button" 
+          class="btn btn-primary" 
+          (click)="guardarCalificacion()"
+          [disabled]="loading() || calificacionSeleccionada() === 0 || calificacionForm.invalid"
+        >
+          @if (loading()) {
+            <span>Guardando...</span>
+          } @else {
+            <span>Guardar calificación</span>
+          }
+        </button>
+      </div>
+    </div>
+  </div>
+}

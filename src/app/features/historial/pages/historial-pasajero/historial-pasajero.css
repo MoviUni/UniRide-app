@@ -224,13 +224,38 @@
 /* Meta del viaje */
 .viaje-meta {
   display: flex;
-  align-items: center;
-  gap: 20px;
+  flex-direction: column;
+  gap: 8px;
+  align-items: flex-end;
 }
 
 .pasajeros {
   font-size: 14px;
   color: #666;
+}
+
+.botones-grupo {
+  display: flex;
+  gap: 8px;
+}
+
+.btn-calificar {
+  background: #FBBF24;
+  color: #FFFFFF;
+  border: none;
+  padding: 8px 16px;
+  border-radius: 8px;
+  font-size: 14px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s;
+  white-space: nowrap;
+}
+
+.btn-calificar:hover {
+  background: #F59E0B;
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(251, 191, 36, 0.4);
 }
 
 .btn-ver-detalles {
