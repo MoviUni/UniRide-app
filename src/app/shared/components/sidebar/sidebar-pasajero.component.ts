@@ -10,14 +10,14 @@ import { RoleType } from '../../../core/models/usuario.model';
   template: `
     <nav class="ur-sidebar">
       <!-- HOME: vista principal según rol -->
-      <button
+      <button 
         class="ur-icon-btn"
         type="button"
         aria-label="Inicio"
         (click)="goHome()"
       >
-        <span class="ur-icon">
-          <img src="assets/sidebar/Casa.png" alt="Inicio" />
+        <span class="ur-icon" >
+          <img src="assets/sidebar/Casa.png" alt="Inicio" title="Inicio" />
         </span>
       </button>
 
@@ -31,7 +31,7 @@ import { RoleType } from '../../../core/models/usuario.model';
         (click)="goSolicitudes()"
       >
         <span class="ur-icon">
-          <img src="assets/sidebar/calendar.png" alt="Mis solicitudes" />
+          <img src="assets/sidebar/calendar.png" alt="Mis solicitudes" title="Mis solicitudes" />
         </span>
       </button>
 
@@ -45,7 +45,7 @@ import { RoleType } from '../../../core/models/usuario.model';
         (click)="goBuscarRutas()"
       >
         <span class="ur-icon">
-          <img src="assets/sidebar/Ubicacion.png" alt="Buscar rutas" />
+          <img src="assets/sidebar/Ubicacion.png" alt="Buscar rutas" title="Buscar rutas"/>
         </span>
       </button>
 
@@ -59,7 +59,7 @@ import { RoleType } from '../../../core/models/usuario.model';
         (click)="goHistorial()"
       >
         <span class="ur-icon">
-          <img src="assets/sidebar/Libro.png" alt="Historial" />
+          <img src="assets/sidebar/Libro.png" alt="Historial" title="Historial de viajes"/>
         </span>
       </button>
 
@@ -73,7 +73,7 @@ import { RoleType } from '../../../core/models/usuario.model';
         (click)="goPerfil()"
       >
         <span class="ur-icon">
-          <img src="assets/sidebar/user.png" alt="Perfil" />
+          <img src="assets/sidebar/user.png" alt="Perfil" title="Mi perfil"/>
         </span>
       </button>
 
@@ -87,7 +87,7 @@ import { RoleType } from '../../../core/models/usuario.model';
         (click)="goConfiguracion()"
       >
         <span class="ur-icon">
-          <img src="assets/sidebar/Engranaje.png" alt="Configuración" />
+          <img src="assets/sidebar/Engranaje.png" alt="Configuración" title="Configuración" />
         </span>
       </button>
 
@@ -104,7 +104,7 @@ import { RoleType } from '../../../core/models/usuario.model';
         (click)="logout()"
       >
         <span class="ur-icon">
-          <img src="assets/sidebar/On.png" alt="Cerrar sesión" />
+          <img src="assets/sidebar/On.png" alt="Cerrar sesión" title="Cerrar sesión"/>
         </span>
       </button>
     </nav>

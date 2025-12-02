@@ -17,7 +17,7 @@ import { RoleType } from '../../../core/models/usuario.model';
         (click)="goHome()"
       >
         <span class="ur-icon">
-          <img src="assets/sidebar/Casa.png" alt="Inicio" />
+          <img src="assets/sidebar/Casa.png" alt="Inicio" title = "Inicio" />
         </span>
       </button>
 
@@ -31,7 +31,7 @@ import { RoleType } from '../../../core/models/usuario.model';
         (click)="goPublicarRuta()"
       >
         <span class="ur-icon">
-          <img src="assets/sidebar/Journey.png" alt="Publicar ruta" />
+          <img src="assets/sidebar/Journey.png" alt="Publicar ruta" title = "Crear nueva ruta" />
         </span>
       </button>
 
@@ -45,7 +45,7 @@ import { RoleType } from '../../../core/models/usuario.model';
         (click)="goSolicitudes()"
       >
         <span class="ur-icon">
-          <img src="assets/sidebar/Ubicacion.png" alt="Solicitudes" />
+          <img src="assets/sidebar/Ubicacion.png" alt="Solicitudes" title = "Mis rutas" />
         </span>
       </button>
 
@@ -59,7 +59,7 @@ import { RoleType } from '../../../core/models/usuario.model';
         (click)="goHistorial()"
       >
         <span class="ur-icon">
-          <img src="assets/sidebar/Libro.png" alt="Historial" />
+          <img src="assets/sidebar/Libro.png" alt="Historial" title = "Historial de viajes" />
         </span>
       </button>
 
@@ -73,7 +73,7 @@ import { RoleType } from '../../../core/models/usuario.model';
         (click)="goEstadisticas()"
       >
         <span class="ur-icon">
-          <img src="assets/Estadisticas.png" alt="Estadísticas" />
+          <img src="assets/Estadisticas.png" alt="Estadísticas" title = "Estadísticas de viaje" />
         </span>
       </button>
 
@@ -87,7 +87,7 @@ import { RoleType } from '../../../core/models/usuario.model';
         (click)="goPerfil()"
       >
         <span class="ur-icon">
-          <img src="assets/sidebar/user.png" alt="Perfil" />
+          <img src="assets/sidebar/user.png" alt="Perfil" title = "Mi perfil" />
         </span>
       </button>
 
@@ -101,7 +101,7 @@ import { RoleType } from '../../../core/models/usuario.model';
         (click)="goVehiculo()"
       >
         <span class="ur-icon">
-          <img src="assets/sidebar/auto_icon.png" alt="Vehículo" />
+          <img src="assets/sidebar/auto_icon.png" alt="Vehículo" title = "Mi vehículo"/>
         </span>
       </button>
 
@@ -115,7 +115,7 @@ import { RoleType } from '../../../core/models/usuario.model';
         (click)="goConfiguracion()"
       >
         <span class="ur-icon">
-          <img src="assets/sidebar/Engranaje.png" alt="Configuración" />
+          <img src="assets/sidebar/Engranaje.png" alt="Configuración" title = "Configuración" />
         </span>
       </button>
 
@@ -132,7 +132,7 @@ import { RoleType } from '../../../core/models/usuario.model';
         (click)="logout()"
       >
         <span class="ur-icon">
-          <img src="assets/sidebar/On.png" alt="Cerrar sesión" />
+          <img src="assets/sidebar/On.png" alt="Cerrar sesión" title = "Cerrar sesión" />
         </span>
       </button>
     </nav>
