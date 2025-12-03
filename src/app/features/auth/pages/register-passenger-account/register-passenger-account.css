@@ -101,6 +101,13 @@ button {
   cursor: pointer;
 }
 
+button:active {
+  transform: scale(0.96); /* se achica un poquito */
+  box-shadow: 0 3px 6px rgba(43,61,187,0.20); /* sombra más pequeña */
+  background: #2332a0; /* color más oscuro para efecto “presionado” */
+}
+
+
 hr {
   margin: 35px 0;
   border: none;
