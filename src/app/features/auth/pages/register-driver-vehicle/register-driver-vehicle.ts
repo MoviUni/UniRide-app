@@ -82,12 +82,12 @@ export class RegisterDriverVehicle implements OnInit {
     this.authService.registerDriver(payload).subscribe({
       next: () => {
         this.driverState.clear();
+        this.router.navigate(['/auth/login']);
         this.mostrarExito();
         
       },
       error: (err) => {
         console.error('Error al registrar:', err);
-        alert(err?.error?.message ?? 'No se pudo completar el registro.');
       }
     });
   }

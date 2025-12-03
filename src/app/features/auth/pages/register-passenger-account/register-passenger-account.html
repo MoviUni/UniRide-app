@@ -28,28 +28,28 @@
 
       <!-- Código Universitario -->
       <label>Código Universitario</label>
-      <input type="text" placeholder="Empty label" formControlName="codigo" />
+      <input type="text" placeholder="Ingrese su código universitario" formControlName="codigo" />
       <p class="error" *ngIf="accountForm.get('codigo')?.touched && accountForm.get('codigo')?.invalid">
         * Código inválido (mínimo 6 caracteres).
       </p>
 
       <!-- Email -->
       <label>Email</label>
-      <input type="email" placeholder="Empty label" formControlName="email" />
+      <input type="email" placeholder="Ingrese su email" formControlName="email" />
       <p class="error" *ngIf="accountForm.get('email')?.touched && accountForm.get('email')?.invalid">
         * Ingresa un email válido.
       </p>
 
       <!-- Contraseña -->
       <label>Contraseña</label>
-      <input type="password" placeholder="Empty label" formControlName="password" />
+      <input type="password" placeholder="Ingrese su contraseña" formControlName="password" />
       <p class="error" *ngIf="accountForm.get('password')?.touched && accountForm.get('password')?.invalid">
         * La contraseña debe tener al menos 6 caracteres.
       </p>
 
       <!-- Confirmar Contraseña -->
       <label>Confirmar contraseña</label>
-      <input type="password" placeholder="Empty label" formControlName="password2" />
+      <input type="password" placeholder="Ingrese su contraseña" formControlName="password2" />
       <p class="error"
          *ngIf="accountForm.get('password2')?.touched && accountForm.hasError('mismatch')">
         * Las contraseñas no coinciden.

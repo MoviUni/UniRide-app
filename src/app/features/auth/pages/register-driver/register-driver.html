@@ -37,14 +37,14 @@
 
       <!-- Nombres -->
       <label>Nombres</label>
-      <input type="text" placeholder="Empty label" formControlName="nombres">
+      <input type="text" placeholder="Ingrese su nombre" formControlName="nombres">
       <p class="error" *ngIf="driverForm.get('nombres')?.touched && driverForm.get('nombres')?.invalid">
         * Ingresa al menos 3 caracteres.
       </p>
 
       <!-- Apellidos -->
       <label>Apellidos</label>
-      <input type="text" placeholder="Empty label" formControlName="apellidos">
+      <input type="text" placeholder="Ingrese sus apellidos" formControlName="apellidos">
       <p class="error" *ngIf="driverForm.get('apellidos')?.touched && driverForm.get('apellidos')?.invalid">
         * Ingresa al menos 3 caracteres.
       </p>
@@ -58,7 +58,7 @@
 
       <!-- DNI -->
       <label>DNI</label>
-      <input type="text" placeholder="Empty label" formControlName="dni">
+      <input type="text" placeholder="Ingrese su DNI" formControlName="dni">
       <p class="error" *ngIf="driverForm.get('dni')?.touched && driverForm.get('dni')?.invalid">
         * El DNI debe tener 8 dígitos.
       </p>
