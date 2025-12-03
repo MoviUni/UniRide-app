@@ -70,3 +70,14 @@
 
   </div>
 </div>
+@if (mostrarExitoso) {
+    <div class="popup-ex-overlay">
+      <div class="popup-ex-box">
+        <div class="popup-ex-close" (click)="cerrarExito()">x</div>
+
+        <p class="popup-ex-message"> ¡Se ha creado la cuenta con éxito! </p>
+        <img class="trayectoria-ex-img" src="assets/check_mark.png" />
+
+      </div>
+    </div>
+  }

@@ -127,3 +127,157 @@ input::placeholder {
   color: #cfcfcf;
   opacity: 1;
 }
+/* Fondo oscuro (antes .poppup) */
+.popup-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(108, 108, 108, 0.4);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 99999;
+}
+
+/* Caja blanca (antes .rectangle-188) */
+.popup-box {
+  width: 90%;
+  max-width: 900px;
+  height: 639px;
+  padding: 50px 40px;
+  background: white;
+  border-radius: 10px;
+  position: relative;
+
+
+   /* Forzar centrado vertical y horizontal */
+
+  flex-direction: column;
+  align-items: center;
+}
+
+/* X para cerrar */
+.popup-close {
+  position: absolute;
+  right: 45px;
+  top: 20px;
+  font-size: 48px;
+  font-family: Poppins;
+  font-weight: 500;
+  cursor: pointer;
+  user-select: none;
+}
+
+/* Ícono de error */
+.popup-icon {
+  width: 100px;
+  height: 100px;
+  margin-bottom: 90px;
+  margin-top: 70px;
+}
+
+/* Texto del mensaje */
+.popup-message {
+  font-size: 32px;
+  font-family: Poppins, sans-serif;
+  font-weight: 600;
+  color:#620713;
+  max-width: 700px;
+
+  line-height: 1.2;
+}
+
+/* Texto del mensaje */
+.popup-section {
+  left:15px;
+  position: relative;
+  padding-top: 22px;
+  font-size: 18px;
+  font-family: Poppins, sans-serif;
+  font-weight: 600;
+  color: black;
+  max-width: 700px;
+
+  line-height: 1.2;
+}
+
+/* Texto del mensaje */
+.popup-info {
+  left:15px;
+  position: relative;
+  padding-top: 15px;
+  font-size: 16px;
+  font-family: Poppins, sans-serif;
+  font-weight: 500;
+  color: black;
+  max-width: 700px;
+
+  line-height: 1.2;
+}
+
+/* Fondo oscuro (antes .poppup) */
+.popup-ex-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(108, 108, 108, 0.4);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 99999;
+  
+}
+
+/* Caja blanca (antes .rectangle-188) */
+.popup-ex-box {
+  width: 50%;
+  max-width: 900px;
+  height: 400px;
+  padding: 50px 40px;
+  background: white;
+  border-radius: 10px;
+  position: relative;
+
+
+  flex-direction: column;
+  align-items: center;
+}
+
+/* X para cerrar */
+.popup-ex-close {
+  position: absolute;
+  right: 45px;
+  top: 20px;
+  font-size: 48px;
+  font-family: Poppins;
+  font-weight: 500;
+  cursor: pointer;
+  user-select: none;
+}
+
+/* Ícono de error */
+.popup-ex-icon {
+  width: 100px;
+  height: 100px;
+  margin-bottom: 90px;
+  margin-top: 70px;
+}
+
+/* Texto del mensaje */
+.popup-ex-message {
+  font-size: 32px;
+  font-family: Poppins, sans-serif;
+  font-weight: 600;
+  color:#620713;
+  max-width: 700px;
+  text-align: center;
+  line-height: 1.2;
+  top: 80px;
+  position: relative;
+}
+
+.trayectoria-ex-img{
+  left: 300px;
+  top: 100px;
+  width: 100px;
+  height: auto;
+  position: relative;
+}

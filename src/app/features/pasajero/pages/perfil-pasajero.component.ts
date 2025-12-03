@@ -5,6 +5,8 @@ import { RouterModule } from '@angular/router';
 import { PasajeroService } from '@core/services/pasajero.service';
 import { AuthService } from '@core/services/auth.service';
 import { PasajeroResponse, ComentarioResponse } from '@core/models/pasajero.model';
+import { CalificacionService } from '@core/services/calificacion.service';
+import { CalificacionResponse } from '@core/models/calificacion.model';
 
 @Component({
   selector: 'app-perfil-pasajero',
@@ -16,6 +18,7 @@ import { PasajeroResponse, ComentarioResponse } from '@core/models/pasajero.mode
 export class PerfilPasajero implements OnInit {
   private pasajeroService = inject(PasajeroService);
   private auth = inject(AuthService);
+  private calificacionService = inject(CalificacionService);
 
   pasajero = signal<PasajeroResponse | null>(null);
   comentarios = signal<ComentarioResponse[]>([]);
@@ -58,25 +61,30 @@ export class PerfilPasajero implements OnInit {
   }
 
   loadComentarios(): void {
-    // Simulación de comentarios - reemplazar con llamada real al backend
-    const mockComentarios: ComentarioResponse[] = [
-      {
-        idComentario: 1,
-        nombreUsuario: 'María',
-        calificacion: 5,
-        comentario: 'Llegó a tiempo al punto de encuentro.',
-        fecha: '2025-09-15'
+    const id = this.auth.getPasajeroId();
+    if (!id) return;
+
+    this.calificacionService.getCalificacionesByPasajero(id).subscribe({
+      next: (calificaciones: CalificacionResponse[]) => {
+        console.log('📝 Calificaciones de pasajero cargadas:', calificaciones);
+        
+        // Transformar CalificacionResponse a ComentarioResponse
+        const comentarios: ComentarioResponse[] = calificaciones.map(cal => ({
+          idComentario: cal.idCalificacion,
+          nombreUsuario: cal.nombreCalificador || 'Usuario',
+          calificacion: cal.calificacion,
+          comentario: cal.comentario,
+          fecha: cal.fechaCreacion || new Date().toISOString().split('T')[0]
+        }));
+        
+        this.comentarios.set(comentarios);
       },
-      {
-        idComentario: 2,
-        nombreUsuario: 'José',
-        calificacion: 1,
-        comentario: 'Comió en el carro y lo dejó sucio',
-        fecha: '2025-09-10'
+      error: (err) => {
+        console.error('❌ Error cargando comentarios del pasajero:', err);
+        // Mantener array vacío si hay error
+        this.comentarios.set([]);
       }
-    ];
-    
-    this.comentarios.set(mockComentarios);
+    });
   }
 
   onFileSelected(event: Event): void {

@@ -1,5 +1,5 @@
 // src/app/features/auth/page/register-passenger-account/register-passenger-account.ts
-import { Component } from '@angular/core';
+import { Component, inject,ChangeDetectorRef } from '@angular/core';
 import { Router, RouterModule } from '@angular/router';
 import { CommonModule } from '@angular/common';
 import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
@@ -16,7 +16,9 @@ import { AuthService } from '../../../../core/services/auth.service';
 export class RegisterPassengerAccount {
 
   accountForm: FormGroup;
-
+  private cdr = inject(ChangeDetectorRef);
+  // Popup de éxito
+  mostrarExitoso: boolean = false;
   constructor(
     private router: Router,
     private fb: FormBuilder,
@@ -69,12 +71,25 @@ export class RegisterPassengerAccount {
     this.authService.registerPassenger(payload).subscribe({
       next: () => {
         this.passengerState.clear();
-        this.router.navigate(['/auth/login']);
+        this.mostrarExito();
       },
       error: (err) => {
         console.error('Error registrando pasajero', err);
         alert(err?.error?.message ?? 'No se pudo completar el registro de pasajero');
       }
     });
+  }
+
+  mostrarExito() {
+    
+    this.mostrarExitoso = true;
+    this.cdr.detectChanges();
+  }
+
+  cerrarExito() {
+    this.mostrarExitoso = false;
+    this.router.navigate(['/auth/login']);
+    this.cdr.detectChanges();
+    
   }
 }
