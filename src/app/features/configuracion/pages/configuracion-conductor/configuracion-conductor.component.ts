@@ -35,9 +35,8 @@ export class ConfiguracionConductorComponent implements OnInit {
     this.configuracionForm = this.fb.group({
       nombres: ['', [Validators.required]],
       apellidos: ['', [Validators.required]],
-      email: ['', [Validators.required, Validators.email]],
-      telefono: ['', [Validators.required]],
-      distrito: ['', [Validators.required]]
+      codigoUni: ['', [Validators.required]],
+      carrera: ['', [Validators.required]]
     });
   }
 
@@ -69,9 +68,8 @@ export class ConfiguracionConductorComponent implements OnInit {
         this.configuracionForm.patchValue({
           nombres: data.nombre,
           apellidos: data.apellido,
-          email: '', // El email no viene en ConductorResponse
-          telefono: '', // El teléfono no está en el modelo
-          distrito: data.distrito || ''
+          codigoUni: data.codigoUni,
+          carrera: data.carrera
         });
 
         this.loading.set(false);
@@ -138,7 +136,8 @@ export class ConfiguracionConductorComponent implements OnInit {
     const updateData = {
       nombre: formData.nombres,
       apellido: formData.apellidos,
-      distrito: formData.distrito,
+      codigoUni: formData.codigoUni,
+      carrera: formData.carrera,
       fotoPerfil: this.fotoPerfil() !== 'assets/default-avatar.png' ? this.fotoPerfil() : undefined
     };
 

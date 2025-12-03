@@ -141,7 +141,7 @@ import { AuthService } from '@core/services/auth.service';
         <p class="popup-info">{{ "Precio: s/." + rutaDetails()[0].tarifa }}</p>
 
         <p class="popup-info">{{ "Capacidad de pasajeros: " + rutaDetails()[0].asientosDisponibles }}</p>
-        <img class="trayectoria-img" src="assets/calendar.png" />
+        
       </div>
       
       <div class="rectangle-conductor">

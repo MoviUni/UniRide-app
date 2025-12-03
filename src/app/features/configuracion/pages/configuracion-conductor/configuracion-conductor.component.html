@@ -55,7 +55,7 @@
       <!-- Contenedor con foto y formulario -->
       <div class="contenedor-flex">
         <!-- Columna izquierda: Foto de perfil -->
-        <div class="columna-foto">
+        <!--  <div class="columna-foto">
           <div class="foto-container">
             <img [src]="fotoPerfil()" alt="Foto de perfil" class="foto-perfil" />
           </div>
@@ -68,10 +68,10 @@
               style="display: none;"
             />
           </label>
-        </div>
+        </div>-->
 
         <!-- Columna derecha: Formulario -->
-        <div class="columna-formulario">
+        
           <form [formGroup]="configuracionForm">
             <!-- Nombres -->
             <div class="form-group">
@@ -81,7 +81,7 @@
                 id="nombres"
                 formControlName="nombres"
                 class="form-input"
-                placeholder="Empty label"
+                placeholder="Ingrese su nombre"
               />
             </div>
 
@@ -93,48 +93,36 @@
                 id="apellidos"
                 formControlName="apellidos"
                 class="form-input"
-                placeholder="Empty label"
+                placeholder="Ingrese sus apellidos"
               />
             </div>
 
-            <!-- Correo electrónico -->
+            <!-- Codigo universitario -->
             <div class="form-group">
-              <label for="email" class="form-label">Correo electrónico:</label>
-              <input
-                type="email"
-                id="email"
-                formControlName="email"
-                class="form-input"
-                placeholder="Empty label"
-              />
-            </div>
-
-            <!-- Teléfono -->
-            <div class="form-group">
-              <label for="telefono" class="form-label">Teléfono:</label>
-              <input
-                type="tel"
-                id="telefono"
-                formControlName="telefono"
-                class="form-input"
-                placeholder="Empty label"
-              />
-            </div>
-
-            <!-- Distrito -->
-            <div class="form-group">
-              <label for="distrito" class="form-label">Distrito:</label>
+              <label for="codigoUni" class="form-label">Codigo universitario:</label>
               <input
                 type="text"
-                id="distrito"
-                formControlName="distrito"
+                id="codigoUni"
+                formControlName="codigoUni"
                 class="form-input"
-                placeholder="Empty label"
+                placeholder="Ingrese su código universitario"
               />
             </div>
+
+            <div class="form-group">
+              <label for="carrera" class="form-label">Carrera:</label>
+              <input
+                type="carrera"
+                id="carrera"
+                formControlName="carrera"
+                class="form-input"
+                placeholder="Ingrese su carrera"
+              />
+            </div>
+
           </form>
         </div>
-      </div>
+      
 
       <!-- Botones -->
       <div class="botones-container">

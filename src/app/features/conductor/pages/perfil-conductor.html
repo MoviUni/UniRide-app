@@ -20,7 +20,7 @@
   @if (!loading() && conductor()) {
     <!-- Tarjeta de perfil del conductor -->
     <div class="perfil-card">
-      <div class="perfil-foto">
+      <!--<div class="perfil-foto">
         <div class="foto-container">
           <img [src]="fotoPerfil()" alt="Foto de perfil" class="foto-perfil" />
           <label for="file-upload" class="upload-btn">
@@ -34,16 +34,11 @@
             <span class="upload-icon">📷</span>
           </label>
         </div>
-      </div>
+      </div>-->
 
       <div class="perfil-info">
         <h1 class="nombre-completo">{{ conductor()!.nombre }} {{ conductor()!.apellido }}</h1>
         
-        <div class="info-item">
-          <span class="label">Distrito:</span>
-          <span class="value">{{ conductor()!.distrito || 'No especificado' }}</span>
-        </div>
-
         <div class="info-item">
           <span class="label">Carrera:</span>
           <span class="value">{{ conductor()!.carrera || 'No especificada' }}</span>
@@ -74,7 +69,7 @@
         @if (vehiculo()) {
           <div class="vehiculo-card">
             <div class="vehiculo-imagen">
-              <img src="assets/car-placeholder.png" alt="Vehículo" class="car-img" />
+              
             </div>
             
             <div class="vehiculo-info">
@@ -115,7 +110,7 @@
       </div>
 
       <!-- Columna derecha: Solicita un viaje -->
-      <div class="solicitudes-section">
+      <!--<div class="solicitudes-section">
         <h2 class="seccion-titulo">Solicita un viaje</h2>
         
         @if (solicitudes().length === 0) {
@@ -149,7 +144,7 @@
             </div>
           }
         }
-      </div>
+      </div>-->
     </div>
 
     <!-- Sección de comentarios -->
