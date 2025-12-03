@@ -33,10 +33,10 @@ export class ConfiguracionVehiculoComponent implements OnInit {
 
   constructor() {
     this.vehiculoForm = this.fb.group({
-      matricula: ['', [Validators.required]],
-      marca: ['', [Validators.required]],
-      modelo: ['', [Validators.required]],
-      capacidad: ['', [Validators.required, Validators.min(1)]],
+      matricula: [{ value: '', disabled: true }, [Validators.required]],
+      marca: [{ value: '', disabled: true }, [Validators.required]],
+      modelo: [{ value: '', disabled: true }, [Validators.required]],
+      capacidad: [{ value: '', disabled: true }, [Validators.required, Validators.min(1)]],
       color: ['', [Validators.required]],
       aireAcondicionado: [false]
     });

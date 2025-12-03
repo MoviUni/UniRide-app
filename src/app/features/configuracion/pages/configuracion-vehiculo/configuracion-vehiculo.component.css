@@ -372,3 +372,10 @@
     gap: 24px;
   }
 }
+
+input[disabled], 
+select[disabled], 
+textarea[disabled] {
+  cursor: default !important; /* o pointer si prefieres */
+}
+

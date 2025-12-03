@@ -50,8 +50,8 @@ export class VehiculoService {
     idVehiculo: number,
     body: Partial<VehiculoRequest>
   ): Observable<VehiculoResponse> {
-    return this.http.put<VehiculoResponse>(
-      `${this.apiUrl}/${idVehiculo}`,
+    return this.http.patch<VehiculoResponse>(
+      `${this.apiUrl}/${idVehiculo}/color`,
       body
     );
   }
