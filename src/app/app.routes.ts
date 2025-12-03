@@ -52,6 +52,11 @@ export const routes: Routes = [
           import('./features/historial/historial.routes').then(m => m.HISTORIAL_ROUTES)
       },
       {
+        path: 'pagos',
+        loadChildren: () =>
+          import('./features/pagos/pagos.routes').then(m => m.pagosRoutes)
+      },
+      {
         path: 'perfil-pasajero',
         loadChildren: () =>
             import('./features/pasajero/perfil-pasajero.routes').then(m => m.PERFIL_PASAJERO_ROUTES)

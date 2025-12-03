@@ -1,0 +1,138 @@
+<!-- src/app/features/pagos/pages/registrar-pago/registrar-pago.component.html -->
+
+<div class="registrar-pago-container">
+  <div class="breadcrumb">
+    <a routerLink='/main/pasajero' class="breadcrumb-link">Inicio</a>
+    <span class="breadcrumb-separator">></span>
+    <a routerLink='/main/pasajero/solicitudes' class="breadcrumb-link">Mis solicitudes</a>
+    <span class="breadcrumb-separator">></span>
+    <span class="breadcrumb-current">Registrar Pago</span>
+  </div>
+
+  <h1 class="page-title">Registrar Pago</h1>
+
+  @if (solicitud()) {
+    <div class="solicitud-info">
+      <h3>Información del Viaje</h3>
+      <p><strong>Origen:</strong> {{ solicitud()!.origen }}</p>
+      <p><strong>Destino:</strong> {{ solicitud()!.destino }}</p>
+      <p><strong>Conductor:</strong> {{ solicitud()!.nombreConductor }} {{ solicitud()!.apellidoConductor }}</p>
+      <p><strong>Tarifa:</strong> S/. {{ solicitud()!.tarifa }}</p>
+      <p><strong>Fecha:</strong> {{ solicitud()!.fechaSalida }} {{ solicitud()!.horaSalida }}</p>
+    </div>
+  }
+
+  <form [formGroup]="pagoForm" (ngSubmit)="registrarPago()" class="pago-form">
+    
+    <!-- Monto -->
+    <div class="form-group">
+      <label for="monto">Monto (S/.)</label>
+      <input 
+        type="number" 
+        id="monto" 
+        formControlName="monto"
+        step="0.01"
+        min="0.01"
+        placeholder="Ingrese el monto"
+        (blur)="calcularComision()"
+        class="form-control">
+      @if (pagoForm.get('monto')?.invalid && pagoForm.get('monto')?.touched) {
+        <span class="error-text">El monto es requerido y debe ser mayor a 0</span>
+      }
+    </div>
+
+    <!-- Comisión -->
+    <div class="form-group">
+      <label for="comision">Comisión (10%)</label>
+      <input 
+        type="number" 
+        id="comision" 
+        formControlName="comision"
+        step="0.01"
+        min="0"
+        readonly
+        class="form-control readonly">
+      <small class="help-text">La comisión se calcula automáticamente (10% del monto)</small>
+    </div>
+
+    <!-- Medio de Pago -->
+    <div class="form-group">
+      <label for="medioPago">Medio de Pago</label>
+      <select 
+        id="medioPago" 
+        formControlName="medioPago"
+        class="form-control">
+        @for (medio of mediosPago; track medio) {
+          <option [value]="medio">{{ getMedioPagoLabel(medio) }}</option>
+        }
+      </select>
+    </div>
+
+    <!-- Estado de Pago -->
+    <div class="form-group">
+      <label for="estadoPago">Estado del Pago</label>
+      <select 
+        id="estadoPago" 
+        formControlName="estadoPago"
+        class="form-control">
+        @for (estado of estadosPago; track estado) {
+          <option [value]="estado">{{ getEstadoPagoLabel(estado) }}</option>
+        }
+      </select>
+    </div>
+
+    <!-- Fecha -->
+    <div class="form-group">
+      <label for="fecha">Fecha</label>
+      <input 
+        type="date" 
+        id="fecha" 
+        formControlName="fecha"
+        class="form-control">
+    </div>
+
+    <!-- Hora -->
+    <div class="form-group">
+      <label for="hora">Hora</label>
+      <input 
+        type="time" 
+        id="hora" 
+        formControlName="hora"
+        class="form-control">
+    </div>
+
+    <!-- Mensajes -->
+    @if (errorMessage()) {
+      <div class="alert alert-error">
+        {{ errorMessage() }}
+      </div>
+    }
+
+    @if (successMessage()) {
+      <div class="alert alert-success">
+        {{ successMessage() }}
+      </div>
+    }
+
+    <!-- Botones -->
+    <div class="form-actions">
+      <button 
+        type="button" 
+        (click)="cancelar()"
+        class="btn btn-secondary"
+        [disabled]="loading()">
+        Cancelar
+      </button>
+      <button 
+        type="submit" 
+        class="btn btn-primary"
+        [disabled]="pagoForm.invalid || loading()">
+        @if (loading()) {
+          <span>Registrando...</span>
+        } @else {
+          <span>Registrar Pago</span>
+        }
+      </button>
+    </div>
+  </form>
+</div>
