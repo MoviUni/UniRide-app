@@ -42,24 +42,62 @@
 
       <!-- Contraseña -->
       <label>Contraseña</label>
-      <input type="password" placeholder="Ingrese su contraseña" formControlName="password" />
+      <div class="input-with-icon">
+        <input
+          [type]="showPassword ? 'text' : 'password'"
+          placeholder="Empty label"
+          formControlName="password"
+        />
+
+        <button
+          type="button"
+          class="toggle-password-btn"
+          (click)="togglePassword()"
+          aria-label="Mostrar u ocultar contraseña"
+        >
+          <img
+            [src]="showPassword ? 'assets/ojo_abierto.png' : 'assets/ojo_bloqueado.png'"
+            alt="Icono mostrar/ocultar contraseña"
+          />
+        </button>
+      </div>
       <p class="error" *ngIf="accountForm.get('password')?.touched && accountForm.get('password')?.invalid">
         * La contraseña debe tener al menos 6 caracteres.
       </p>
 
       <!-- Confirmar Contraseña -->
       <label>Confirmar contraseña</label>
-      <input type="password" placeholder="Ingrese su contraseña" formControlName="password2" />
+      <div class="input-with-icon">
+        <input
+          [type]="showPassword2 ? 'text' : 'password'"
+          placeholder="Empty label"
+          formControlName="password2"
+        />
+
+        <button
+          type="button"
+          class="toggle-password-btn"
+          (click)="togglePassword2()"
+          aria-label="Mostrar u ocultar confirmación de contraseña"
+        >
+          <img
+            [src]="showPassword2 ? 'assets/ojo_abierto.png' : 'assets/ojo_bloqueado.png'"
+            alt="Icono mostrar/ocultar contraseña"
+          />
+        </button>
+      </div>
       <p class="error"
          *ngIf="accountForm.get('password2')?.touched && accountForm.hasError('mismatch')">
         * Las contraseñas no coinciden.
       </p>
 
       <button type="button"
+              class="form-main-btn"
               (click)="createAccount()"
               [disabled]="accountForm.invalid">
         Crear Cuenta
       </button>
+
     </form>
 
     <hr />
@@ -70,14 +108,3 @@
 
   </div>
 </div>
-@if (mostrarExitoso) {
-    <div class="popup-ex-overlay">
-      <div class="popup-ex-box">
-        <div class="popup-ex-close" (click)="cerrarExito()">x</div>
-
-        <p class="popup-ex-message"> ¡Se ha creado la cuenta con éxito! </p>
-        <img class="trayectoria-ex-img" src="assets/check_mark.png" />
-
-      </div>
-    </div>
-  }
