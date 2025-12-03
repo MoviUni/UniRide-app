@@ -34,7 +34,6 @@
   margin-bottom: 25px;
 }
 
-/* Cada paso es una columna */
 .step {
   display: flex;
   flex-direction: column;
@@ -42,7 +41,6 @@
   gap: 4px;
 }
 
-/* Círculo */
 .circle {
   width: 22px;
   height: 22px;
@@ -50,13 +48,11 @@
   border: 2px solid #ccc;
 }
 
-/* Círculo activo */
 .circle.active {
   background: #2b3dbb;
   border-color: #2b3dbb;
 }
 
-/* Línea entre pasos */
 .line {
   width: 40px;
   height: 2px;
@@ -64,7 +60,6 @@
   margin-top: -25px;
 }
 
-/* Texto debajo de cada círculo */
 .label {
   font-size: 12px;
   color: #333;
@@ -95,7 +90,8 @@ input::placeholder {
   color: #cfcfcf;
 }
 
-button {
+/* ✅ Botón principal del formulario */
+.form-main-btn {
   margin-top: 20px;
   height: 45px;
   background: #2b3dbb;
@@ -104,6 +100,11 @@ button {
   border: none;
   border-radius: 25px;
   cursor: pointer;
+  width: 100%;
+}
+
+.form-main-btn:hover {
+  opacity: 0.9;
 }
 
 button:active {
@@ -126,4 +127,38 @@ p {
 
 a {
   color: #2b3dbb;
+}
+
+/* ----- Input con icono de ojo (register) ----- */
+.input-with-icon {
+  position: relative;
+  display: flex;
+  align-items: center;
+}
+
+.input-with-icon input {
+  width: 100%;
+  padding-right: 48px; /* espacio para el ojito */
+}
+
+/* Botón del ojito */
+.toggle-password-btn {
+  position: absolute;
+  right: 18px;
+  top: 50%;
+  transform: translateY(-50%);
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  padding: 0;
+  width: auto;
+  height: auto;        
+  box-shadow: none;
+  border-radius: 0;
+}
+
+/* Imagen del ojo */
+.toggle-password-btn img {
+  width: 20px;
+  height: 20px;
 }

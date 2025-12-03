@@ -22,10 +22,29 @@
 
       <!-- Password -->
       <label>Contraseña</label>
-      <input type="password" formControlName="password" />
+      <div class="input-with-icon">
+        <input
+          [type]="showPassword ? 'text' : 'password'"
+          formControlName="password"
+        />
+
+        <button
+          type="button"
+          class="toggle-password-btn"
+          (click)="togglePassword()"
+          aria-label="Mostrar u ocultar contraseña"
+        >
+          <img
+            [src]="showPassword ? 'assets/ojo_abierto.png' : 'assets/ojo_bloqueado.png'"
+            alt="Icono mostrar/ocultar contraseña"
+          />
+        </button>
+      </div>
+
       <p class="error" *ngIf="loginForm.get('password')?.touched && loginForm.get('password')?.invalid">
         * La contraseña es obligatoria.
       </p>
+
 
       <!-- BOTÓN -->
       <button type="submit">Acceder</button>

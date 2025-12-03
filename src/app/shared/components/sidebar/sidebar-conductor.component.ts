@@ -79,46 +79,6 @@ import { RoleType } from '../../../core/models/usuario.model';
 
       <div class="ur-divider"></div>
 
-      <!-- PERFIL -->
-      <button
-        class="ur-icon-btn"
-        type="button"
-        aria-label="Mi perfil"
-        (click)="goPerfil()"
-      >
-        <span class="ur-icon">
-          <img src="assets/sidebar/user.png" alt="Perfil" title = "Mi perfil" />
-        </span>
-      </button>
-
-      <div class="ur-divider"></div>
-
-      <!-- VEHÍCULO -->
-      <button
-        class="ur-icon-btn"
-        type="button"
-        aria-label="Mi vehículo"
-        (click)="goVehiculo()"
-      >
-        <span class="ur-icon">
-          <img src="assets/sidebar/auto_icon.png" alt="Vehículo" title = "Mi vehículo"/>
-        </span>
-      </button>
-
-      <div class="ur-divider"></div>
-
-      <!-- CONFIGURACIÓN -->
-      <button
-        class="ur-icon-btn"
-        type="button"
-        aria-label="Configuración"
-        (click)="goConfiguracion()"
-      >
-        <span class="ur-icon">
-          <img src="assets/sidebar/Engranaje.png" alt="Configuración" title = "Configuración" />
-        </span>
-      </button>
-
       <!-- Empuja el power al fondo -->
       <div class="ur-spacer"></div>
 

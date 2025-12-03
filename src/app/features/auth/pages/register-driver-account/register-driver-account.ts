@@ -15,6 +15,9 @@ export class RegisterDriverAccount implements OnInit {
 
   accountForm!: FormGroup;
 
+  showPassword = false;
+  showPassword2 = false;
+
   constructor(
     private router: Router,
     private fb: FormBuilder,
@@ -35,16 +38,22 @@ export class RegisterDriverAccount implements OnInit {
     }
   }
 
+  togglePassword(): void {
+    this.showPassword = !this.showPassword;
+  }
+
+  togglePassword2(): void {
+    this.showPassword2 = !this.showPassword2;
+  }
+
   goToNext() {
     if (this.accountForm.invalid) {
       this.accountForm.markAllAsTouched();
       return;
     }
 
-    // (opcional) validar que password = password2 aquí
-
     this.driverState.setAccountData(this.accountForm.value);
-
     this.router.navigate(['/auth/register/driver/vehicle']);
   }
 }
+
