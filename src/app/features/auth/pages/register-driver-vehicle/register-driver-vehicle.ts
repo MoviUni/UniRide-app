@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { ChangeDetectorRef, Component, OnInit, inject } from '@angular/core';
 import { Router, RouterModule } from '@angular/router';
 import { CommonModule } from '@angular/common';
 import { ReactiveFormsModule, FormBuilder, Validators, FormGroup } from '@angular/forms';
@@ -15,6 +15,10 @@ import { AuthService } from '../../../../core/services/auth.service';
 export class RegisterDriverVehicle implements OnInit {
 
   vehicleForm!: FormGroup;
+  private cdr = inject(ChangeDetectorRef);
+  // Popup de éxito
+  mostrarExitoso: boolean = false;
+
 
   constructor(
     private router: Router,
@@ -43,6 +47,7 @@ export class RegisterDriverVehicle implements OnInit {
     const driver = this.driverState.getDriverData();
     const account = this.driverState.getAccountData();
     const vehicle = this.vehicleForm.value;
+    
 
     if (!driver || !account) {
       alert('Faltan datos del registro. Empieza nuevamente.');
@@ -77,13 +82,26 @@ export class RegisterDriverVehicle implements OnInit {
     this.authService.registerDriver(payload).subscribe({
       next: () => {
         this.driverState.clear();
-        alert('Registro completado correctamente.');
-        this.router.navigate(['/auth/login']);
+        this.mostrarExito();
+        
       },
       error: (err) => {
         console.error('Error al registrar:', err);
         alert(err?.error?.message ?? 'No se pudo completar el registro.');
       }
     });
+  }
+
+  mostrarExito() {
+    
+    this.mostrarExitoso = true;
+    this.cdr.detectChanges();
+  }
+
+  cerrarExito() {
+    this.mostrarExitoso = false;
+    this.router.navigate(['/auth/login']);
+    this.cdr.detectChanges();
+    
   }
 }
