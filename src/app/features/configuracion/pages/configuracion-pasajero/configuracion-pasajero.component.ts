@@ -36,6 +36,7 @@ export class ConfiguracionPasajeroComponent implements OnInit {
       nombres: ['', [Validators.required]],
       apellidos: ['', [Validators.required]],
       codigo: ['', [Validators.required]],
+      carrera:['', [Validators.required]],
     });
   }
 
@@ -68,6 +69,7 @@ export class ConfiguracionPasajeroComponent implements OnInit {
           nombres: data.nombre,
           apellidos: data.apellido,
           codigo: data.codigoUni, // El teléfono no está en el modelo, agrégalo si es necesario
+          carrera: data.carrera
         });
 
         this.loading.set(false);
@@ -140,6 +142,7 @@ export class ConfiguracionPasajeroComponent implements OnInit {
       dni: this.pasajero()?.dni,
       edad: this.pasajero()?.edad,
       codigoUni: formData.codigo,
+      carrera: formData.carrera
 
     };
 
