@@ -129,7 +129,7 @@ export class RegistrarPagoComponent implements OnInit {
         // Redirigir después de 2 segundos
         setTimeout(() => {
           const tipoUsuario = this.authService.getUserRole();
-          if (tipoUsuario === 'ROLE_PASAJERO') {
+          if (tipoUsuario === 'PASAJERO') {
             this.router.navigate(['/main/pasajero/solicitudes']);
           } else {
             this.router.navigate(['/main/pasajero']);
