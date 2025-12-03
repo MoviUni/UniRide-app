@@ -4,6 +4,7 @@ import { CommonModule } from '@angular/common';
 import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { CalificacionService } from '../../../core/services/calificacion.service';
 import { CalificacionRequest } from '../../../core/models/calificacion.model';
+import { AuthService } from '@core/services/auth.service';
 
 @Component({
   selector: 'app-modal-calificacion',
@@ -13,6 +14,8 @@ import { CalificacionRequest } from '../../../core/models/calificacion.model';
   styleUrls: ['./modal-calificacion.component.css']
 })
 export class ModalCalificacionComponent {
+
+  
   @Input() isOpen = false;
   @Input() idSolicitudViaje?: number;
   @Input() idUsuarioCalificado?: number; // ID del pasajero o conductor a calificar
@@ -31,7 +34,8 @@ export class ModalCalificacionComponent {
 
   constructor(
     private fb: FormBuilder,
-    private calificacionService: CalificacionService
+    private calificacionService: CalificacionService,
+    private authService: AuthService
   ) {
     this.calificacionForm = this.fb.group({
       comentario: ['', [Validators.required, Validators.minLength(10), Validators.maxLength(500)]]
@@ -67,7 +71,8 @@ export class ModalCalificacionComponent {
 
     const request: CalificacionRequest = {
       puntaje: this.calificacionSeleccionada(),
-      comentario: this.calificacionForm.value.comentario
+      comentario: this.calificacionForm.value.comentario,
+
     };
 
     // Solo asignar el ID si está disponible
