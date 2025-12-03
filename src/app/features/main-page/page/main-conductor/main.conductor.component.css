@@ -67,3 +67,35 @@ div {
     cursor: pointer;
     background-color: rgb(242, 234, 234);
 }
+
+/* Barra superior fija con perfil y configuración */
+.top-bar {
+  position: fixed;
+  top: 16px;
+  right: 32px;
+  display: flex;
+  gap: 16px;
+  z-index: 1000;
+}
+
+.top-icon-btn {
+  width: 44px;
+  height: 44px;
+  border-radius: 22px;
+  border: none;
+  background: #ffffff;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.18);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+}
+
+.top-icon-btn img {
+  width: 22px;
+  height: 22px;
+}
+
+.top-icon-btn:hover {
+  background: #f4f4f4;
+}

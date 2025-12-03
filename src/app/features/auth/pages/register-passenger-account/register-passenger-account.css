@@ -30,7 +30,7 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  gap: 20px; /* espacio general */
+  gap: 20px;
   margin-bottom: 25px;
 }
 
@@ -40,7 +40,7 @@
   align-items: center;
   gap: 6px;
 }
-/* círculos */
+
 .circle {
   width: 26px;
   height: 26px;
@@ -53,22 +53,19 @@
   border-color: #2b3dbb;
 }
 
-/* línea perfectamente centrada entre los círculos */
 .line {
-  width: 60px;              /* << Tamaño controlado */
+  width: 60px;
   height: 2px;
   background: #ccc;
-  margin-top: -25px;         /* << Alinea verticalmente con los círculos */
+  margin-top: -25px;
 }
 
-/* texto debajo */
 .label {
   font-size: 13px;
   color: #333;
 }
 
-
-/* --- Formulario y resto --- */
+/* --- Formulario --- */
 form {
   display: flex;
   flex-direction: column;
@@ -90,7 +87,13 @@ input {
   outline: none;
 }
 
-button {
+input::placeholder {
+  color: #cfcfcf;
+  opacity: 1;
+}
+
+/* ✅ Botón principal */
+.form-main-btn {
   margin-top: 20px;
   height: 45px;
   background: #2b3dbb;
@@ -99,6 +102,11 @@ button {
   border: none;
   border-radius: 25px;
   cursor: pointer;
+  width: 100%;
+}
+
+.form-main-btn:hover {
+  opacity: 0.9;
 }
 
 hr {
@@ -116,7 +124,34 @@ a {
   color: #2b3dbb;
 }
 
-input::placeholder {
-  color: #cfcfcf;
-  opacity: 1;
+/* ----- Input con icono de ojo ----- */
+.input-with-icon {
+  position: relative;
+  display: flex;
+  align-items: center;
+}
+
+.input-with-icon input {
+  width: 100%;
+  padding-right: 48px;
+}
+
+.toggle-password-btn {
+  position: absolute;
+  right: 18px;
+  top: 50%;
+  transform: translateY(-50%);
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  padding: 0;
+  width: auto;
+  height: auto;       
+  box-shadow: none;
+  border-radius: 0;
+}
+
+.toggle-password-btn img {
+  width: 20px;
+  height: 20px;
 }

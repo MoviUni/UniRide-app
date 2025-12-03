@@ -111,6 +111,38 @@ a:hover {
   text-decoration: underline;
 }
 
+/* ----- Input con icono de ojo ----- */
+.input-with-icon {
+  position: relative;
+  display: flex;
+  align-items: center;
+}
+
+.input-with-icon input {
+  width: 100%;
+  padding-right: 48px;  /* espacio para el ojito */
+}
+
+/* Botón del ojito */
+.toggle-password-btn {
+  position: absolute;
+  right: 18px;
+  top: 50%;
+  transform: translateY(-50%);
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  padding: 0;
+  width: auto;           /* sobrescribe el width:100% del button general */
+  box-shadow: none;      /* sin sombra para que parezca icono */
+}
+
+/* Imagen del ojo */
+.toggle-password-btn img {
+  width: 20px;
+  height: 20px;
+}
+
 /* --- MEDIA QUERIES PARA MOVILES --- */
 @media (max-width: 900px) {
   .login-container {

@@ -53,7 +53,25 @@
 
       <!-- Password -->
       <label>Contraseña</label>
-      <input type="password" placeholder="Empty label" formControlName="password" />
+      <div class="input-with-icon">
+        <input
+          [type]="showPassword ? 'text' : 'password'"
+          placeholder="Empty label"
+          formControlName="password"
+        />
+
+        <button
+          type="button"
+          class="toggle-password-btn"
+          (click)="togglePassword()"
+          aria-label="Mostrar u ocultar contraseña"
+        >
+          <img
+            [src]="showPassword ? 'assets/ojo_abierto.png' : 'assets/ojo_bloqueado.png'"
+            alt="Icono mostrar/ocultar contraseña"
+          />
+        </button>
+      </div>
       <div class="error" *ngIf="accountForm.get('password')?.touched && accountForm.get('password')?.invalid">
         <small *ngIf="accountForm.get('password')?.errors?.['required']">* La contraseña es obligatoria.</small>
         <small *ngIf="accountForm.get('password')?.errors?.['minlength']">* Mínimo 6 caracteres.</small>
@@ -61,13 +79,34 @@
 
       <!-- Confirm Password -->
       <label>Confirmar contraseña</label>
-      <input type="password" placeholder="Empty label" formControlName="password2" />
+      <div class="input-with-icon">
+        <input
+          [type]="showPassword2 ? 'text' : 'password'"
+          placeholder="Empty label"
+          formControlName="password2"
+        />
+
+        <button
+          type="button"
+          class="toggle-password-btn"
+          (click)="togglePassword2()"
+          aria-label="Mostrar u ocultar confirmación de contraseña"
+        >
+          <img
+            [src]="showPassword2 ? 'assets/ojo_abierto.png' : 'assets/ojo_bloqueado.png'"
+            alt="Icono mostrar/ocultar contraseña"
+          />
+        </button>
+      </div>
       <div class="error" *ngIf="accountForm.get('password2')?.touched && accountForm.get('password2')?.invalid">
         <small *ngIf="accountForm.get('password2')?.errors?.['required']">* Este campo es obligatorio.</small>
         <small *ngIf="accountForm.get('password2')?.errors?.['minlength']">* Mínimo 6 caracteres.</small>
       </div>
 
-      <button type="button" (click)="goToNext()">Continuar</button>
+      <button type="button" class="form-main-btn" (click)="goToNext()">
+        Continuar
+      </button>
+
     </form>
 
     <hr/>

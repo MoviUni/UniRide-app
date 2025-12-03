@@ -17,6 +17,10 @@ export class RegisterPassengerAccount {
 
   accountForm: FormGroup;
 
+  // 👇 NUEVOS FLAGS PARA LOS OJOS
+  showPassword = false;
+  showPassword2 = false;
+
   constructor(
     private router: Router,
     private fb: FormBuilder,
@@ -38,6 +42,15 @@ export class RegisterPassengerAccount {
     return pass === pass2 ? null : { mismatch: true };
   }
 
+  // 👇 NUEVOS MÉTODOS PARA TOGGLE
+  togglePassword(): void {
+    this.showPassword = !this.showPassword;
+  }
+
+  togglePassword2(): void {
+    this.showPassword2 = !this.showPassword2;
+  }
+
   createAccount() {
     if (this.accountForm.invalid) {
       this.accountForm.markAllAsTouched();
@@ -50,7 +63,7 @@ export class RegisterPassengerAccount {
     if (!passenger) {
       console.error('Faltan datos del paso anterior de pasajero');
       alert('Ocurrió un problema con los datos del registro. Vuelve a empezar.');
-      this.router.navigate(['/auth/register/passenger']); // 👈 corrige ruta
+      this.router.navigate(['/auth/register/passenger']);
       return;
     }
 
@@ -58,8 +71,8 @@ export class RegisterPassengerAccount {
       nombre: passenger.nombres,
       apellido: passenger.apellidos,
       dni: passenger.dni,
-      edad: Number(passenger.edad),  
-      codigoUni: account.codigo,     
+      edad: Number(passenger.edad),
+      codigoUni: account.codigo,
       email: account.email,
       password: account.password
     };

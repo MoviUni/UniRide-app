@@ -15,19 +15,25 @@ import { AuthService } from '../../../../core/services/auth.service';
 export class Login {
 
   loginForm: FormGroup;
-  loginError: string | null = null;   // 👈 mensaje de error de backend
+  loginError: string | null = null;
+
+  showPassword = false;
 
   constructor(
-  private fb: FormBuilder,
-  private authService: AuthService,
-  private router: Router,
-  private cdr: ChangeDetectorRef
-) {
-  this.loginForm = this.fb.group({
-    email: ['', [AuthValidators.email]],
-    password: ['', [Validators.required]]
-  });
-}
+    private fb: FormBuilder,
+    private authService: AuthService,
+    private router: Router,
+    private cdr: ChangeDetectorRef
+  ) {
+    this.loginForm = this.fb.group({
+      email: ['', [AuthValidators.email]],
+      password: ['', [Validators.required]]
+    });
+  }
+
+  togglePassword(): void {
+    this.showPassword = !this.showPassword;
+  }
 
 
     submit(): void {
