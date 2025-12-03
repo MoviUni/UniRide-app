@@ -1,11 +1,13 @@
 // src/app/features/historial/pages/historial-conductor/historial-conductor.component.ts
 import { Component, OnInit, inject, signal } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { RouterModule } from '@angular/router';
+import { RouterModule, Router  } from '@angular/router';
 import { SolicitudService } from '../../../../core/services/solicitud.service';
 import { AuthService } from '../../../../core/services/auth.service';
 import { SolicitudCardResponse, EstadoSolicitud } from '../../../../core/models/solicitud.model';
 import { ModalCalificacionComponent } from '../../../../shared/components/modal-calificacion/modal-calificacion.component';
+import { forkJoin } from 'rxjs';
+import { PasajeroService } from '@core/services/pasajero.service';
 
 interface ViajeAgrupado {
   fecha: string;
@@ -23,6 +25,9 @@ interface ViajeAgrupado {
 export class HistorialConductor implements OnInit {
   private solicitudService = inject(SolicitudService);
   private auth = inject(AuthService);
+  private router = inject(Router);
+  private pasajeroService = inject(PasajeroService);
+
 
   historialAgrupado = signal<ViajeAgrupado[]>([]);
   loading = signal(false);
@@ -52,7 +57,7 @@ export class HistorialConductor implements OnInit {
         
         // Filtrar solo solicitudes aceptadas (viajes realizados)
         const viajesRealizados = data.filter(
-          (s) => s.estadoSolicitud === EstadoSolicitud.ACEPTADO
+          (s) => s.estadoSolicitud === EstadoSolicitud.FINALIZADO
         );
 
         // Agrupar por fecha
@@ -135,4 +140,58 @@ export class HistorialConductor implements OnInit {
     // Recargar el historial después de calificar
     this.loadHistory();
   }
+
+  //Pop up para ver más detalles
+  mensajePopup: string = '';
+  mostrarPopup: boolean = false;
+  rutaDetails = signal<any[]>([]);
+
+  mostrarMensaje(dt: any) {
+  this.mensajePopup = 'Detalles de la solicitud';
+  this.mostrarPopup = true;
+
+  // 1. Traer todas las solicitudes de esa ruta
+  this.solicitudService.getSolicitudesPorRuta(dt.idRuta).subscribe({
+    next: (solicitudes) => {
+      // 2. Filtrar solo las aceptadas
+      const solicitudesRelevantes = solicitudes.filter(
+  s => [EstadoSolicitud.ACEPTADO, EstadoSolicitud.FINALIZADO].includes(s.estadoSolicitud)
+);
+
+      // 3. Sacar los IDs de pasajero
+      const idsPasajeros = solicitudesRelevantes.map(s => s.pasajeroId);
+
+      if (idsPasajeros.length === 0) {
+        this.rutaDetails.set([{ ...dt, pasajeros: [] }]);
+        return;
+      }
+
+      // 4. Traer los datos de los pasajeros
+      const observables = idsPasajeros.map(id => this.pasajeroService.getById(id));
+      forkJoin(observables).subscribe({
+        next: (pasajeros) => {
+          const dtConPasajeros = { ...dt, pasajeros };
+          this.rutaDetails.set([dtConPasajeros]);
+        },
+        error: (err) => {
+          console.error('Error cargando pasajeros:', err);
+          this.rutaDetails.set([{ ...dt, pasajeros: [] }]); // fallback sin pasajeros
+        }
+      });
+    },
+    error: (err) => {
+      console.error('Error cargando solicitudes de la ruta:', err);
+      this.rutaDetails.set([{ ...dt, pasajeros: [] }]); // fallback sin pasajeros
+    }
+  });
+}
+
+
+cerrarPopup(event: Event) {
+  this.mostrarPopup = false;
+  this.rutaDetails.set([]);
+}
+
+
+
 }

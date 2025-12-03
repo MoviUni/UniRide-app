@@ -218,7 +218,7 @@
 
 .pasajero-label {
   font-size: 14px;
-  color: #666;
+  color: white;
 }
 
 /* Meta del viaje */
@@ -303,3 +303,168 @@
     font-size: 20px;
   }
 }
+
+/* Fondo oscuro del popup */
+.popup-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background: rgba(0, 0, 0, 0.45);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 99999;
+}
+
+/* Caja blanca centrada */
+.popup-box {
+  width: 90%;
+  max-width: 900px;
+  background: white;
+  border-radius: 12px;
+  padding: 40px;
+  position: relative;
+  animation: popupFade 0.25s ease-out;
+}
+
+/* Animación suave */
+@keyframes popupFade {
+  from { transform: scale(0.92); opacity: 0; }
+  to { transform: scale(1); opacity: 1; }
+}
+
+/* Botón X para cerrar */
+.popup-close {
+  position: absolute;
+  top: 15px;
+  right: 20px;
+  font-size: 40px;
+  font-weight: 600;
+  cursor: pointer;
+  color: #333;
+  transition: 0.2s;
+}
+
+.popup-close:hover {
+  color: #DD2D4A;
+}
+
+/* Título del popup */
+.popup-title {
+  font-size: 28px;
+  font-weight: 600;
+  font-family: "Poppins", sans-serif;
+  margin-bottom: 20px;
+  color: #880D1E;
+}
+
+/* Texto general */
+.popup-text {
+  font-size: 18px;
+  font-family: "Poppins", sans-serif;
+  line-height: 1.4;
+  margin-bottom: 20px;
+}
+
+/* Botón principal */
+.popup-btn {
+  width: 180px;
+  height: 45px;
+  border-radius: 8px;
+  background: #880D1E;
+  color: white;
+  font-size: 18px;
+  font-family: "Poppins";
+  border: none;
+  cursor: pointer;
+  transition: 0.2s;
+}
+
+.popup-btn:hover {
+  background: #620713;
+}
+
+.rectangle1,
+.rectangle2,
+.rectangle-trayecto,
+.rectangle-conductor {
+  padding: 20px 30px;
+  box-sizing: border-box;
+  
+}
+
+.mi_cuenta_contenido {
+  padding-top: 40px;
+  padding-left: 40px;
+}
+
+.filtros-container {
+  margin-top: 40px;
+  margin-bottom: 30px;
+}
+
+.rectangle-trayecto{
+  width: 796.74px;
+  left: 0px;
+  top: 35px;
+  position: relative;
+  background: #F3F3F3;
+  border-radius: 10.40px;
+  margin: auto;
+  margin-top: -20px;
+  
+}
+
+.rectangle-conductor{
+  width: 796.74px;
+  left: 0px;
+  top: 35px;
+  position: relative;
+  background: #F3F3F3;
+  border-radius: 10.40px;
+  margin: auto;
+  margin-top: 20px;
+}
+
+
+.popup-message {
+  font-size: 32px;
+  font-family: Poppins, sans-serif;
+  font-weight: 600;
+  color:#620713;
+  max-width: 700px;
+
+  line-height: 1.2;
+  margin-bottom: -20px;
+}
+
+.popup-section {
+  left:15px;
+  position: relative;
+  padding-top: 22px;
+  font-size: 18px;
+  font-family: Poppins, sans-serif;
+  font-weight: 600;
+  color: black;
+  max-width: 700px;
+    
+  line-height: 1.2;
+}
+
+.popup-info {
+  left:15px;
+  position: relative;
+  padding-top: 15px;
+  margin-bottom: 15px;
+  font-size: 16px;
+  font-family: Poppins, sans-serif;
+  font-weight: 500;
+  color: black;
+  max-width: 700px;
+
+  line-height: 1.2;
+}
+
+

@@ -57,7 +57,7 @@
               <div class="viaje-footer">
                 <div class="pasajero-info">
                   <div class="pasajero-details">
-                    <span class="pasajero-label">Pasajeros: {{ viaje.asientosDisponibles }}</span>
+                    <span class="pasajero-label">.</span>
                   </div>
                 </div>
 
@@ -68,12 +68,13 @@
                       class="btn-calificar"
                       (click)="abrirModalCalificacion(viaje)"
                     >
-                      ⭐ Calificar pasajero
+                      ⭐ Calificar viaje
                     </button>
                     <button 
                       type="button" 
                       class="btn-ver-detalles"
                       (click)="verDetalles(viaje)"
+                      (click)="mostrarMensaje(viaje)"
                     >
                       Ver detalles
                     </button>
@@ -98,3 +99,31 @@
   (closeModal)="cerrarModal()"
   (calificacionGuardada)="onCalificacionGuardada()"
 ></app-modal-calificacion>
+
+@if (mostrarPopup && rutaDetails().length > 0) {
+  <div class="popup-overlay" (click)="cerrarPopup($event)">
+    <div class="popup-box" (click)="$event.stopPropagation()">
+      <div class="popup-close" (click)="cerrarPopup($event)">×</div>
+
+      <p class="popup-message">{{ mensajePopup }}</p>
+
+      
+      <!-- Información del trayecto -->
+      <div class="rectangle-trayecto">
+        <p class="popup-section">Información del trayecto</p>
+        <p class="popup-info">
+          {{ "Origen y destino: " + rutaDetails()[0].origen + " → " + rutaDetails()[0].destino }}
+        </p>
+        <p class="popup-info">
+          {{ "Hora de salida: " + rutaDetails()[0].horaSalida }}
+        </p>
+        <p class="popup-info">
+          {{ "Fecha de salida: " + formatFechaCompleta(rutaDetails()[0].fechaSalida) }}
+        </p>
+        <p class="popup-info">{{ "Precio: s/." + rutaDetails()[0].tarifa }}</p>
+        <p class="popup-info">{{ "Capacidad de pasajeros: " + rutaDetails()[0].asientosDisponibles }}</p>
+      </div>
+    </div>
+  </div>
+}
+
