@@ -6,6 +6,8 @@ import { ConductorService } from '@core/services/conductor.service';
 import { AuthService } from '@core/services/auth.service';
 import { VehiculoService } from '@core/services/vehiculo.service';
 import { RoutesService } from '@core/services/routes.service';
+import { CalificacionService } from '@core/services/calificacion.service';
+import { CalificacionResponse } from '@core/models/calificacion.model';
 import { ConductorResponse, ComentarioConductorResponse, SolicitudViajeCardResponse } from '@core/models/conductor.model';
 import { VehiculoResponse } from '@core/models/vehiculo.model';
 
@@ -21,6 +23,7 @@ export class PerfilConductor implements OnInit {
   private auth = inject(AuthService);
   private vehiculoService = inject(VehiculoService);
   private routesService = inject(RoutesService);
+  private calificacionService = inject(CalificacionService);
 
   conductor = signal<ConductorResponse | null>(null);
   vehiculo = signal<VehiculoResponse | null>(null);
@@ -116,25 +119,30 @@ export class PerfilConductor implements OnInit {
   }
 
   loadComentarios(): void {
-    // Simulación de comentarios - reemplazar con llamada real al backend
-    const mockComentarios: ComentarioConductorResponse[] = [
-      {
-        idComentario: 1,
-        nombreUsuario: 'Ricardo',
-        calificacion: 5,
-        comentario: 'Llegó muy rápido a la universidad cuando pensaba que iba a llegar tarde',
-        fecha: '2025-09-20'
+    const id = this.auth.getConductorId();
+    if (!id) return;
+
+    this.calificacionService.getCalificacionesByConductor(id).subscribe({
+      next: (calificaciones: CalificacionResponse[]) => {
+        console.log('📝 Calificaciones de conductor cargadas:', calificaciones);
+        
+        // Transformar CalificacionResponse a ComentarioConductorResponse
+        const comentarios: ComentarioConductorResponse[] = calificaciones.map(cal => ({
+          idComentario: cal.idCalificacion,
+          nombreUsuario: cal.nombreCalificador || 'Usuario',
+          calificacion: cal.calificacion,
+          comentario: cal.comentario,
+          fecha: cal.fechaCreacion || new Date().toISOString().split('T')[0]
+        }));
+        
+        this.comentarios.set(comentarios);
       },
-      {
-        idComentario: 2,
-        nombreUsuario: 'Andrea',
-        calificacion: 1,
-        comentario: 'Se pasaba todas las luces rojas!',
-        fecha: '2025-09-15'
+      error: (err) => {
+        console.error('❌ Error cargando comentarios del conductor:', err);
+        // Mantener array vacío si hay error
+        this.comentarios.set([]);
       }
-    ];
-    
-    this.comentarios.set(mockComentarios);
+    });
   }
 
   onFileSelected(event: Event): void {
