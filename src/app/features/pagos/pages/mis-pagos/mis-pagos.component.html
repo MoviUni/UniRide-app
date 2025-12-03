@@ -1,0 +1,73 @@
+<!-- src/app/features/pagos/pages/mis-pagos/mis-pagos.component.html -->
+
+<div class="mis-pagos-container">
+  <div class="breadcrumb">
+    <a routerLink='/main/pasajero' class="breadcrumb-link">Inicio</a>
+    <span class="breadcrumb-separator">></span>
+    <span class="breadcrumb-current">Mis Pagos</span>
+  </div>
+
+  <h1 class="page-title">Mis Pagos</h1>
+
+  <div class="pagos-content">
+    @if (loading()) {
+      <div class="loading-state">
+        <p>Cargando pagos...</p>
+      </div>
+    } @else if (errorMessage()) {
+      <div class="error-state">
+        <span class="error-text">{{ errorMessage() }}</span>
+        <img class="error-image" src="assets/history.png" alt="Error" />
+      </div>
+    } @else if (pagos().length === 0) {
+      <div class="empty-state">
+        <span class="empty-text">No tienes pagos registrados aún...</span>
+        <img class="empty-image" src="assets/history.png" alt="Sin pagos" />
+      </div>
+    } @else {
+      <div class="pagos-list">
+        @for (pago of pagos(); track pago.idPago) {
+          <div class="pago-card">
+            <div class="pago-header">
+              <div class="pago-id">
+                <span class="label">Pago #{{ pago.idPago }}</span>
+              </div>
+              <div class="pago-estado" [style.background-color]="getEstadoColor(pago.estadoPago)">
+                {{ getEstadoLabel(pago.estadoPago) }}
+              </div>
+            </div>
+
+            <div class="pago-body">
+              <div class="pago-info">
+                <div class="info-row">
+                  <span class="info-label">Monto:</span>
+                  <span class="info-value monto">S/. {{ pago.monto.toFixed(2) }}</span>
+                </div>
+                <div class="info-row">
+                  <span class="info-label">Comisión:</span>
+                  <span class="info-value">S/. {{ pago.comision.toFixed(2) }}</span>
+                </div>
+                <div class="info-row">
+                  <span class="info-label">Total:</span>
+                  <span class="info-value total">S/. {{ (pago.monto + pago.comision).toFixed(2) }}</span>
+                </div>
+                <div class="info-row">
+                  <span class="info-label">Medio de pago:</span>
+                  <span class="info-value">{{ getMedioPagoLabel(pago.medioPago) }}</span>
+                </div>
+                <div class="info-row">
+                  <span class="info-label">Fecha:</span>
+                  <span class="info-value">{{ formatFecha(pago.fecha) }} - {{ pago.hora }}</span>
+                </div>
+                <div class="info-row">
+                  <span class="info-label">Solicitud:</span>
+                  <span class="info-value">#{{ pago.solicitudViajeId }}</span>
+                </div>
+              </div>
+            </div>
+          </div>
+        }
+      </div>
+    }
+  </div>
+</div>
