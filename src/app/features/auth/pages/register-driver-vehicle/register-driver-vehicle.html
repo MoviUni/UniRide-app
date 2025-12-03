@@ -37,7 +37,7 @@
 
       <!-- Matrícula -->
       <label>Placa</label>
-      <input type="text" placeholder="Empty label" formControlName="placa">
+      <input type="text" placeholder="Ingrese su placa" formControlName="placa">
       <div class="error"
            *ngIf="vehicleForm.get('placa')?.touched && vehicleForm.get('placa')?.invalid">
         <small *ngIf="vehicleForm.get('placa')?.errors?.['required']">* Este campo es obligatorio.</small>
@@ -45,7 +45,7 @@
 
       <!-- Marca -->
       <label>Marca</label>
-      <input type="text" placeholder="Empty label" formControlName="marca">
+      <input type="text" placeholder="Ingrese la marca del vehiculo" formControlName="marca">
       <div class="error"
            *ngIf="vehicleForm.get('marca')?.touched && vehicleForm.get('marca')?.invalid">
         <small *ngIf="vehicleForm.get('marca')?.errors?.['required']">* Este campo es obligatorio.</small>
@@ -53,7 +53,7 @@
 
       <!-- Modelo -->
       <label>Modelo</label>
-      <input type="text" placeholder="Empty label" formControlName="modelo">
+      <input type="text" placeholder="Ingrese el modelo del vehiculo" formControlName="modelo">
       <div class="error"
            *ngIf="vehicleForm.get('modelo')?.touched && vehicleForm.get('modelo')?.invalid">
         <small *ngIf="vehicleForm.get('modelo')?.errors?.['required']">* Este campo es obligatorio.</small>
@@ -61,7 +61,7 @@
 
       <!-- Capacidad -->
       <label>Capacidad</label>
-      <input type="number" placeholder="Empty label" formControlName="capacidad">
+      <input type="number" placeholder="Ingrese la capacidad del vehiculo" formControlName="capacidad">
       <div class="error"
            *ngIf="vehicleForm.get('capacidad')?.touched && vehicleForm.get('capacidad')?.invalid">
         <small *ngIf="vehicleForm.get('capacidad')?.errors?.['required']">* Este campo es obligatorio.</small>
@@ -70,7 +70,7 @@
 
       <!-- Color -->
       <label>Color</label>
-      <input type="text" placeholder="Empty label" formControlName="color">
+      <input type="text" placeholder="Ingrese el color del vehículo" formControlName="color">
       <div class="error"
            *ngIf="vehicleForm.get('color')?.touched && vehicleForm.get('color')?.invalid">
         <small *ngIf="vehicleForm.get('color')?.errors?.['required']">* Este campo es obligatorio.</small>
@@ -97,3 +97,14 @@
 
   </div>
 </div>
+@if (mostrarExitoso) {
+    <div class="popup-ex-overlay">
+      <div class="popup-ex-box">
+        <div class="popup-ex-close" (click)="cerrarExito()">x</div>
+
+        <p class="popup-ex-message"> ¡Se ha creado la cuenta con éxito! </p>
+        <img class="trayectoria-ex-img" src="assets/check_mark.png" />
+
+      </div>
+    </div>
+  }

@@ -23,7 +23,7 @@ export class ConfiguracionPasajeroComponent implements OnInit {
 
   // Signals
   pasajero = signal<PasajeroResponse | null>(null);
-  fotoPerfil = signal<string>('assets/default-avatar.png');
+  fotoPerfil = signal<string>('assets/default-avatar.jpg');
   loading = signal<boolean>(false);
   errorMessage = signal<string>('');
   successMessage = signal<string>('');
@@ -35,9 +35,7 @@ export class ConfiguracionPasajeroComponent implements OnInit {
     this.configuracionForm = this.fb.group({
       nombres: ['', [Validators.required]],
       apellidos: ['', [Validators.required]],
-      email: ['', [Validators.required, Validators.email]],
-      telefono: ['', [Validators.required]],
-      distrito: ['', [Validators.required]]
+      codigo: ['', [Validators.required]],
     });
   }
 
@@ -69,9 +67,7 @@ export class ConfiguracionPasajeroComponent implements OnInit {
         this.configuracionForm.patchValue({
           nombres: data.nombre,
           apellidos: data.apellido,
-          email: '', // El email no viene en PasajeroResponse, necesitarás obtenerlo de otro lado
-          telefono: '', // El teléfono no está en el modelo, agrégalo si es necesario
-          distrito: data.distrito || ''
+          codigo: data.codigoUni, // El teléfono no está en el modelo, agrégalo si es necesario
         });
 
         this.loading.set(false);
@@ -118,10 +114,11 @@ export class ConfiguracionPasajeroComponent implements OnInit {
 
   guardarCambios(): void {
     if (this.configuracionForm.invalid) {
+      
       this.errorMessage.set('Por favor completa todos los campos correctamente');
       return;
     }
-
+    console.log("HOLAAA", this.configuracionForm.value);
     const pasajeroId = this.authService.getPasajeroId();
     if (!pasajeroId) {
       this.errorMessage.set('No se encontró ID de pasajero');
@@ -138,8 +135,12 @@ export class ConfiguracionPasajeroComponent implements OnInit {
     const updateData = {
       nombre: formData.nombres,
       apellido: formData.apellidos,
-      distrito: formData.distrito,
-      fotoPerfil: this.fotoPerfil() !== 'assets/default-avatar.png' ? this.fotoPerfil() : undefined
+      email: "",
+      password: "",
+      dni: this.pasajero()?.dni,
+      edad: this.pasajero()?.edad,
+      codigoUni: formData.codigo,
+
     };
 
     console.log('📤 Actualizando pasajero:', updateData);

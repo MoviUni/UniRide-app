@@ -1,5 +1,5 @@
 // src/app/features/auth/page/register-passenger-account/register-passenger-account.ts
-import { Component } from '@angular/core';
+import { Component, inject,ChangeDetectorRef } from '@angular/core';
 import { Router, RouterModule } from '@angular/router';
 import { CommonModule } from '@angular/common';
 import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
@@ -82,7 +82,6 @@ export class RegisterPassengerAccount {
     this.authService.registerPassenger(payload).subscribe({
       next: () => {
         this.passengerState.clear();
-        this.router.navigate(['/auth/login']);
       },
       error: (err) => {
         console.error('Error registrando pasajero', err);

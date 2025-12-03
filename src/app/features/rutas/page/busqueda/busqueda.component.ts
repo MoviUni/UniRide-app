@@ -470,7 +470,7 @@ export class BusquedaRutasComponent implements OnInit{
     const pasajeroId = this.authService.getPasajeroId();
     
     if (!pasajeroId) {
-      alert('Debes iniciar sesión como pasajero para solicitar unirse a un viaje');
+      alert('Debe iniciar sesión como pasajero para solicitar unirse a un viaje');
       return;
     }
 
@@ -508,7 +508,7 @@ export class BusquedaRutasComponent implements OnInit{
         let mensajeError = 'Ha ocurrido un error al solicitar unirse a este viaje.';
         
         if (error.status === 400) {
-          mensajeError = 'Ya tienes una solicitud pendiente para este viaje.';
+          mensajeError = 'Ya tiene una solicitud pendiente para este viaje.';
         } else if (error.status === 404) {
           mensajeError = 'La ruta no está disponible.';
         } else if (error.error?.message) {
