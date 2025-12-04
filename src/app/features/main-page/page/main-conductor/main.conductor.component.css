@@ -99,3 +99,13 @@ div {
 .top-icon-btn:hover {
   background: #f4f4f4;
 }
+.banner {
+  width: 100%;
+  height: 240px;           /* controla la altura, puedes ajustarlo */
+  object-fit: cover;        /* recorta manteniendo proporción */
+  object-position: center 20%;  /* 👈 mueve el recorte hacia abajo */
+  border-radius: 20px;
+  display: block;
+  margin: 20px auto;
+}
+

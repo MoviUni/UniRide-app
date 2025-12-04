@@ -1,5 +1,5 @@
 // src/app/features/auth/page/register-passenger-account/register-passenger-account.ts
-import { Component, inject,ChangeDetectorRef } from '@angular/core';
+import { Component, ChangeDetectorRef } from '@angular/core';
 import { Router, RouterModule } from '@angular/router';
 import { CommonModule } from '@angular/common';
 import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
@@ -17,15 +17,17 @@ export class RegisterPassengerAccount {
 
   accountForm: FormGroup;
 
-  // 👇 NUEVOS FLAGS PARA LOS OJOS
   showPassword = false;
   showPassword2 = false;
+
+  mostrarExitoso = false;
 
   constructor(
     private router: Router,
     private fb: FormBuilder,
     private passengerState: RegisterPassengerStateService,
-    private authService: AuthService
+    private authService: AuthService,
+    private cdr: ChangeDetectorRef     // <--- FALTABA INYECTAR ESTO
   ) {
 
     this.accountForm = this.fb.group({
@@ -42,7 +44,6 @@ export class RegisterPassengerAccount {
     return pass === pass2 ? null : { mismatch: true };
   }
 
-  // 👇 NUEVOS MÉTODOS PARA TOGGLE
   togglePassword(): void {
     this.showPassword = !this.showPassword;
   }
@@ -61,7 +62,6 @@ export class RegisterPassengerAccount {
     const account = this.accountForm.value;
 
     if (!passenger) {
-      console.error('Faltan datos del paso anterior de pasajero');
       alert('Ocurrió un problema con los datos del registro. Vuelve a empezar.');
       this.router.navigate(['/auth/register/passenger']);
       return;
@@ -77,16 +77,26 @@ export class RegisterPassengerAccount {
       password: account.password
     };
 
-    console.log('Payload registro pasajero:', payload);
-
     this.authService.registerPassenger(payload).subscribe({
       next: () => {
         this.passengerState.clear();
+        this.mostrarExito();
       },
       error: (err) => {
         console.error('Error registrando pasajero', err);
         alert(err?.error?.message ?? 'No se pudo completar el registro de pasajero');
       }
     });
+  }
+
+  mostrarExito() {
+    this.mostrarExitoso = true;
+    this.cdr.detectChanges();
+  }
+
+  cerrarExito() {
+    this.mostrarExitoso = false;
+    this.cdr.detectChanges();
+    this.router.navigate(['/auth/login']);
   }
 }
