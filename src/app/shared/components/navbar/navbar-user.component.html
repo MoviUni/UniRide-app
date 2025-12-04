@@ -1,10 +1,20 @@
 <nav class="navbar-user">
-    <div class="landing_header">
-    <div class="frame-427318918"></div>
-    <div class="rectangle-3348"></div>
-    <div class="frame-427318926"></div>
-    <div class="uniride"><span class="uniride_span">UniRide</span></div>
-    <div class="uniride_01"><span class="uniride_01_span">UniRide</span></div>
-    <img class="image-39" src="assets/logo.png" />
+  <div class="landing_header">
+
+    <!-- LOGO -->
+    <img class="logo-img" src="assets/logo.png" alt="Logo" />
+    <h1 class="logo-text">UniRide</h1>
+
+    <!-- ICONOS SUPERIOR DERECHA (mismos para ambos roles, pero con link dinámico) -->
+    <div class="navbar-actions">
+      <button class="icon-btn" [routerLink]="perfilLink">
+        <img src="assets/sidebar/user.png" alt="Perfil">
+      </button>
+
+      <button class="icon-btn" [routerLink]="configLink">
+        <img src="assets/sidebar/Engranaje.png" alt="Configuración">
+      </button>
     </div>
+
+  </div>
 </nav>

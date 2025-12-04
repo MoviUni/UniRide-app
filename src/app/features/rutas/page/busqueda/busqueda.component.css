@@ -140,6 +140,9 @@ div {
 
   z-index: 10;
 }
+.form-group {
+  padding: 0 24px;   /* margen interno izquierda y derecha */
+}
 
 .form-content {
   top: 45vh;
@@ -597,13 +600,14 @@ div {
 }
 
 .filtros_01 {
-  width: 330.01px;
+  width: 330px;
   height: 665.17px;
   left: 40px;
   top: 66.27px;
   position: absolute;
   overflow: hidden;
 }
+
 
 .mi_cuenta_contenido {
   width: 1411.20px;
@@ -647,17 +651,16 @@ div {
 }
 
 .form-control {
-  padding: 2vh;
+  padding: 10px 16px;
   text-align: left;
-  margin-top: 0.5vh;
+  margin-top: 6px;
   color: gray;
-  border-radius: 2vh;
-  width: 38vh;
-  height: 4vh;
-  border: 2px solid;
-  border-color:#6BC8C9;
-
+  border-radius: 20px;
+  width: 100%;              /* ocupa el ancho disponible del contenedor */
+  box-sizing: border-box;   /* incluye el padding dentro del ancho */
+  border: 2px solid #6BC8C9;
 }
+
 
 .fecha1{
   padding: 100px;
@@ -671,11 +674,13 @@ div {
   padding: 100px;
 }
 
-.filters-form{
-  left: 20px;
-  top: 66.27px;
+.filters-form {
   position: relative;
+  left: 0;          /* antes estaba en 20px */
+  top: 66.27px;
 }
+
+
 
 .btn-clear{
   top: -563px;

@@ -8,10 +8,12 @@ import { RouterModule } from '@angular/router';
   imports: [CommonModule, RouterModule],
   template: `
 
-    <img class="banner" src="assets/MainBanner.png" />
-    <div class="content">
+      <img class="banner" src="assets/banner2.png" />
+
+      <div class="content">
 
         <p class="inicio"> Inicio </p>
+
         <div class="main-buttons">
           <div>
             <button type="button" class="btn" routerLink="/solicitudes/pasajero/estados">
@@ -33,7 +35,7 @@ import { RouterModule } from '@angular/router';
               <img class="image" src="assets/sidebar/Libro.png" />
             </button>
           </div>
-     
+
           <div>
             <button type="button" class="btn" routerLink="/rutas/perfil-pasajero">
               <p class="btn-text">Mi perfil</p>
@@ -48,8 +50,9 @@ import { RouterModule } from '@angular/router';
             </button>
           </div>
         </div>
-    </div>
-  
+
+      </div>
+
   `,
   styleUrl: './main.pasajero.component.css'
 })

@@ -6,7 +6,7 @@ import { RutasPasajeroLayoutComponent } from '@shared/layouts/rutas-pasajero-lay
 export const MAIN_ROUTES: Routes = [
   { 
     path: 'conductor',
-      component: RutasLayoutComponent,   // 👈 aquí va el layout con sidebar
+      component: RutasLayoutComponent,   
       children: [
         {
           path: '',
@@ -16,7 +16,7 @@ export const MAIN_ROUTES: Routes = [
   },
   { 
     path: 'pasajero',
-      component: RutasPasajeroLayoutComponent,   // 👈 aquí va el layout con sidebar
+      component: RutasPasajeroLayoutComponent,   
       children: [
         {
           path: '',

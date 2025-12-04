@@ -7,28 +7,9 @@ import { RouterModule } from '@angular/router';
   standalone: true,
   imports: [CommonModule, RouterModule],
   template: `
-    <!-- Barra superior fija con Perfil y Configuración -->
-    <div class="top-bar">
-      <button
-        type="button"
-        class="top-icon-btn"
-        routerLink="/rutas/perfil-conductor"
-        aria-label="Mi perfil"
-      >
-        <img src="assets/sidebar/user.png" alt="Perfil" />
-      </button>
 
-      <button
-        type="button"
-        class="top-icon-btn"
-        routerLink="/rutas/configuracion-conductor"
-        aria-label="Configuración"
-      >
-        <img src="assets/sidebar/Engranaje.png" alt="Configuración" />
-      </button>
-    </div>
 
-    <img class="banner" src="assets/MainBanner.png" />
+    <img class="banner" src="assets/banner2.png" />
     <div class="content">
       <p class="inicio"> Inicio </p>
 
